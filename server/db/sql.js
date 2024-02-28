@@ -1,8 +1,38 @@
-const book = require('./book.js');
-const member = require('./member.js');
+
+// 장효은
+const userranks = require('./userranks.js'); // 회원등급 sql문
+
+// 도승민
+const user = require('./user.js'); // 회원 리스트 sql문
+
+
+// 박지웅
+const detailreview = require('./detailreview.js'); // 도서 상세 페이지 리뷰
+
+
+// 신수지
+const orders = require('./orders.js'); // 주문 sql문
+
+// 이유민
+const books = require('./books.js'); // 상품 sql문
+
 
 
 module.exports = {
-    book,
-    member
+    // 장효은
+    userranks
+
+    // 도승민
+    , user
+    
+
+    // 박지웅
+    , detailreview
+
+
+    // 신수지
+    , orders
+
+    // 이유민
+    ,books
 }
