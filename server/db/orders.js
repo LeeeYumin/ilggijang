@@ -17,10 +17,9 @@ const orderList =
         , pay_result
 FROM orders`;
 
-// 주문등록
-const orderInsert = 
-`INSERT INTO orders
-        (recipient
+// 단건조회
+const orderInfo = 
+`SELECT recipient
         , dlv_addr
         , orders_date
         , orders_state
@@ -32,7 +31,13 @@ const orderInsert =
         , orders_no
         , user_no
         , pay_type
-        , pay_result)
+        , pay_result
+FROM orders
+WHERE orders_no = ?`;
+
+// 주문등록
+const orderInsert = 
+`INSERT INTO orders
 SET ?`;
 
 // 주문수정
@@ -48,6 +53,7 @@ WHERE orders_no = ?`;
 
 module.exports = {
     orderList,
+    orderInfo,
     orderInsert,
     orderUpdate,
     orderDelete

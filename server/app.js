@@ -12,7 +12,7 @@ const userRankRouter = require('./router/userRankRouter.js'); // 회원등급 �
 
 
 // 신수지
-
+const ordersRouter = require('./router/ordersRouter.js') // 주문 전체조회
 
 // 이유민
 
@@ -34,7 +34,7 @@ app.use('/userrank', userRankRouter); // 회원등급 전체조회 (get방식), 
 
 
 // 신수지
-
+app.use('/orders', ordersRouter); // 주문
 
 // 이유민
 
