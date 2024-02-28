@@ -12,7 +12,7 @@ const userRouter = require('./router/userRouter.js'); //회원 전체조회
 
 
 // 신수지
-
+const ordersRouter = require('./router/ordersRouter.js') // 주문 전체조회
 
 // 이유민
 
@@ -33,7 +33,7 @@ app.use('/user', userRouter); //회원 전체조회 (get방식), http://localhos
 
 
 // 신수지
-
+app.use('/orders', ordersRouter); // 주문
 
 // 이유민
 

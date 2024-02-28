@@ -11,7 +11,7 @@ const user = require('./user.js'); // 회원 리스트 sql문
 
 
 // 신수지
-
+const orders = require('./orders.js'); // 주문 sql문
 
 // 이유민
 
@@ -32,7 +32,7 @@ module.exports = {
 
 
     // 신수지
-
+    , orders
 
     // 이유민
 }
