@@ -15,6 +15,7 @@ const userRankRouter = require('./router/userRankRouter.js'); // 회원등급 �
 
 
 // 이유민
+const bookRouter = require('./router/bookRouter.js'); // 상품
 
 app.use( // json-parser
   express.json({
@@ -24,7 +25,7 @@ app.use( // json-parser
 
 app.use(express.urlencoded({extended : false})); // query
 
-app.use('/books', bookRouter);
+
 // 장효은
 app.use('/userrank', userRankRouter); // 회원등급 전체조회 (get방식), http://localhost:3000/userrank
 
@@ -38,6 +39,7 @@ app.use('/userrank', userRankRouter); // 회원등급 전체조회 (get방식), 
 
 
 // 이유민
+app.use('/books', bookRouter);
 
 app.listen(3000, () => {
   console.log("Server started. port 3000.");
