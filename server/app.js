@@ -6,13 +6,13 @@ const app = express();
 const userRankRouter = require('./router/userRankRouter.js'); // 회원등급 전체조회
 
 // 도승민
-
+const userRouter = require('./router/userRouter.js'); //회원 전체조회
 
 // 박지웅
 
 
 // 신수지
-
+const ordersRouter = require('./router/ordersRouter.js') // 주문 전체조회
 
 // 이유민
 const bookRouter = require('./router/bookRouter.js'); // 상품
@@ -30,13 +30,12 @@ app.use(express.urlencoded({extended : false})); // query
 app.use('/userrank', userRankRouter); // 회원등급 전체조회 (get방식), http://localhost:3000/userrank
 
 // 도승민
-
-
+app.use('/user', userRouter); //회원 전체조회 (get방식), http://localhost:3000/userList
 // 박지웅
 
 
 // 신수지
-
+app.use('/orders', ordersRouter); // 주문
 
 // 이유민
 app.use('/books', bookRouter);
@@ -46,6 +45,7 @@ app.listen(3000, () => {
 });
 
 const db = require("./db.js");
+
 // REST API 기준
 
 //전체조회
