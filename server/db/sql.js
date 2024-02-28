@@ -19,7 +19,7 @@ const books = require('./book.js'); // 상품 sql문
 
 module.exports = {
     // 장효은
-    , userRank
+    userRank
 
     // 도승민
     , user

@@ -9,8 +9,8 @@ ordersRouter.get("/", async (request, response) => {
 });
 
 // 단건조회
-ordersRouter.get("/:orders_no", async (request, response) => {
-    let data = request.params.orders_no;
+ordersRouter.get("/:ono", async (request, response) => {
+    let data = request.params.ono;
     let result = (await db.connection('orders', 'orderInfo', data))[0];
     response.send(result);
 });
@@ -23,8 +23,8 @@ ordersRouter.post("/", async (request, response) => {
 });
 
 // 주문수정
-ordersRouter.put("/:orders_no", async (request, response) => {
-    let data = [request.body.param, request.params.orders_no];
+ordersRouter.put("/:ono", async (request, response) => {
+    let data = [request.body.param, request.params.ono];
     console.log(data);
     let result = await db.connection('orders', 'orderUpdate', data);
     response.send(result);
@@ -32,8 +32,8 @@ ordersRouter.put("/:orders_no", async (request, response) => {
 
 
 // 주문삭제
-ordersRouter.delete("/:orders_no", async (request, response) => {
-    let data = request.params.orders_no;
+ordersRouter.delete("/:ono", async (request, response) => {
+    let data = request.params.ono;
     console.log(data);
     let result = await db.connection('orders', 'orderDelete', data);
     response.send(result);
