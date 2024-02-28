@@ -18,20 +18,41 @@ const userList =
     user_rank_no
 FROM user`;
 
-userJoin =
-`INSERT INTO user(
-            id,
-            pw_no,
-            name,
-            birth_date,
-            addr,
-            detail_daar,
-            mail,
-            phone,
-            age_code)
-VALUES(?)`;
+const userJoin =
+`INSERT INTO user 
+ SET ?`;
+
+const userInfo = 
+`select 
+    id
+    ,pw_no
+    ,name
+    ,birth_date
+    ,addr
+    ,detail_addr
+    ,mail,phone
+    ,login_type_code
+    ,age_code 
+FROM user
+WHERE user_no = ? `;
+
+userLogin = 
+`SELECT 
+        user_no
+        ,name
+        ,birth_date
+        ,addr,detail_addr
+        ,mail,phone
+        ,age_code
+        ,gender_code
+        ,join_date
+        ,login_type_code
+FROM user
+WHERE id = ? AND pw_no = ?`;
 
 module.exports = {
     userList,
-    userJoin
+    userJoin,
+    userInfo,
+    userLogin
   }
