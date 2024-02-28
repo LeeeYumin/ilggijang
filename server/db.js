@@ -15,11 +15,13 @@ const dbPool = mysql.createPool(dbInfo);
 module.exports = {
      connection(table, alias, param = []) {
       return new Promise((resolve, reject) => dbPool.query(sql[table][alias], param, (error, results) => {
-        if (error) {         
-          reject({
-            error
-          });
-        } else resolve(results);
+        if (error) {
+          console.log(error); // DB연결 에러를 콘솔에서 보기.         
+          reject({error});
+        } else {
+          console.log(results); // DB연결 성공결과를 콘솔에서 보기.
+          resolve(results);
+        };
       }));
     }
   };

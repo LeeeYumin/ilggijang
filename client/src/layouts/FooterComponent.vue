@@ -15,13 +15,15 @@
                 <td>개발자이름 : 장효은, 신수지, 이유민, 도승민, 박지웅</td>
             </tr>
         </table>
-        <customercenter/>
+        <a>고객센터</a>
+        <CustomerCenter/>
     </div>
 </template>
 
 <style scoped>
-#footer {
+.footer {
     border: 1px solid #888;
+    background: #919191;
 }
 table, tr, td {
     border: none;

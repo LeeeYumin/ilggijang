@@ -1,14 +1,21 @@
-import HomeView from '../views/HomeView.vue';
+import CommonMainView from '../views/CommonMainView.vue';
+import MainView from '../views/MainView.vue';
 import GuideView from '../views/GuideView.vue';
 
 
 export default {
     path: '/',
-    name: 'home',
-    component: HomeView,
+    name: 'commonMain',
+    component: CommonMainView, // header, footer 고정
+    redirect : 'main', // '/'로 진입시 실제로 보여야하는 컴포넌트로 연결
     children: [
     {
-        path: '/guide',
+        path: 'main',
+        name: 'main',
+        component: MainView
+    },
+    {
+        path: 'guide',
         name: 'guide',
         component: GuideView
     }
