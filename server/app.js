@@ -9,7 +9,7 @@ const userRankRouter = require('./router/userRankRouter.js'); // 회원등급 �
 const userRouter = require('./router/userRouter.js'); //회원 전체조회
 
 // 박지웅
-
+const reviewRouter = require('./router/reviewRouter.js'); // 리뷰 관련 라우터 경로
 
 // 신수지
 const ordersRouter = require('./router/ordersRouter.js') // 주문 전체조회
@@ -31,8 +31,9 @@ app.use('/userrank', userRankRouter); // 회원등급 전체조회 (get방식), 
 
 // 도승민
 app.use('/user', userRouter); //회원 전체조회 (get방식), http://localhost:3000/userList
-// 박지웅
 
+// 박지웅
+app.use('/reviews', reviewRouter); // 리뷰 파라미터 워딩
 
 // 신수지
 app.use('/orders', ordersRouter); // 주문
