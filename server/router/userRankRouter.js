@@ -3,8 +3,8 @@ const userRankRouter = express.Router();
 const db = require("../db.js");
 
 // 회원등급 전체 조회
-userRankRouter.get("/", async (request, response) => {
-  result = await db.connection('userRank', 'userRankList');
+userRankRouter.get("/", (request, response) => {
+  let result = db.connection('userRank', 'userRankList').then(rlt => {console.log(rlt)}).catch(err=>{console.log(err)});
   response.send(result);
 });
 
