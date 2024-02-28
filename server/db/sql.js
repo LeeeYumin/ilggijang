@@ -13,7 +13,7 @@ const userRank = require('./test.js'); // 회원등급 sql문
 
 
 // 이유민
-const books = require('./book.js'); // 상품 sql문
+const books = require('./books.js'); // 상품 sql문
 
 
 // 장효은
