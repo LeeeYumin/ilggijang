@@ -27,7 +27,7 @@ app.use(express.urlencoded({extended : false})); // query
 
 
 // 장효은
-app.use('/userrank', userRankRouter); // 회원등급 전체조회 (get방식), http://localhost:3000/userrank
+app.use('/userranks', userRankRouter); // 회원등급 전체조회 (get방식), http://localhost:3000/userrank
 
 // 도승민
 app.use('/user', userRouter); //회원 전체조회 (get방식), http://localhost:3000/userList

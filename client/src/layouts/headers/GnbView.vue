@@ -1,8 +1,8 @@
 <template>
     <div>
-        <login /> |
-        <account /> |
-        <cart />
+        <a>로그인</a> |
+        <a>장바구니</a> |
+        <a>뭐였더라</a>
     </div>
 </template>
 
