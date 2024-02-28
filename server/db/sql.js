@@ -15,19 +15,6 @@ const userRank = require('./test.js'); // 회원등급 sql문
 // 이유민
 
 
-// 장효은
-const test = require('./test.js'); // 회원등급 sql문
-
-// 도승민
-
-
-// 박지웅
-
-
-// 신수지
-
-
-// 이유민
 
 module.exports = {
     book,
