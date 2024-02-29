@@ -4,7 +4,7 @@ const userranks = require('./userranks.js'); // 회원등급 sql문
 
 // 도승민
 const user = require('./user.js'); // 회원 리스트 sql문
-
+const notice = require('./notice.js'); //공지사랑 리스트 sql문
 
 // 박지웅
 const detailreview = require('./detailreview.js'); // 도서 상세 페이지 리뷰
@@ -24,6 +24,7 @@ module.exports = {
 
     // 도승민
     , user
+    ,notice
     
 
     // 박지웅

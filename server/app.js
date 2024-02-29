@@ -7,7 +7,7 @@ const userRankRouter = require('./router/userRankRouter.js'); // 회원등급 �
 
 // 도승민
 const userRouter = require('./router/userRouter.js'); //회원 전체조회
-
+const noticeRouter = require('./router/noticeRouter.js'); // 공지사항 조회
 // 박지웅
 
 
@@ -31,6 +31,7 @@ app.use('/userranks', userRankRouter); // 회원등급 전체조회 (get방식),
 
 // 도승민
 app.use('/user', userRouter); //회원 전체조회 (get방식), http://localhost:3000/userList
+app.use('/notice', noticeRouter); //공지사항 조회 (get방식), http://localhost:3000/noticeList
 // 박지웅
 
 
