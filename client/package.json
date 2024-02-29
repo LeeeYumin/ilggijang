@@ -12,7 +12,7 @@
     "bootstrap-vue": "^2.23.1",
     "bootstrap-vue-3": "^0.5.1",
     "core-js": "^3.8.3",
-    "vue": "^3.4.20",
+    "vue": "^3.4.21",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
