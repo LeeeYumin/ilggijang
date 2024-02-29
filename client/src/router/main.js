@@ -1,6 +1,7 @@
 import CommonMainView from '../views/CommonMainView.vue';
 import MainView from '../views/MainView.vue';
 import GuideView from '../views/GuideView.vue';
+import OrderView from '../views/OrderView.vue';
 
 
 export default {
@@ -18,6 +19,11 @@ export default {
         path: 'guide',
         name: 'guide',
         component: GuideView
+    },
+    {
+        path: 'order',
+        name: 'order',
+        component: OrderView
     }
     ]
 }
