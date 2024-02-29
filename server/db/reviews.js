@@ -36,7 +36,7 @@ const adminReviewList =
         , p.book_name
         , u.id
         , u.name
-        , RPAD(SUBSTR(r.content, 1, 8), 10, '.') AS litecont
+        , RPAD(SUBSTR(r.content, 1, 8), CHAR_LENGTH(SUBSTR(r.content, 1, 10)), '.') AS litecont
         , r.grade
 FROM review r 
 JOIN user u
