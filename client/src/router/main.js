@@ -1,6 +1,7 @@
 import CommonMainView from '../views/CommonMainView.vue';
 import MainView from '../views/MainView.vue';
 import GuideView from '../views/GuideView.vue';
+import BookInfoView from '../views/BookInfoView.vue';
 
 
 export default {
@@ -18,7 +19,11 @@ export default {
         path: 'guide',
         name: 'guide',
         component: GuideView
+    },
+    {
+        path: 'book',
+        name: 'book',
+        component: BookInfoView // 책 검색 후 도서 상세화면
     }
     ]
 }
-    
