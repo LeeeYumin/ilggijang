@@ -43,7 +43,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <table class="table">
           <colgroup>
             <col span="1" style="width:20%;">
@@ -148,7 +148,6 @@ table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #
 
 <script>
   import axios from 'axios';
-  import userList from '../views/userList.vue';
 
   export default {
     data() {
@@ -159,9 +158,6 @@ table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #
                 phone : ''
             }
       }
-    },
-    components : {
-        userList
     },
     created(){
         let searchNo = this.$route.query.userNo;
