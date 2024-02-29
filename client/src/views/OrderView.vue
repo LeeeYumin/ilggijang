@@ -210,8 +210,7 @@ table ul li button:hover{background:#eee;}
         // x(?=y) -> "x" 뒤에 "y"가 오는 경우에만 "x"와 일치
         // x(?!y) -> "x" 뒤에 "y"가 없는 경우에만 "x"와 일치
         
-        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        
+        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");       
       }
     },
     created(){
@@ -224,7 +223,6 @@ table ul li button:hover{background:#eee;}
         async getUserInfo(){
             let result = await axios.get('/api/user/50') // + no
                                    .catch(err => console.log(err));
-
             console.log(result);
             this.userInfo = result.data;
         },
