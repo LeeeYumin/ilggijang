@@ -15,21 +15,21 @@ bookRouter.get("/:pno", async (request, response) => { //:prdt_no 에서 수정
   response.send(result);
 });
 
-// 상품관리 입력
+// 상품관리 입력 (관리자)
 bookRouter.post("/", async (request, response) => {
   let data = request.body.param;
   let result = await db.connection('books', 'bookInsert', data);
   response.send(result);
 });
 
-// 상품관리 수정
+// 상품관리 수정 (관리자)
 bookRouter.put("/:pno", async (request, response) => {
   let data = [request.body.param, request.params.pno];
   let result = await db.connection('books', 'bookUpdate', data);
   response.send(result);
 });
 
-// 상품관리 삭제
+// 상품관리 삭제 (관리자)
 bookRouter.delete("/:pno", async (request, response) => {
   let data = request.params.pno;
   let result = await db.connection('books', 'bookDelete', data);
@@ -37,8 +37,6 @@ bookRouter.delete("/:pno", async (request, response) => {
 });
 
 
-
 // 함수
-
 
 module.exports = bookRouter;

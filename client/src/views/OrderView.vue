@@ -43,7 +43,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <table class="table">
           <colgroup>
             <col span="1" style="width:20%;">
