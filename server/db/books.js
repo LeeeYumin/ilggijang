@@ -45,17 +45,36 @@ const bookDelete =
 `DELETE FROM prdt
 WHERE prdt_no = ?`
 
-
-// 도서 상세상단 컴포넌트 (검색결과)
-
-// 도서 상세하단 컴포넌트 (검색결과)
-
 // 도서 리스트 컴포넌트 (검색결과)
+const bookSearchList =
+`SELECT book_img
+      , book_name
+      , title
+      , publ_date
+      , book_price
+FROM prdt`;
+
+// 도서 상세정보 컴포넌트 (상+하단)
+const bookDetailSearch =
+`SELECT book_name
+      , book_img
+      , isbn
+      , title
+      , book_price
+      , publ_co
+      , category_code
+      , publ_date
+      , detail_exp
+      , book_intro
+FROM  prdt`;
+
 
 module.exports = {
     bookList,
     bookInsert,
     bookUpdate,
     bookDelete,
-    bookDetailInfo
+    bookDetailInfo,
+    bookSearchList,
+    bookDetailSearch
   }
