@@ -1,8 +1,18 @@
 <template>
     <div>
-        <a a href="/user">로그인</a> |
-        <a>장바구니</a> |
-        <a>뭐였더라</a>
+        <div>
+            <b-button-group>
+            <b-button variant="outline-primary">
+                로그인
+            </b-button>
+            <b-button variant="outline-primary">
+                회원가입
+            </b-button>
+            <b-button variant="outline-primary">
+                장바구니
+            </b-button>
+            </b-button-group>
+        </div>
     </div>
 </template>
 

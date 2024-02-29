@@ -25,7 +25,7 @@ bookRouter.post("/", async (request, response) => {
 // 상품관리 수정
 bookRouter.put("/:pno", async (request, response) => {
   let data = [request.body.param, request.params.pno];
-  let esult = await db.connection('books', 'bookUpdate', data);
+  let result = await db.connection('books', 'bookUpdate', data);
   response.send(result);
 });
 
