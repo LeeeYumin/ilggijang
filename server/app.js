@@ -40,7 +40,7 @@ app.use('/notice', noticeRouter); //공지사항 조회 (get방식), http://loca
 // 박지웅
 app.use('/reviews', reviewRouter); // 리뷰 파라미터 워딩
 app.use('/qnas', qnaRouter); // QnA 파라미터 워딩
-app.use('/qnas', qryRouter); // 회원, 배송&주문, 기타 문의 파라미터 워딩
+app.use('/qrys', qryRouter); // 회원, 배송&주문, 기타 문의 파라미터 워딩
 
 // 신수지
 app.use('/orders', ordersRouter); // 주문

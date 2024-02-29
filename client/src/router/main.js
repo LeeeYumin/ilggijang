@@ -3,6 +3,7 @@ import MainView from '../views/MainView.vue';
 import GuideView from '../views/GuideView.vue';
 import BookInfoView from '../views/BookInfoView.vue';
 import OrderView from '../views/OrderView.vue';
+import MainBookListView from '../views/MainBookListView.vue';
 
 
 
@@ -34,9 +35,14 @@ export default {
         name: 'order',
         component: OrderView
 
-    }
+    },
     // 박지웅
+    {
+        path: 'mainBookList',
+        name: 'mainBookList',
+        component: MainBookListView
 
+    },
     // 도승민
 
     // 장효은
