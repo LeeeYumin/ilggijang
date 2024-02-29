@@ -231,7 +231,6 @@ table ul li button:hover{background:#eee;}
         async getBookInfo(){
             let result = await axios.get('/api/books/BK000001') // + no
                                    .catch(err => console.log(err));
-
             console.log(result);
             this.bookInfo = result.data[0];
         },
