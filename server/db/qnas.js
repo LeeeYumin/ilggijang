@@ -70,8 +70,6 @@ module.exports = {
     detailQnaList
     , detailMyQnaList
     , adminQnaList
-    , adminQnaInsert
-    , adminQnaUpdate
     , qnaInfo
     , qnaInsert
     , qnaUpdate
