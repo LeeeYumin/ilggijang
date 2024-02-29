@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer py-3">
+<footer class="footer py-3">
     <div class="container">
       <div class="row">
         <div class="col-2">

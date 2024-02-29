@@ -21,10 +21,11 @@ userRouter.get("/:user_no", async (request, response)=>{
     let result = (await db.connection('user','userInfo', data))[0];
     response.send(result);
 });
-
-//로그인 
-userRouter.get("/:id", async (request, response)=>{ //id pw 를 입력받아서 넘겨와야하는데 방법을 모름 더 찾아보고 정리해야됨.
-    
+//회원정보 수정
+userRouter.put("/:uno", async(request, response)=>{
+    let data = [request.body.param, request.params.uno];
+    let result = await db.connection('user', 'userUpdate', data);
+    response.send(result);
 })
 
 
