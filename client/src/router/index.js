@@ -6,8 +6,18 @@ import login from './login.js';
 
 const routes = [
   main,
-  admin,
-  login
+  admin
+  // 도승민
+  , login
+
+  // 신수지
+
+  // 이유민
+
+  // 박지웅
+
+  // 장효은
+  
 ]
 
 

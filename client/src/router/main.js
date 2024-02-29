@@ -22,16 +22,23 @@ export default {
         name: 'guide',
         component: GuideView
     },
+    // 이유민
     {
         path: 'book',
         name: 'book',
         component: BookInfoView // 책 검색 후 도서 상세화면
     },
+    // 신수지
     {
         path: 'order',
         name: 'order',
         component: OrderView
 
     }
+    // 박지웅
+
+    // 도승민
+
+    // 장효은
     ]
 }
