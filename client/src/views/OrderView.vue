@@ -11,9 +11,9 @@
           <tr>
             <th>배송지 정보</th>
             <td>
-              <div class="info">
+              <div>
                 <p>{{ userInfo.name }}</p>
-                <p>{{ userInfo.name }}/{{ userInfo.phone }}</p>
+                <p>{{ userInfo.name }} / {{ userInfo.phone }}</p>
                 <p>{{ userInfo.addr }}</p>
               </div>
             </td>
@@ -148,7 +148,6 @@ table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #
 
 <script>
   import axios from 'axios';
-  import userList from '../views/userList.vue';
 
   export default {
     data() {
@@ -160,20 +159,18 @@ table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #
             }
       }
     },
-    components : {
-        userList
-    },
     created(){
-        let searchNo = this.$route.query.userNo;
-        this.getBoardInfo(searchNo);
+        // let searchNo = this.$route.query.userNo;
+        this.getUserList();
     },
     methods : {
 
-        async getUserList(no){
-            let result = await axios.get('/api/user/' + no)
+        async getUserList(){
+            let result = await axios.get('/api/user/50') // + no
                                    .catch(err => console.log(err));
 
-            this.userList = result.data;
+            console.log(result);
+            this.userInfo = result.data;
         }
     }
   }
