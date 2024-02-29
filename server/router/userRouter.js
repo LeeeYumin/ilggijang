@@ -26,7 +26,20 @@ userRouter.put("/:uno", async(request, response)=>{
     let data = [request.body.param, request.params.uno];
     let result = await db.connection('user', 'userUpdate', data);
     response.send(result);
-})
+});
+
+//로그인
+userRouter.post('/login', (request, response, next)=>{
+    const {id, pw_no} = request.body.param;
+    //데이터베이스의 사용자가 테이블에서 로그인 인증 처리코드 작성
+    //사용자가 존재하면 성공
+    request.session.id = id;
+    request.session.is_logined = true; // 로그인 여부저장
+    request.session.save(err =>{ //세션에 저장
+        if(err) throw err;
+        response.redirect('/main'); //로그인후 메인화면으로
+    });
+});
 
 
 
