@@ -11,7 +11,7 @@
   <div class="mb-3">
     <input name="pw" class="w3-input" placeholder="PW를 입력해주세요" v-model="pw_no" type="password">
   </div>
-    <button type="submit" class="w3-button w3-green w3-round">Login</button>
+    <button v-on:click="login" type="submit" class="w3-button w3-green w3-round">Login</button>
         </form> 
       </div>
     </div>
@@ -22,6 +22,7 @@
 
 
 <script>
+  import axios from 'axios';
 import Footer from '../layouts/FooterComponent.vue';
 
 export default {
@@ -31,23 +32,29 @@ export default {
   data() {
     return {
       id: '',
-      pw_no: ''
+      pw_no: '',
+      loginSuccess : false
     }
   },
   methods: {
-    Login() {
-      if (this.id === '') {
-        alert('ID를 입력하세요.')
-        return
-      }
-
-      if (this.pw_no === '') {
-        alert('비밀번호를 입력하세요.')
-        return
-      }
-
-      
+    
+    async login() {
+    try {
+        const result = await axios.get('/api/user/login', {
+           
+                id: this.id,
+                pw_no: this.pw_no
+            
+        });
+        if (result.status === 200) {
+       
+            this.$router.push('/main');
+        }
+    } catch (err) {
+        this.loginError = true;
+        throw new Error(err)
     }
+  }
   }
 }
 </script>
