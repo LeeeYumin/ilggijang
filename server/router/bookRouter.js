@@ -2,16 +2,24 @@ const express =  require('express');
 const bookRouter = express.Router();
 const db = require("../db.js");
 
-// 전체 조회
+// 전체 조회 (관리자)
 bookRouter.get("/", async (request, response) => {
   let result = await db.connection('books', 'bookList');
   response.send(result);
 });
 
-//상품 상세조회
+// 도서 검색결과
+bookRouter.get("/:pname", async (request, response) => {
+  let data = request.params.pname;
+  console.log(data);
+  let result = await db.connection('books', 'bookSearchList', data);
+  response.send(result);
+});
+
+// 상품 상세조회
 bookRouter.get("/:pno", async (request, response) => { //:prdt_no 에서 수정
   let data = request.params.pno;
-  let result = await db.connection('books', 'bookDetailInfo', data);
+  let result = (await db.connection('books', 'bookDetailInfo', data))[0];
   response.send(result);
 });
 
