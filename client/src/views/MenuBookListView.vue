@@ -1,6 +1,6 @@
 <template>
   <div class="books">
-    <h3>오늘의 추천도서</h3>
+    <h3>도서 목록</h3>
     <div class="booklist" :key="i" v-for="(book, i) in bookList">
       <b-card :title="book.book_name" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
         tag="article" style="max-width: 20rem;" class="mb-2">
@@ -50,9 +50,11 @@ export default {
 .books {
   text-align: center;
   margin: 0 auto;
+  width: 1526px;
 }
 
 .booklist {
   display: inline-block;
+  margin: 20px;
 }
 </style>

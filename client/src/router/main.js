@@ -4,6 +4,7 @@ import GuideView from '../views/GuideView.vue';
 import BookInfoView from '../views/BookInfoView.vue';
 import OrderView from '../views/OrderView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
+import MenuBookListView from '../views/MenuBookListView.vue';
 
 
 
@@ -41,7 +42,11 @@ export default {
         path: 'mainBookList',
         name: 'mainBookList',
         component: MainBookListView
-
+    },
+    {
+        path: 'menuBookList',
+        name: 'menuBookList',
+        component: MenuBookListView
     },
     // 도승민
 
