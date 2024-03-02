@@ -36,6 +36,31 @@ bookRouter.delete("/:pno", async (request, response) => {
   response.send(result);
 });
 
+// 추천도서 목록 (연령대별 구매순)
+bookRouter.get("/agelike/:agecode", async (request, response) => {
+  let data = request.params.agecode;
+  let result = await db.connection('books', 'ageLikeBookList', data);
+  response.send(result);
+});
+
+// 베스트셀러 목록 (3개월 판매량 순)
+bookRouter.get("/bestseller", async (request, response) => {
+  let result = await db.connection('books', 'bestSellerBookList');
+  response.send(result);
+});
+
+// 신간도서 목록 (12개월 내 출판 날짜순)
+bookRouter.get("/newpubl", async (request, response) => {
+  let result = await db.connection('books', 'newPublBookList');
+  response.send(result);
+});
+
+// 분야별 인기도서 목록 (각 분야별 판매량 순)
+bookRouter.get("/category/:catcode", async (request, response) => {
+  let data = request.params.agecode;
+  let result = await db.connection('books', 'categoryBookList', data);
+  response.send(result);
+});
 
 // 함수
 
