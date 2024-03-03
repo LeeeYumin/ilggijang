@@ -3,6 +3,7 @@ import MainView from '../views/MainView.vue';
 import GuideView from '../views/GuideView.vue';
 import BookInfoView from '../views/BookInfoView.vue';
 import OrderView from '../views/OrderView.vue';
+import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
 
 
@@ -34,6 +35,12 @@ export default {
         path: 'order',
         name: 'order',
         component: OrderView
+
+    },
+    {
+        path: 'cart',
+        name: 'cart',
+        component: CartView
 
     },
     // 박지웅
