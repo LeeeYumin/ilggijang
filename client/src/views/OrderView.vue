@@ -13,7 +13,7 @@
             <tr>
               <th>배송지 정보</th>
               <td>
-                <div>
+                <div class="addr_info">
                   <p>{{ userInfo.name }}</p>
                   <p>{{ userInfo.name }} / {{ userInfo.phone }}</p>
                   <p>{{ userInfo.addr }}</p>
@@ -84,7 +84,7 @@
                 <td>
                   <ul>
                     <li><button @click="goToPayment">일반결제</button></li>
-                    <li><button @click="goToNpay()">Npay</button></li>
+                    <li><button @click="goToNpay()" id="naverPayBtn" value="네이버페이 결제 버튼">Npay</button></li>
                   </ul>
                   <div v-if="show" class="option_box">
                     <b-form-select v-model="selected" :options="options"></b-form-select>
@@ -114,7 +114,7 @@
           <p>최종 결제 금액</p>
           <span><i>{{ totalPrice }}</i>원</span>
         </div>
-        <button class="btn btn-primary btn_order">결제하기</button>
+        <button class="btn btn-primary btn_order" @click="getImPort()">결제하기</button>
       </div>
     </div> 
   </div>
@@ -122,9 +122,10 @@
 
 <style scoped>
 .title{font-weight:700;}
-.content{position:relative;}
-.left{width:calc(100% - 28%);}
-.right{position:absolute; right:0; top:0; width:25%; padding:20px; border:1px solid #ddd; border-radius:15px; box-sizing:border-box;}
+.content{position:relative; margin-bottom:50px;}
+.content:after{content:''; display:block; clear:both;}
+.left{float:left; width:calc(100% - 28%);}
+.right{float:right; width:25%; padding:20px; border:1px solid #ddd; border-radius:15px; box-sizing:border-box;}
 .right ul{list-style:none; padding-left:0; margin-bottom:0;}
 .right .total{padding-top:20px; border-top:1px solid #ddd;}
 .right .total p{margin-bottom:0; font-weight:700; line-height:27px;}
@@ -153,6 +154,7 @@ table ul li:first-child{margin-left:0;}
 table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #ddd; background:#fff; border-radius:5px;}
 table ul li button:hover{background:#eee;}
 .option_box{padding:20px; background:#eee; border-radius:10px; box-sizing:border-box;}
+.addr_info p{margin-bottom:10px;}
 </style>
 
 <script>
@@ -186,7 +188,7 @@ table ul li button:hover{background:#eee;}
       }
     },
     computed : {
-       totalBookPrice() {
+      totalBookPrice() {
         let result = 0;
         result = + this.bookInfo.book_price;
         return result;
@@ -222,25 +224,54 @@ table ul li button:hover{background:#eee;}
     methods : {
         async getUserInfo(){
             let result = await axios.get('/api/user/50') // + no
-                                   .catch(err => console.log(err));
+                          .catch(err => console.log(err));
             console.log(result);
             this.userInfo = result.data;
         },
         async getBookInfo(){
-            let result = await axios.get('/api/books/BK000001') // + no
-                                   .catch(err => console.log(err));
+            let result = await axios.get('/api/books/BK240228001') // + no
+            .catch(err => console.log(err));
             console.log(result);
             this.bookInfo = result.data[0];
         },
         async getUserRankInfo(){
-            let result = await axios.get('/api/userranks/2') // + no
-                                   .catch(err => console.log(err));
+            let result = await axios.get('/api/userranks/1') // + no
+            .catch(err => console.log(err));
 
             console.log(result);
             this.userRankInfo = result.data;
         },
         goToPayment() {
           this.show = !this.show;
+        },
+        getImPort() {
+          let IMP = window.IMP; // 생략가능
+          IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
+          IMP.request_pay({
+            // pg: "inicis",
+            pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
+            pay_method: "card",
+            merchant_uid : 'merchant_'+new Date().getTime(),
+            name : '결제테스트',
+            amount : this.totalPrice,
+            buyer_email : this.userInfo.mail,
+            buyer_name : this.userInfo.name,
+            buyer_tel : this.userInfo.phone,
+            buyer_addr : this.userInfo.addr,
+            buyer_postcode : '123-456',
+            m_redirect_url : '/main',
+          }, function (rsp) { // callback
+            console.log(rsp);
+            if (rsp.success) {
+              let msg = '결제가 완료되었습니다.';
+              alert(msg);
+                // this.$router.push({ path : '/main' });
+            } else {
+              let msg = '결제에 실패하였습니다.';
+              // msg += '에러내용 : ' + rsp.error_msg;
+              alert(msg);
+            }
+          });
         }
     }
   }
