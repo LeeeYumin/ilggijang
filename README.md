@@ -5,7 +5,8 @@
 
 
 #### 프로젝트 소개
-중간 프로젝트 주제였던 북적북적(도서 쇼핑몰)을 1차 최종 프로젝트로 
+중간 프로젝트 주제였던 북적북적(도서 쇼핑몰)을 1차 최종 프로젝트로 보완합니다.
+
 
 #### 팀원 소개
 | 장효은 | 신수지 | 도승민 | 박지웅 | 이유민 |
@@ -22,4 +23,4 @@
 
 
 ##### Tools
-<img src="https://img.shields.io/badge/Visual Studio Code-#007ACC?style=flat&logo=Visual Studio Code&logoColor=white"/>
+
