@@ -1,27 +1,18 @@
 <template>
     <div class="header">
         <div class="container">
+            <h1>관리자</h1>
             <Gnb />
-        </div>
-        <div class="container">
-            <Search />
-        </div>
-        <div class="container">
-            <Nav />
         </div>
     </div>
 </template>
 
 <script>
 import Gnb from '../layouts/headers/GnbView.vue';
-import Search from '../layouts/headers/SearchView.vue';
-import Nav from '../layouts/headers/NavView.vue';
 
 export default {
     components: {
-        Gnb,
-        Search,
-        Nav
+        Gnb
     }
 }
 
