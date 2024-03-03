@@ -4,19 +4,19 @@
     <div class="row">
 
       <div class="col-6">
-        <img src="{{ bookInfo.img }}">
-        <p>카테고리 : {{ bookInfo.category }}</p>
+        <img src="{{ bookInfo.book_img }}">
+        <p>카테고리 : {{ bookInfo.category_code }}</p>
       </div>
       <div class="col-6">
         <div class="book_info">
-          <p>제목 : {{ bookInfo.name }} </p>
+          <p>제목 : {{ bookInfo.book_name }} </p>
           <p>저자 : {{ bookInfo.title }} </p>
           <p>ISBN : {{ bookInfo.isbn }} </p>
         </div>
         <div class="book_info">
-          <p>출판사 : {{ bookInfo.publco }}</p>
-          <p>가격 : {{ bookInfo.price }}</p>
-          <p>출간일 : {{ bookInfo.publdate }}</p>
+          <p>출판사 : {{ bookInfo.publ_co }}</p>
+          <p>가격 : {{ bookInfo.book_price }}</p>
+          <p>출간일 : {{ bookInfo.publ_date }}</p>
         </div>
         <div>
           <p>부가 설명</p>
@@ -32,8 +32,8 @@
 
     <div class="detailDown">
       <div class="remains">
-        <p>책 목차 영역 {{ bookInfo.intro }}</p>
-        <p>저자/관리자 작성 책 소개 영역 {{ bookInfo.exp }}</p>
+        <p>책 목차, 상세내용 영역 {{ bookInfo.detail_exp }}</p>
+        <p>저자/관리자작성 책 소개 영역 {{ bookInfo.book_intro }}</p>
       </div>
     </div>
 
@@ -41,26 +41,37 @@
 </template>
 
 <script>
-//import axios from 'axios';
+import axios from 'axios';
 
 export default {
   data() {
     return {
       bookInfo: {
         isbn: '',
-        name: '',
-        img: '',
+        book_name: '',
+        book_img: '',
         title: '',
-        publco: '',
-        price: '',
-        intro: '',
-        exp: '',
-        publdate: '',
-        category: ''
+        publ_co: '',
+        book_price: '',
+        book_intro: '',
+        detail_exp: '',
+        publ_date: '',
+        category_code: ''
       }
     }
+  },
+  created(){
+    this.getBookInfo()
+  },
+  methods : {
+    async getBookInfo(){
+      let result = await axios.get('/api/books/BK000001')
+                              .catch(err => console.log(err));
+      console.log(result);
+      this.bookInfo = result.data;
+    }
   } //,
-  // filters: { // 가격 3단위 구분...
+  // filters: { // 가격 3단위 구분... + 출간일도 시간은 안보이게 추가하기.
   //   formatPrice(price) {
   //     if (price > 999) {
   //       var priceAry = price.split("").reverse();
