@@ -4,11 +4,10 @@ import { turn } from 'core-js/core/array';
     <div>
         <div>
             <b-button-group>
-            <router-link to="/login">
-                <b-button variant="outline-primary">
+                <router-link to="/login">
+            <b-button variant="outline-primary">
                 로그인
-                </b-button>
-            </router-link>
+            </b-button></router-link>
             <b-button variant="outline-primary">
                 회원가입
             </b-button>
@@ -19,10 +18,6 @@ import { turn } from 'core-js/core/array';
         </div>
     </div>
 </template>
-
-<script>
-
-</script>
 
 <style scoped>
 div {

@@ -12,6 +12,8 @@
     <input name="pw" class="w3-input" placeholder="PW를 입력해주세요" v-model="pw_no" type="password">
   </div>
     <button v-on:click="login" type="submit" class="w3-button w3-green w3-round">Login</button>
+   <NaverLogin />
+    <button v-on:click="join"  class="w3-button w3-green w3-round" >회원가입</button>
     
         </form> 
       </div>
@@ -24,17 +26,20 @@
 
 <script>
 import axios from 'axios';
-
 import Footer from '../layouts/FooterComponent.vue';
+import NaverLogin from '../components/NaverLogin.vue';
 
 export default {
   components: {
-  Footer
+  Footer,
+  NaverLogin
   },
   data() {
     return {
       id: '',
       pw_no: '',
+      IsLogin: ''
+      
     
     }
   },
@@ -50,11 +55,21 @@ export default {
 
       let uid = result.data.id;
       let upw = result.data.pw_no;
+      let userNo = result.data.user_no;
+
 
       //console.log(uid, upw);
 
       if(uid == this.id && upw == this.pw_no) {
+        this.$store.commit('setIsLogin', true);
+        this.$store.commit('setId', uid);
+        this.$store.commit('setUserNo', userNo);
         alert('로그인 되었습니다.');
+
+        console.log(this.$store.state.isLogin);
+        console.log(this.$store.state.id);
+        console.log(this.$store.state.userNo);
+
         this.$router.push({path : '/main'});
       }
     },
@@ -68,7 +83,14 @@ export default {
         alert('비밀번호를 입력하세요.')
         return
       }
+    },
+    async join(){
+      this.validation();
+    },
+    naverLogin(){
+      this.$router.push({path : '/naverLogin'});
     }
-  }
+  },
+
 }
 </script>
