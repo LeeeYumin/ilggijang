@@ -15,17 +15,17 @@
         </div>
         <div class="book_info">
           <p>출판사 : {{ bookInfo.publ_co }}</p>
-          <p>가격 : {{ bookInfo.book_price }}</p>
-          <p>출간일 : {{ bookInfo.publ_date }}</p>
+          <p>가격 : {{ formatPrice(bookInfo.book_price) }}</p>
+          <p>출간일 : {{ publDate }}</p>
         </div>
         <div>
-          <p>부가 설명</p>
+          <p>부가 설명 ex. 3시 이전 주문시 당일 출고</p>
         </div>
         <div class="btn">
           <button type="button" class="btn btn-dark">장바구니</button>
           <button type="button" class="btn btn-dark">찜</button>
           <button type="button" class="btn btn-dark">바로구매</button>
-          <!--@click="" 추가할 것-->
+          <!--@click="" 추가할 것..?-->
         </div>
       </div>
     </div>
@@ -52,17 +52,29 @@ export default {
         book_img: '',
         title: '',
         publ_co: '',
-        book_price: '',
+        book_price: '', //null 하면 여러건 나오는데 왜 그런거지??
         book_intro: '',
         detail_exp: '',
-        publ_date: '',
+        publ_date: null,
         category_code: ''
       }
     }
   },
+  computed : {
+    publDate() {
+            let result = null;
+            if(this.bookInfo.publ_date != null){
+                let date = new Date(this.bookInfo.publ_date);
+                let year = date.getFullYear();
+                let month = ('0' + (date.getMonth() + 1)).slice(-2);
+                let day = ('0' + date.getDate()).slice(-2);
+                result = `${year}년 ${month}월 ${day}일`;
+            }
+            return result;
+        }
+  },
   created(){
-    this.getBookInfo(),
-    this.getDate()
+    this.getBookInfo()
   },
   methods : {
     async getBookInfo(){
@@ -70,27 +82,18 @@ export default {
                               .catch(err => console.log(err));
       console.log(result);
       this.bookInfo = result.data;
-    }
-  },
-  getDate() {
-    let dateValue = bookInfo.publ_date;
-    let year = dateValue.getFullYear();
-    let month = ('0' + (dateValue.getMonth() + 1)).slice(-2);
-    let day = ('0' + dateValue.getDate()).slice(-2);
-    return `${year}.${month}.${day}`;
-  },
-  filters: { // 가격 3단위 구분
-    formatPrice(price) {
-      if (price > 999) {
-        var priceAry = price.split("").reverse();
-        var idx = 1;
+    },
+    formatPrice(book_price) {
+      if (book_price > 999) {
+        let priceAry = String(book_price).split("").reverse(); //split 사용해서 앞에 String 으로 감싸주고 씀
+        let idx = 0;
         while (priceAry.length > idx + 3) {
           priceAry.splice(idx + 3, 0, ',');
           idx += 4;
         }
-        return priceAry.reverse.join('') + '원'
+        return priceAry.reverse().join('') + '원'  //reverse 함수임
       } else {
-        return price + '원'
+        return book_price + '원'
       }
     }
   }
