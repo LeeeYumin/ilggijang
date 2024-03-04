@@ -1,6 +1,10 @@
 require("dotenv").config({ path: "./db/db.env" });
 const express = require("express");
 const app = express();
+// const session = require('express-session');
+
+
+
 
 // 장효은
 const userRankRouter = require('./router/userRankRouter.js'); // 회원등급 전체조회
@@ -65,3 +69,33 @@ app.get("/", async (request, response) => {
 });
 
 
+
+// let sessionSetting = session({
+//   secret : 'Have$A!@Nice_day', // 하드코딩 X 
+//   resave : false,
+//   saveUninitialized : true,
+//   cookie : {
+//       httpOnly : true, // 통신을 이용할 때만 해당 쿠키에 접근해서 정보를 가지고 올 수 있도록
+//       secure : false, // secure : 보안이 강화된 곳에서만 사용할 수 있도록?
+//       maxAge : 60000 // 밀리세컨드
+//   }
+// });
+
+// app.use(sessionSetting);
+
+
+// app.post('/login', (request, response, next)=>{
+//   const {id, pw_no} = request.body.param;
+//   //데이터베이스의 사용자가 테이블에서 로그인 인증 처리코드 작성
+
+//   //사용자가 존재하면 성공
+//   request.session.id = id;
+//   request.session.pw_no = pw_no;
+//   request.session.is_logined = true; // 로그인 여부저장
+//   request.session.save(err =>{ //세션에 저장
+//       if(err) throw err;
+//       console.log('세션저장성공');
+//       //response.redirect('/main'); //로그인후 메인화면으로
+//       response.send(id, pw_no);
+//   });
+// });
