@@ -4,6 +4,8 @@ import GuideView from '../views/GuideView.vue';
 import BookInfoView from '../views/BookInfoView.vue';
 import OrderView from '../views/OrderView.vue';
 
+import UserListview from '../views/UserListview.vue';
+
 
 
 export default {
@@ -38,6 +40,12 @@ export default {
     // 박지웅
 
     // 도승민
+    ,{
+        path: 'userList',
+        name: 'userList',
+        component: UserListview
+
+    },
 
     // 장효은
     ]
