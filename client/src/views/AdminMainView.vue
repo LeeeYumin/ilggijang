@@ -1,9 +1,17 @@
 <template>
   <HeaderAdmin />
-  <div class="container float-left">
-    <SideBarAdmin />
+  
+  <div class="container-fluid">
+    <div class="row my-3">
+      <div class="col-2">
+        <SideBarAdmin />
+      </div>
+      <div class="col-10">
+        <router-view :key="$route.fullPath" class="float-left"/>
+      </div>
+    </div>
   </div>
-  <router-view :key="$route.fullPath"/>
+  
   <Footer />
 
 </template>

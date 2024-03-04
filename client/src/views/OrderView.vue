@@ -274,8 +274,9 @@ table ul li button:hover{background:#eee;}
 
         IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
         IMP.request_pay({
-          // pg: "inicis",
           pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
+          // pg: "kakaopay.TC0ONETIME", // 카카오페이.상점아이디
+          // pg: "html5_inicis.INIpayTest", // KG이니시스.상점아이디
           pay_method: "card",
           merchant_uid : 'merchant_'+new Date().getTime(), // 도서 id
           name : '결제테스트',
@@ -287,12 +288,15 @@ table ul li button:hover{background:#eee;}
           buyer_postcode : '123-456',
           m_redirect_url : 'http://localhost:8081/complete',
         },
-        function (rsp) { // callback
+        function (rsp) { // callback 
             console.log(rsp);
-          if (rsp.success) {
-            console.log(rsp.imp_uid);
+            console.log(rsp.imp_uid); // 
+          
+          if (rsp.imp_uid != '') {
+            console.log('결제성공');
             //DB로 저장될 정보 전송
             // axios로 HTTP 요청
+
             axios({
               url: "api/complete",
               method: "post",
@@ -302,9 +306,15 @@ table ul li button:hover{background:#eee;}
               }
             }).then((data) => {
               // 서버 결제 API 성공시 로직
-              console.log(data);
-              let msg = '결제가 완료되었습니다.';
-              alert(msg);
+              console.log(data.data);
+              if(data.data != 'failed') {
+                let msg = '결제가 완료되었습니다.';
+                alert(msg);
+              }
+              else {
+                let msg = '결제가 취소되었습니다.';
+                alert(msg);
+              }
             })
             console.log(rsp);
           } else {
@@ -312,32 +322,8 @@ table ul li button:hover{background:#eee;}
             let msg = '결제에 실패하였습니다.';
             alert(msg);
           }
-          // 아임포트 결제단건조회 axios (DB-주문테이블에 저장될 값)
-          // 메소드 호출
-          // if (rsp.success) {
-          //   axios({
-          //       url: "api/complete",
-          //       method: "post",
-          //       headers: { "Content-Type": "application/json" },
-          //       data: {
-          //         imp_uid: rsp.imp_uid
-          //       }
-          //     }).then((data) => {
-          //       console.log(data);
-          //     })
-          //     console.log(rsp);
-          //   //this.insertInfo();
-          //   let msg = '결제가 완료되었습니다.';
-          //   alert(msg);
-          //     // this.$router.push({ path : '/main' });
-          // } else {
-          //   let msg = '결제에 실패하였습니다.';
-          //   // msg += '에러내용 : ' + rsp.error_msg;
-          //   alert(msg);
-          // }
         });
       },
-      // 아임포트-토큰발급 + 결제단건 메소드
 
       // insertInfo() {
       //   // 2) ajax

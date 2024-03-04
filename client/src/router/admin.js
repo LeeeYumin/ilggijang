@@ -1,5 +1,6 @@
 import AdminMainView from '../views/AdminMainView.vue';
 import DashBoardView from '../views/DashBoardView.vue';
+import UserListview from '../views/UserListview.vue';
 
 export default {
     path: '/admin',
@@ -11,6 +12,11 @@ export default {
           path: 'dashboard',
           name: 'dashboard',
           component: DashBoardView
+      },
+      {// admin 에 넣어야함
+        path: 'userList',
+        name: 'userList',
+        component: UserListview
       }
     ]
   }
