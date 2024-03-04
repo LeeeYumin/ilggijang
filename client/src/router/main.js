@@ -7,6 +7,8 @@ import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
 import MenuBookListView from '../views/MenuBookListView.vue';
 
+import UserListview from '../views/UserListview.vue';
+
 
 
 export default {
@@ -56,6 +58,12 @@ export default {
         component: MenuBookListView
     },
     // 도승민
+    ,{
+        path: 'userList',
+        name: 'userList',
+        component: UserListview
+
+    },
 
     // 장효은
     
