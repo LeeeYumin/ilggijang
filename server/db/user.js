@@ -28,6 +28,7 @@ const userJoin =
 const userInfo = 
 `select 
     id
+    ,user_no
     ,pw_no
     ,name
     ,birth_date
