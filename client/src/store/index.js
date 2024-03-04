@@ -1,20 +1,31 @@
 import { createStore } from 'vuex'
+import persistedstate from 'vuex-persistedstate';
 
 const store = createStore({
     state () {
         return {
             id: {},
-            pw_no: {}
+            isLogin: {},
+            userNo: {}
         }
     },
     mutations : {
-     id(state, data){
+     setId(state, data){
         state.id = data;
      },
-     pw_no(state, data){
-        state.pw_no = data;
+     setIsLogin(state, data){
+        state.isLogin = data;
+     },
+     setUserNo(state, data){
+        state.userNo = data;
      }
-    }
+   
+    },
+    plugins : [
+        persistedstate({
+            paths : ['main']
+        })
+    ]
 });
 
 export default store;

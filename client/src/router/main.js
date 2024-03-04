@@ -11,6 +11,7 @@ import UserListview from '../views/UserListview.vue';
 
 
 
+
 export default {
     path: '/',
     name: 'commonMain',
@@ -58,12 +59,14 @@ export default {
         component: MenuBookListView
     },
     // 도승민
-    ,{
+    {// adim 에 넣어야함
         path: 'userList',
         name: 'userList',
         component: UserListview
 
     },
+  
+    
 
     // 장효은
     
