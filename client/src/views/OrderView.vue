@@ -232,7 +232,7 @@ table ul li button:hover{background:#eee;}
             let result = await axios.get('/api/books/BK240228001') // + no
             .catch(err => console.log(err));
             console.log(result);
-            this.bookInfo = result.data[0];
+            this.bookInfo = result.data;
         },
         async getUserRankInfo(){
             let result = await axios.get('/api/userranks/1') // + no
@@ -272,6 +272,71 @@ table ul li button:hover{background:#eee;}
               alert(msg);
             }
           });
+          // 1) 유효성 체크
+          if(!this.validation()) return; // 논리부정연산자 -> 원래값을 반대로 부정
+
+          // 2) ajax
+          // 2-1) 실제 보낼 데이터 선별
+          let data = this.getSendData();
+
+          // 2-2) axios를 이용해서 ajax 실행 // 비동기로 진행
+          // /api/users
+          axios
+          .post('/api/users', data) // data는 반드시 배열 아니면 객체여야 함 -> axios는 default가 JSON으로 되어있음
+          .then(result => {
+              // 3) 결과처리
+              console.log(result);
+              let user_no = result.data.insertId; // insertId는 AUTO_INCREMENT가 사용됐다는 가정하에 쓰임
+              if(user_no == 0) {
+                  alert(`등록되지 않았습니다\n 메세지를 확인해주세요\n${result.data.message}`);
+              }else {
+                  alert(`정상적으로 등록되었습니다.`);
+                  this.userInfo.user_no = user_no;
+                  this.$router.push({ path : '/'});
+              }
+          })
+          .catch(err => console.log(err));
+        },
+        validation() {
+            if(this.userInfo.user_id == ""){
+                alert('아이디가 입력되지 않았습니다.');
+                return false;
+            }    
+
+            if(this.userInfo.user_pwd == ""){
+                alert('비밀번호가 입력되지 않았습니다.');
+                return false;
+            }
+
+            if(this.userInfo.user_name == ""){
+                alert('이름이 입력되지 않았습니다.');
+                return false;
+            }
+
+            return true;
+        },
+        getSendData() {
+            let obj = this.userInfo;
+            let delData = ["user_no"];
+            let newObj = {};
+            let isTargeted = null;    
+            for( let field in obj){ 
+                isTargeted = false;
+                for(let target of delData){
+                    if(field == target) {
+                        isTargeted = true;
+                        break;
+                    }            
+                }
+                if(!isTargeted){
+                    newObj[field] = obj[field];
+                }
+            }
+
+            let sendData = {
+                "param" : newObj
+            }
+            return sendData;
         }
     }
   }
