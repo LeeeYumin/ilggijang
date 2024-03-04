@@ -1,3 +1,5 @@
+
+import { turn } from 'core-js/core/array';
 <template>
     <div>
         <div>
@@ -16,7 +18,6 @@
         </div>
     </div>
 </template>
-
 
 <style scoped>
 div {

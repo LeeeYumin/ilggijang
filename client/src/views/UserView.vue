@@ -65,9 +65,11 @@ export default {
         this.$store.commit('setId', uid);
         this.$store.commit('setUserNo', userNo);
         alert('로그인 되었습니다.');
+
         console.log(this.$store.state.isLogin);
         console.log(this.$store.state.id);
         console.log(this.$store.state.userNo);
+
         this.$router.push({path : '/main'});
       }
     },

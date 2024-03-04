@@ -1,6 +1,6 @@
 <template>
 <div class="container mt-5">
-    <h3 class="mb-4 title">장바구니 ({{ count}})</h3>
+    <h3 class="mb-4 title">장바구니 ({{ count }})</h3>
     <div class="content">
     <div class="left">
         <div>
@@ -76,7 +76,7 @@
         <p>결제 예정 금액</p>
         <span><i>{{ totalBookPrice }}</i>원</span>
         </div>
-        <button class="btn btn-primary btn_order" @click="getImPort()">주문하기 ({{count}})</button>
+        <button class="btn btn-primary btn_order" @click="getImPort()">주문하기 ({{ count }})</button>
     </div>
     </div> 
 </div>
@@ -141,31 +141,35 @@ import axios from 'axios';
 
 export default {
     data() {
-    return {
-        bookInfo : {
-            book_img : '',
-            book_name : '',
-            title : '',
-            book_price : ''
-            }
+        return {
+            bookInfo : {
+                book_img : '',
+                book_name : '',
+                title : '',
+                book_price : ''
+            },
+            cartList : []
         }
     },
     computed : {
-    totalBookPrice() {
-        let result = 0;
-        result = + this.bookInfo.book_price;
-        return result;
-    },
-    makeComma() {
-        let total = this.totalBookPrice;
-        // toString() 숫자 -> 문자열
-        // replace(정규표현식, "대체문자열")
-        // 정규표현식 \B(63개 문자에 일치하는 경계), {n}(n개) \d(숫자) g(전역검색)
-        // x(?=y) -> "x" 뒤에 "y"가 오는 경우에만 "x"와 일치
-        // x(?!y) -> "x" 뒤에 "y"가 없는 경우에만 "x"와 일치
-        
-        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");       
-    }
+        count() {
+            return this.cartList.length;
+        },
+        totalBookPrice() {
+            let result = 0;
+            result = + this.bookInfo.book_price;
+            return result;
+        },
+        makeComma() {
+            let total = this.totalBookPrice;
+            // toString() 숫자 -> 문자열
+            // replace(정규표현식, "대체문자열")
+            // 정규표현식 \B(63개 문자에 일치하는 경계), {n}(n개) \d(숫자) g(전역검색)
+            // x(?=y) -> "x" 뒤에 "y"가 오는 경우에만 "x"와 일치
+            // x(?!y) -> "x" 뒤에 "y"가 없는 경우에만 "x"와 일치
+            
+            return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");       
+        }
     },
     created(){
         // let searchNo = this.$route.query.userNo;
@@ -176,7 +180,7 @@ export default {
             let result = await axios.get('/api/books/BK240228001') // + no
             .catch(err => console.log(err));
             console.log(result);
-            this.bookInfo = result.data[0];
+            this.bookInfo = result.data;
         }
     }
 }

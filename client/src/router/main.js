@@ -6,8 +6,10 @@ import OrderView from '../views/OrderView.vue';
 import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
 import MenuBookListView from '../views/MenuBookListView.vue';
+import BookSearchListView from '../views/BookSearchListView.vue';
 
 import UserListview from '../views/UserListview.vue';
+import OrderCompleteView from '../views/OrderCompleteView.vue';
 
 
 
@@ -34,11 +36,21 @@ export default {
         name: 'book',
         component: BookInfoView // 책 검색 후 도서 상세화면
     },
+    {
+        path: 'bookSearch',
+        name: 'bookSearch',
+        component: BookSearchListView // 검색하고 해당 도서 검색 결과 목록
+    },
     // 신수지
     {
         path: 'order',
         name: 'order',
         component: OrderView
+    },
+    {
+        path: 'complete',
+        name: 'complete',
+        component: OrderCompleteView
 
     },
     {
@@ -59,7 +71,9 @@ export default {
         component: MenuBookListView
     },
     // 도승민
-    {// adim 에 넣어야함
+
+    {// admin 에 넣어야함
+
         path: 'userList',
         name: 'userList',
         component: UserListview
@@ -69,6 +83,6 @@ export default {
     
 
     // 장효은
-    
+
     ]
 }
