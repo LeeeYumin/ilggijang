@@ -1,6 +1,14 @@
 import CommonMainView from '../views/CommonMainView.vue';
 import MainView from '../views/MainView.vue';
 import GuideView from '../views/GuideView.vue';
+import BookInfoView from '../views/BookInfoView.vue';
+import OrderView from '../views/OrderView.vue';
+import CartView from '../views/CartView.vue';
+import MainBookListView from '../views/MainBookListView.vue';
+import MenuBookListView from '../views/MenuBookListView.vue';
+
+import UserListview from '../views/UserListview.vue';
+
 
 
 export default {
@@ -18,7 +26,46 @@ export default {
         path: 'guide',
         name: 'guide',
         component: GuideView
-    }
+    },
+    // 이유민
+    {
+        path: 'book',
+        name: 'book',
+        component: BookInfoView // 책 검색 후 도서 상세화면
+    },
+    // 신수지
+    {
+        path: 'order',
+        name: 'order',
+        component: OrderView
+
+    },
+    {
+        path: 'cart',
+        name: 'cart',
+        component: CartView
+
+    },
+    // 박지웅
+    {
+        path: 'mainBookList',
+        name: 'mainBookList',
+        component: MainBookListView
+    },
+    {
+        path: 'menuBookList',
+        name: 'menuBookList',
+        component: MenuBookListView
+    },
+    // 도승민
+    ,{
+        path: 'userList',
+        name: 'userList',
+        component: UserListview
+
+    },
+
+    // 장효은
+    
     ]
 }
-    

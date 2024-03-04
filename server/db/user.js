@@ -1,3 +1,4 @@
+//회원리스트
 const userList = 
 `SELECT 
     user_no ,
@@ -18,10 +19,12 @@ const userList =
     user_rank_no
 FROM user`;
 
+//회원가입
 const userJoin =
 `INSERT INTO user 
  SET ?`;
 
+ //회원상세정보
 const userInfo = 
 `select 
     id
@@ -34,25 +37,18 @@ const userInfo =
     ,login_type_code
     ,age_code 
 FROM user
-WHERE user_no = ? `;
+WHERE id = ? `;
 
-userLogin = 
-`SELECT 
-        user_no
-        ,name
-        ,birth_date
-        ,addr,detail_addr
-        ,mail,phone
-        ,age_code
-        ,gender_code
-        ,join_date
-        ,login_type_code
-FROM user
-WHERE id = ? AND pw_no = ?`;
+//회원정보 수정
+const userUpdate = 
+`UPDATE user
+SET ?
+WHERE user_no = ?`;
 
 module.exports = {
     userList,
     userJoin,
     userInfo,
-    userLogin
+    userUpdate
+   
   }
