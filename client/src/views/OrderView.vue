@@ -45,7 +45,7 @@
               </tr>
             </tbody>
           </table>
-          
+
           <table class="table">
             <colgroup>
               <col span="1" style="width:20%;">
@@ -116,7 +116,7 @@
         </div>
         <button class="btn btn-primary btn_order" @click="getImPort()">결제하기</button>
       </div>
-    </div> 
+    </div>
   </div>
 </template>
 
@@ -226,8 +226,8 @@ table ul li button:hover{background:#eee;}
         // 정규표현식 \B(63개 문자에 일치하는 경계), {n}(n개) \d(숫자) g(전역검색)
         // x(?=y) -> "x" 뒤에 "y"가 오는 경우에만 "x"와 일치
         // x(?!y) -> "x" 뒤에 "y"가 없는 경우에만 "x"와 일치
-        
-        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");       
+
+        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
     },
     created(){
@@ -239,7 +239,9 @@ table ul li button:hover{background:#eee;}
     },
     methods : {
       async getUserInfo(){
-          let result = await axios.get('/api/user/user1') // + no
+          let userId = this.$store.state.id;
+          console.log('회원번호', userId);
+          let result = await axios.get('/api/user/' + userId) // + no
                         .catch(err => console.log(err));
           console.log(result);
           this.userInfo = result.data;
@@ -269,7 +271,7 @@ table ul li button:hover{background:#eee;}
         },
       getImPort() {
         let IMP = window.IMP; // 생략가능
-        
+
         IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
         IMP.request_pay({
           // pg: "inicis",
@@ -284,7 +286,7 @@ table ul li button:hover{background:#eee;}
           buyer_addr : this.userInfo.addr,
           buyer_postcode : '123-456',
           m_redirect_url : 'http://localhost:8081/complete',
-        }, 
+        },
         function (rsp) { // callback
             console.log(rsp);
           if (rsp.success) {
@@ -336,7 +338,7 @@ table ul li button:hover{background:#eee;}
         });
       },
       // 아임포트-토큰발급 + 결제단건 메소드
-      
+
       // insertInfo() {
       //   // 2) ajax
       //   // 2-1) 실제 보낼 데이터 선별
@@ -364,14 +366,14 @@ table ul li button:hover{background:#eee;}
         let obj = this.orderInfo;
         let delData = ["orders_no"];
         let newObj = {};
-        let isTargeted = null;    
-        for( let field in obj){ 
+        let isTargeted = null;
+        for( let field in obj){
             isTargeted = false;
             for(let target of delData){
                 if(field == target) {
                     isTargeted = true;
                     break;
-                }            
+                }
             }
             if(!isTargeted){
                 newObj[field] = obj[field];

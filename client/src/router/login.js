@@ -1,10 +1,11 @@
 import UserView from '../views/UserView.vue';
 
 
-const loginRouter = [{
+const loginRouter = [
+{
   path: '/login',
   component: UserView
-},
+}
 
 ]
 

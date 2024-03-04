@@ -19,11 +19,11 @@ const store = createStore({
      setUserNo(state, data){
         state.userNo = data;
      }
-   
+
     },
     plugins : [
         persistedstate({
-            paths : ['main']
+            paths : ['main', 'order']
         })
     ]
 });
