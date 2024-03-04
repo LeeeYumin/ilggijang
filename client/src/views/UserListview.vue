@@ -19,7 +19,6 @@
             <tbody>
                     <tr v-for="(user, idx) in userList" v-bind:key="idx"
           v-on:click="goToUserInfo(user.id)">
-          <!-- 템플릿 문법 사용시 -->
           <td>{{ user.user_no }}</td>
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>

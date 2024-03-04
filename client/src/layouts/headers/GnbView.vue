@@ -1,10 +1,13 @@
+
+import { turn } from 'core-js/core/array';
 <template>
     <div>
         <div>
             <b-button-group>
+                <router-link to="/login">
             <b-button variant="outline-primary">
                 로그인
-            </b-button>
+            </b-button></router-link>
             <b-button variant="outline-primary">
                 회원가입
             </b-button>

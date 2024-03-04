@@ -9,7 +9,7 @@ bookRouter.get("/", async (request, response) => {
 });
 
 // 도서 검색결과
-bookRouter.get("/:pname", async (request, response) => {
+bookRouter.get("/search/:pname", async (request, response) => {
   let data = request.params.pname;
   console.log(data);
   let result = await db.connection('books', 'bookSearchList', data);

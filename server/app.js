@@ -54,8 +54,7 @@ app.use('/cart', cartRouter); // 장바구니
 app.use('/save', saveRouter); // 찜
 
 // 이유민
-app.use('/books', bookRouter); //책 검색결과 상세 (get방식)
-// 책 검색결과 목록 (get방식)
+app.use('/books', bookRouter); //책 검색결과 목록, 상세 (get방식)
 
 app.listen(3000, () => {
   console.log("Server started. port 3000.");
@@ -70,10 +69,46 @@ app.get("/", async (request, response) => {
   response.send('get방식 전송');
 });
 
+// 서버측 아임포트-토큰발급 + 결제단건 메소드
+app.post("/complete", async (req, res) => {
+  try {
+    // req의 body에서 imp_uid추출
+    // const { imp_uid } = req.body.param;
+    const data = req.body.param;
+    console.log(data)
 
+    // 액세스 토큰(access token) 발급 받기
+    const getToken = await axios({
+      url: "https://api.iamport.kr/users/getToken",
+      method: "post", // POST method
+      headers: { "Content-Type": "application/json" }, 
+      data: {
+        imp_key: "3584236023273102", // REST API 키
+        imp_secret: "8du8ISTcXenIgm3sySvTzfhMMHFCVMf8McZ34XLagnYYzaLnGvVKxY1K1kLrtDlVerJ2kOel4lOUzPEQ" // REST API Secret
+      }
+    });
+    console.log(getToken);
+    // const { access_token } = getToken.data; // 인증 토큰
+    // // imp_uid로 포트원 서버에서 결제 정보 조회
+    // const getPaymentData = await axios({
+    //   // imp_uid 전달
+    //   url: `https://api.iamport.kr/payments/${imp_uid}`, 
+    //   // GET method
+    //   method: "get", 
+    //   // 인증 토큰 Authorization header에 추가
+    //   headers: { "Authorization": access_token } 
+    // });
+    
+    // const paymentData = getPaymentData.data; // 조회한 결제 정보
+    // console.log(paymentData);
+  } 
+  catch (e) {
+    res.status(400).send(e);
+  }
+}); 
 
 // let sessionSetting = session({
-//   secret : 'Have$A!@Nice_day', // 하드코딩 X 
+//   secret : 'Have$A!@Nice_day', // 하드코딩 X
 //   resave : false,
 //   saveUninitialized : true,
 //   cookie : {
