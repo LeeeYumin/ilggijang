@@ -55,7 +55,6 @@ export default {
 
       if(uid == this.id && upw == this.pw_no) {
         alert('로그인 되었습니다.');
-        // store 저장하기 => 공부해서 저장하기
         this.$router.push({path : '/main'});
       }
     },
