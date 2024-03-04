@@ -10,6 +10,7 @@ const notice = require('./notice.js'); //공지사랑 리스트 sql문
 const reviews = require('./reviews.js'); // 리뷰 sql문
 const qnas = require('./qnas.js'); // QnA sql문
 const qrys = require('./qrys.js'); // 회원, 배송&주문, 기타 문의 sql문
+const bookLists = require('./bookLists.js'); // 도서 목록 sql문
 
 // 신수지
 const orders = require('./orders.js'); // 주문 sql문
@@ -34,6 +35,7 @@ module.exports = {
     , reviews
     , qnas
     , qrys
+    , bookLists
 
     // 신수지
     , orders
