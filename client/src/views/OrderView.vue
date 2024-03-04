@@ -99,20 +99,20 @@
         <ul>
           <li>
             <p>상품금액</p>
-            <span><i class="point">{{ totalBookPrice }}</i>원</span>
+            <span><i class="point" v-bind="orderInfo.total_orders_amount">{{ totalBookPrice }}</i>원</span>
           </li>
           <li>
             <p>배송비</p>
-            <span>0원</span>
+            <span v-bind="orderInfo.dlv_amount">0원</span>
           </li>
           <li>
             <p>상품할인</p>
-            <span><i class="color">- {{ totalDcPrice }}</i>원</span>
+            <span><i class="color" v-bind="orderInfo.dc_amount">- {{ totalDcPrice }}</i>원</span>
           </li>
         </ul>
         <div class="total">
           <p>최종 결제 금액</p>
-          <span><i>{{ totalPrice }}</i>원</span>
+          <span><i v-bind="orderInfo.total_orders_amount">{{ totalPrice }}</i>원</span>
         </div>
         <button class="btn btn-primary btn_order" @click="getImPort()">결제하기</button>
       </div>
@@ -185,6 +185,21 @@ table ul li button:hover{background:#eee;}
           { value: 'd', text: 'BC카드'}
         ],
         show: false,
+        orderInfo: {
+          recipient : this.name,
+          dlv_addr : this.addr,
+          orders_date : this.date,
+          orders_state : 's1',
+          total_orders_amount : '',
+          dc_amount : '',
+          total_pay_amount : '',
+          phone : this.phone,
+          dlv_amount : '',
+          orders_no : this.orders_no,
+          user_no : this.usr_no,
+          pay_type : null,
+          pay_result : null
+        }
       }
     },
     computed : {
@@ -220,59 +235,154 @@ table ul li button:hover{background:#eee;}
         this.getUserInfo();
         this.getBookInfo();
         this.getUserRankInfo();
+        this.orderInfo.orders_date = this.getToday();
     },
     methods : {
-        async getUserInfo(){
-            let result = await axios.get('/api/user/50') // + no
-                          .catch(err => console.log(err));
-            console.log(result);
-            this.userInfo = result.data;
-        },
-        async getBookInfo(){
-            let result = await axios.get('/api/books/BK240228001') // + no
-            .catch(err => console.log(err));
-            console.log(result);
-            this.bookInfo = result.data[0];
-        },
-        async getUserRankInfo(){
-            let result = await axios.get('/api/userranks/1') // + no
-            .catch(err => console.log(err));
+      async getUserInfo(){
+          let result = await axios.get('/api/user/user1') // + no
+                        .catch(err => console.log(err));
+          console.log(result);
+          this.userInfo = result.data;
+      },
+      async getBookInfo(){
+          let result = await axios.get('/api/books/BK240228001') // + no
+          .catch(err => console.log(err));
+          console.log(result);
+          this.bookInfo = result.data;
+      },
+      async getUserRankInfo(){
+          let result = await axios.get('/api/userranks/1') // + no
+          .catch(err => console.log(err));
 
-            console.log(result);
-            this.userRankInfo = result.data;
+          console.log(result);
+          this.userRankInfo = result.data;
+      },
+      goToPayment() {
+        this.show = !this.show;
+      },
+      getToday() {
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+            let day = ('0' + date.getDate()).slice(-2);
+            return `${year}-${month}-${day}`;
         },
-        goToPayment() {
-          this.show = !this.show;
-        },
-        getImPort() {
-          let IMP = window.IMP; // 생략가능
-          IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
-          IMP.request_pay({
-            // pg: "inicis",
-            pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
-            pay_method: "card",
-            merchant_uid : 'merchant_'+new Date().getTime(),
-            name : '결제테스트',
-            amount : this.totalPrice,
-            buyer_email : this.userInfo.mail,
-            buyer_name : this.userInfo.name,
-            buyer_tel : this.userInfo.phone,
-            buyer_addr : this.userInfo.addr,
-            buyer_postcode : '123-456',
-            m_redirect_url : '/main',
-          }, function (rsp) { // callback
+      getImPort() {
+        let IMP = window.IMP; // 생략가능
+        
+        IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
+        IMP.request_pay({
+          // pg: "inicis",
+          pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
+          pay_method: "card",
+          merchant_uid : 'merchant_'+new Date().getTime(), // 도서 id
+          name : '결제테스트',
+          amount : this.totalPrice,
+          buyer_email : this.userInfo.mail,
+          buyer_name : this.userInfo.name,
+          buyer_tel : this.userInfo.phone,
+          buyer_addr : this.userInfo.addr,
+          buyer_postcode : '123-456',
+          m_redirect_url : 'http://localhost:8081/complete',
+        }, 
+        function (rsp) { // callback
             console.log(rsp);
-            if (rsp.success) {
+          if (rsp.success) {
+            console.log(rsp.imp_uid);
+            //DB로 저장될 정보 전송
+            // axios로 HTTP 요청
+            axios({
+              url: "api/complete",
+              method: "post",
+              headers: { "Content-Type": "application/json" },
+              data: {
+                imp_uid: rsp.imp_uid
+              }
+            }).then((data) => {
+              // 서버 결제 API 성공시 로직
+              console.log(data);
               let msg = '결제가 완료되었습니다.';
               alert(msg);
-                // this.$router.push({ path : '/main' });
-            } else {
-              let msg = '결제에 실패하였습니다.';
-              // msg += '에러내용 : ' + rsp.error_msg;
-              alert(msg);
+            })
+            console.log(rsp);
+          } else {
+            console.log(rsp);
+            let msg = '결제에 실패하였습니다.';
+            alert(msg);
+          }
+          // 아임포트 결제단건조회 axios (DB-주문테이블에 저장될 값)
+          // 메소드 호출
+          // if (rsp.success) {
+          //   axios({
+          //       url: "api/complete",
+          //       method: "post",
+          //       headers: { "Content-Type": "application/json" },
+          //       data: {
+          //         imp_uid: rsp.imp_uid
+          //       }
+          //     }).then((data) => {
+          //       console.log(data);
+          //     })
+          //     console.log(rsp);
+          //   //this.insertInfo();
+          //   let msg = '결제가 완료되었습니다.';
+          //   alert(msg);
+          //     // this.$router.push({ path : '/main' });
+          // } else {
+          //   let msg = '결제에 실패하였습니다.';
+          //   // msg += '에러내용 : ' + rsp.error_msg;
+          //   alert(msg);
+          // }
+        });
+      },
+      // 아임포트-토큰발급 + 결제단건 메소드
+      
+      // insertInfo() {
+      //   // 2) ajax
+      //   // 2-1) 실제 보낼 데이터 선별
+      //   let data = this.getSendData();
+
+      //   // 2-2) axios를 이용해서 ajax 실행 // 비동기로 진행
+      //   // /api/users
+      //   axios
+      //   .post('/api/orders', data) // data는 반드시 배열 아니면 객체여야 함 -> axios는 default가 JSON으로 되어있음
+      //   .then(rsp => {
+      //       // 3) 결과처리
+      //       console.log(rsp);
+      //       let orders_no = rsp.data.insertId; // insertId는 AUTO_INCREMENT가 사용됐다는 가정하에 쓰임
+      //       if(orders_no == 0) {
+      //           alert(`등록되지 않았습니다\n 메세지를 확인해주세요\n${rsp.data.message}`);
+      //       }else {
+      //           alert(`정상적으로 등록되었습니다.`);
+      //           this.orderInfo.orders_no = orders_no;
+      //           this.$router.push({ path : '/'});
+      //       }
+      //   })
+      //   .catch(err => console.log(err));
+      // },
+      getSendData() {
+        let obj = this.orderInfo;
+        let delData = ["orders_no"];
+        let newObj = {};
+        let isTargeted = null;    
+        for( let field in obj){ 
+            isTargeted = false;
+            for(let target of delData){
+                if(field == target) {
+                    isTargeted = true;
+                    break;
+                }            
             }
-          });
+            if(!isTargeted){
+                newObj[field] = obj[field];
+            }
         }
+
+        let sendData = {
+            "param" : newObj
+        }
+        return sendData;
+      }
     }
   }
 </script>
