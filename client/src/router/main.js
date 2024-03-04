@@ -58,7 +58,7 @@ export default {
         component: MenuBookListView
     },
     // 도승민
-    ,{
+    {
         path: 'userList',
         name: 'userList',
         component: UserListview
