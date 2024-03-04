@@ -61,7 +61,8 @@ export default {
     }
   },
   created(){
-    this.getBookInfo()
+    this.getBookInfo(),
+    this.getDate()
   },
   methods : {
     async getBookInfo(){
@@ -70,22 +71,29 @@ export default {
       console.log(result);
       this.bookInfo = result.data;
     }
-  } //,
-  // filters: { // 가격 3단위 구분... + 출간일도 시간은 안보이게 추가하기.
-  //   formatPrice(price) {
-  //     if (price > 999) {
-  //       var priceAry = price.split("").reverse();
-  //       var idx = 1;
-  //       while (priceAry.length > idx + 3) {
-  //         priceAry.splice(idx + 3, 0, ',');
-  //         idx += 4;
-  //       }
-  //       return priceAry.reverse.join('') + '원'
-  //     } else {
-  //       return price + '원'
-  //     }
-  //   }
-  // }
+  },
+  getDate() {
+    let dateValue = bookInfo.publ_date;
+    let year = dateValue.getFullYear();
+    let month = ('0' + (dateValue.getMonth() + 1)).slice(-2);
+    let day = ('0' + dateValue.getDate()).slice(-2);
+    return `${year}.${month}.${day}`;
+  },
+  filters: { // 가격 3단위 구분
+    formatPrice(price) {
+      if (price > 999) {
+        var priceAry = price.split("").reverse();
+        var idx = 1;
+        while (priceAry.length > idx + 3) {
+          priceAry.splice(idx + 3, 0, ',');
+          idx += 4;
+        }
+        return priceAry.reverse.join('') + '원'
+      } else {
+        return price + '원'
+      }
+    }
+  }
 }
 </script>
 
