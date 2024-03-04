@@ -2,20 +2,17 @@
 
 // 장바구니목록
 const cartList = 
-`SELECT cart_no
-        , quantity
-        , user_no
-        , prdt_no
-FROM cart`;
-
-// 장바구니조회
-const cartInfo = 
-`SELECT cart_no
-        , quantity
-        , user_no
-        , prdt_no
-        FROM cart
-WHERE cart_no = ?`;
+`SELECT c.cart_no
+        , p.book_name
+        , p.book_img
+        , p.title
+        , p.book_price
+        , c.quantity
+        , c.user_no
+        , p.prdt_no
+FROM cart c JOIN prdt p
+            ON c.prdt_no = p.prdt_no
+WHERE c.user_no = ?`;
 
 // 장바구니등록
 const cartInsert = 
@@ -35,7 +32,6 @@ WHERE cart_no = ?`;
 
 module.exports = {
     cartList,
-    cartInfo,
     cartInsert,
     cartUpdate,
     cartDelete

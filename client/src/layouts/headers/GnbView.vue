@@ -14,10 +14,12 @@ import { turn } from 'core-js/core/array';
                         회원가입
                     </b-button>
                 </router-link>
-
-                <b-button variant="outline-primary">
-                    장바구니
-                </b-button>
+                
+                <router-link to="/cart">
+                    <b-button variant="outline-primary">
+                        장바구니
+                    </b-button>
+                </router-link>   
             </b-button-group>
         </div>
     </div>
