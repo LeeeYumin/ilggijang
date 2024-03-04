@@ -52,8 +52,7 @@ app.use('/cart', cartRouter); // 장바구니
 app.use('/save', saveRouter); // 찜
 
 // 이유민
-app.use('/books', bookRouter); //책 검색결과 상세 (get방식)
-// 책 검색결과 목록 (get방식)
+app.use('/books', bookRouter); //책 검색결과 목록, 상세 (get방식)
 
 app.listen(3000, () => {
   console.log("Server started. port 3000.");
@@ -107,7 +106,7 @@ app.post("/complete", async (req, res) => {
 }); 
 
 // let sessionSetting = session({
-//   secret : 'Have$A!@Nice_day', // 하드코딩 X 
+//   secret : 'Have$A!@Nice_day', // 하드코딩 X
 //   resave : false,
 //   saveUninitialized : true,
 //   cookie : {
