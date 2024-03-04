@@ -7,6 +7,9 @@ import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
 import MenuBookListView from '../views/MenuBookListView.vue';
 
+import UserListview from '../views/UserListview.vue';
+import OrderCompleteView from '../views/OrderCompleteView.vue';
+
 
 
 export default {
@@ -36,6 +39,11 @@ export default {
         path: 'order',
         name: 'order',
         component: OrderView
+    },
+    {
+        path: 'complete',
+        name: 'complete',
+        component: OrderCompleteView
 
     },
     {
@@ -56,6 +64,12 @@ export default {
         component: MenuBookListView
     },
     // 도승민
+    {
+        path: 'userList',
+        name: 'userList',
+        component: UserListview
+
+    },
 
     // 장효은
     

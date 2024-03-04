@@ -37,7 +37,7 @@ const userInfo =
     ,login_type_code
     ,age_code 
 FROM user
-WHERE user_no = ? `;
+WHERE id = ? `;
 
 //회원정보 수정
 const userUpdate = 
