@@ -1,6 +1,7 @@
 import AdminMainView from '../views/AdminMainView.vue';
 import DashBoardView from '../views/DashBoardView.vue';
 import UserListview from '../views/UserListview.vue';
+import BookInsertView from '../views/BookInsertView.vue';
 
 export default {
     path: '/admin',
@@ -13,10 +14,17 @@ export default {
           name: 'dashboard',
           component: DashBoardView
       },
-      {// admin 에 넣어야함
+      // 도승민
+      {
         path: 'userList',
         name: 'userList',
         component: UserListview
+      },
+      // 장효은
+      {
+        path: 'bookInsert',
+        name: 'bookInsert',
+        component: BookInsertView
       }
     ]
   }
