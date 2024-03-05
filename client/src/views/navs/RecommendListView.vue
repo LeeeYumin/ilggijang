@@ -2,13 +2,13 @@
   <div class="container">
     <h3>추천도서</h3>
     <div class="">
-      <b-tabs content-class="mt-3">
-        <b-tab title="10대" @click="getBookList(currentPage, codes[0])" active></b-tab>
-        <b-tab title="20대" @click="getBookList(currentPage, codes[1])"></b-tab>
-        <b-tab title="30대" @click="getBookList(currentPage, codes[2])"></b-tab>
-        <b-tab title="40대" @click="getBookList(currentPage, codes[3])"></b-tab>
-        <b-tab title="50대" @click="getBookList(currentPage, codes[4])"></b-tab>
-        <b-tab title="60대이상" @click="getBookList(currentPage, codes[5])"></b-tab>
+      <b-tabs content-class="mt-3" @click.capture="changeState()">
+        <b-tab title="10대" :buttonId="1" active></b-tab>
+        <b-tab title="20대"></b-tab>
+        <b-tab title="30대"></b-tab>
+        <b-tab title="40대"></b-tab>
+        <b-tab title="50대"></b-tab>
+        <b-tab title="60대이상"></b-tab>
       </b-tabs>
         <div class="row">
           <div class="col-3 booklist" :key="i" v-for="i in currentList">
@@ -49,9 +49,6 @@ export default { // listId: 목록 식별, startCnt: 페이지마다 표시할 �
     this.makePage(this.currentCode);
     this.getBookList(this.currentPage, this.currentCode);
   },
-  computed:{
-    
-  },
   methods: {
     async getBookList(pgno, c) {
       this.currentCode = c;
@@ -64,10 +61,10 @@ export default { // listId: 목록 식별, startCnt: 페이지마다 표시할 �
         .catch(err => console.log(err));
       this.pages = result.data[0].pcnt;
     },
-    // changeCode(code){
-    //   console.log(code);
-    //   this.currentCode = code;
-    // },
+    changeState(e){
+      console.log(e);
+      // this.currentCode = e.target.$props;
+    },
   }
 }
 </script>
