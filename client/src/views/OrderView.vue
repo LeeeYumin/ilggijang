@@ -82,10 +82,21 @@
             <tbody>
               <tr>
                 <td>
-                  <ul>
-                    <li><button @click="goToPayment">일반결제</button></li>
-                    <li><button @click="goToNpay()" id="naverPayBtn" value="네이버페이 결제 버튼">Npay</button></li>
-                  </ul>
+                  <div class="pay_list">
+                    <label class="pay">
+                      <input type="radio" v-bind:value="radioValue1" v-model="selectPay" name="payMethod" @change="payMethod" @click="payCnt++" />
+                      <span v-bind:class="{'active' : isActive}">카드결제</span>
+                    </label>
+                    <label class="pay">
+                      <input type="radio" v-bind:value="radioValue2" v-model="selectPay" name="payMethod" @change="payMethod" @click="payCnt++" />
+                      <span v-bind:class="{'active' : isActive}">카카오페이</span>
+                    </label>
+                    <label class="pay">
+                      <input type="radio" v-bind:value="radioValue3" v-model="selectPay" name="payMethod" @change="payMethod" @click="payCnt++" />
+                      <span v-bind:class="{'active' : isActive}">토스페이</span>
+                    </label>
+                  </div>
+                  <span>선택한 결제수단 : {{ selectedPay }}</span>
                   <div v-if="show" class="option_box">
                     <b-form-select v-model="selected" :options="options"></b-form-select>
                   </div>
@@ -148,11 +159,12 @@ fieldset{margin-bottom:0 !important;}
 .color{color:#0d6efd; font-weight:700;}
 i.point{font-style:normal; font-size:16px;}
 .border_bottom{border-bottom:1px solid #ddd;}
-table ul{list-style:none; margin-top:20px; padding-left:0;}
-table ul li{display:inline-block; margin-left:10px;}
-table ul li:first-child{margin-left:0;}
-table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #ddd; background:#fff; border-radius:5px;}
-table ul li button:hover{background:#eee;}
+.pay_list{margin-top:5px;}
+.pay_list label{display:inline-block; position:relative; margin-right:10px;}
+.pay_list input[type="radio"]{display:block; position:absolute; z-index:-1;}
+.pay_list span:hover{background:#eee;}
+.active{background:#eee !important;}
+.pay_list label span{display:block; width:120px; height:50px; line-height:50px; font-weight:700; text-align:center; border:1px solid #ddd; background:#fff; border-radius:5px; cursor:pointer;}
 .option_box{padding:20px; background:#eee; border-radius:10px; box-sizing:border-box;}
 .addr_info p{margin-bottom:10px;}
 </style>
@@ -177,24 +189,23 @@ table ul li button:hover{background:#eee;}
           user_rank : '',
           dc_rate : ''
         },
-        selected: null,
-        options: [
-          { value: null, text: '카드를 선택해주세요' },
-          { value: 'a', text: '신한카드' },
-          { value: 'b', text: 'KB국민카드' },
-          { value: 'd', text: 'BC카드'}
-        ],
-        show: false,
+        isActive : true,
+        selectPay: '',
+        selectedPay : '',
+        selectedPayCode : '',
+        radioValue1: 'credit',
+        radioValue2: 'kakao',
+        radioValue3: 'toss',
         orderInfo: {
           recipient : this.name,
           dlv_addr : this.addr,
           orders_date : this.date,
           orders_state : 's1',
-          total_orders_amount : '',
-          dc_amount : '',
-          total_pay_amount : '',
+          total_orders_amount : 0,
+          dc_amount : 0,
+          total_pay_amount : 0,
           phone : this.phone,
-          dlv_amount : '',
+          dlv_amount : 0,
           orders_no : this.orders_no,
           user_no : this.usr_no,
           pay_type : null,
@@ -205,7 +216,7 @@ table ul li button:hover{background:#eee;}
     computed : {
       totalBookPrice() {
         let result = 0;
-        result = + this.bookInfo.book_price;
+        result += this.bookInfo.book_price;
         return result;
       },
       totalDcPrice() {
@@ -269,61 +280,61 @@ table ul li button:hover{background:#eee;}
             let day = ('0' + date.getDate()).slice(-2);
             return `${year}-${month}-${day}`;
         },
-      getImPort() {
-        let IMP = window.IMP; // 생략가능
+      // getImPort() {
+      //   let IMP = window.IMP; // 생략가능
 
-        IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
-        IMP.request_pay({
-          pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
-          // pg: "kakaopay.TC0ONETIME", // 카카오페이.상점아이디
-          // pg: "html5_inicis.INIpayTest", // KG이니시스.상점아이디
-          pay_method: "card",
-          merchant_uid : 'merchant_'+new Date().getTime(), // 도서 id
-          name : '결제테스트',
-          amount : this.totalPrice,
-          buyer_email : this.userInfo.mail,
-          buyer_name : this.userInfo.name,
-          buyer_tel : this.userInfo.phone,
-          buyer_addr : this.userInfo.addr,
-          buyer_postcode : '123-456',
-          m_redirect_url : 'http://localhost:8081/complete',
-        },
-        function (rsp) { // callback 
-            console.log(rsp);
-            console.log(rsp.imp_uid); // 
+      //   IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
+      //   IMP.request_pay({
+      //     pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
+      //     // pg: "kakaopay.TC0ONETIME", // 카카오페이.상점아이디
+      //     // pg: "html5_inicis.INIpayTest", // KG이니시스.상점아이디
+      //     pay_method: "card",
+      //     merchant_uid : 'merchant_'+new Date().getTime(), // 도서 id
+      //     name : '결제테스트',
+      //     amount : this.totalPrice,
+      //     buyer_email : this.userInfo.mail,
+      //     buyer_name : this.userInfo.name,
+      //     buyer_tel : this.userInfo.phone,
+      //     buyer_addr : this.userInfo.addr,
+      //     buyer_postcode : '123-456',
+      //     m_redirect_url : 'http://localhost:8081/complete',
+      //   },
+      //   function (rsp) { // callback 
+      //       console.log(rsp);
+      //       console.log(rsp.imp_uid); // 
           
-          if (rsp.imp_uid != '') {
-            console.log('결제성공');
-            //DB로 저장될 정보 전송
-            // axios로 HTTP 요청
+      //     if (rsp.imp_uid != '') {
+      //       console.log('결제성공');
+      //       //DB로 저장될 정보 전송
+      //       // axios로 HTTP 요청
 
-            axios({
-              url: "api/complete",
-              method: "post",
-              headers: { "Content-Type": "application/json" },
-              data: {
-                imp_uid: rsp.imp_uid
-              }
-            }).then((data) => {
-              // 서버 결제 API 성공시 로직
-              console.log(data.data);
-              if(data.data != 'failed') {
-                let msg = '결제가 완료되었습니다.';
-                alert(msg);
-              }
-              else {
-                let msg = '결제가 취소되었습니다.';
-                alert(msg);
-              }
-            })
-            console.log(rsp);
-          } else {
-            console.log(rsp);
-            let msg = '결제에 실패하였습니다.';
-            alert(msg);
-          }
-        });
-      },
+      //       axios({
+      //         url: "api/complete",
+      //         method: "post",
+      //         headers: { "Content-Type": "application/json" },
+      //         data: {
+      //           imp_uid: rsp.imp_uid
+      //         }
+      //       }).then((data) => {
+      //         // 서버 결제 API 성공시 로직
+      //         console.log(data.data);
+      //         if(data.data != 'failed') {
+      //           let msg = '결제가 완료되었습니다.';
+      //           alert(msg);
+      //         }
+      //         else {
+      //           let msg = '결제가 취소되었습니다.';
+      //           alert(msg);
+      //         }
+      //       })
+      //       console.log(rsp);
+      //     } else {
+      //       console.log(rsp);
+      //       let msg = '결제에 실패하였습니다.';
+      //       alert(msg);
+      //     }
+      //   });
+      // },
 
       // insertInfo() {
       //   // 2) ajax
@@ -370,6 +381,94 @@ table ul li button:hover{background:#eee;}
             "param" : newObj
         }
         return sendData;
+      },
+      payMethod: function () {
+        if (this.selectPay == 'credit') {
+          this.selectPay = 'nice_v2.nictest00m';
+          this.selectedPay = '카드 결제';
+          this.selectedPayCode = 'p1';
+        } else if (this.selectPay == 'kakao') {
+          this.selectPay = 'kakaopay.TC0ONETIME';
+          this.selectedPay = '카카오페이 결제';
+          this.selectedPayCode = 'p2';
+        } else {
+          this.selectPay = 'tosspay.tosstest';
+          this.selectedPay = '토스페이 결제';
+          this.selectedPayCode = 'p3';
+        }
+        console.log('function', this.selectPay);
+      },
+      async getImPort() {
+        let IMP = window.IMP; // 생략가능
+        IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
+        
+        if (this.payCnt != 0) {
+          IMP.request_pay(
+            {
+              pg: this.selectPay,
+              // pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
+              // pg: "kakaopay.TC0ONETIME", // 카카오페이.상점아이디
+              // pg: "html5_inicis.INIpayTest", // KG이니시스.상점아이디
+              pay_method: "card",
+              merchant_uid : 'merchant_'+new Date().getTime(), // 도서 id
+              name : '결제테스트',
+              amount : this.totalPrice,
+              buyer_email : this.userInfo.mail,
+              buyer_name : this.userInfo.name,
+              buyer_tel : this.userInfo.phone,
+              buyer_addr : this.userInfo.addr,
+              buyer_postcode : '123-456'
+            },
+            (rsp) => {
+              // callback
+              if (rsp.imp_uid != '') {
+                console.log('결제성공');
+                axios({
+                  url: "api/complete",
+                  method: "post",
+                  headers: { "Content-Type": "application/json" },
+                  data: {
+                    imp_uid: rsp.imp_uid
+                  }
+                }).then((result) => {
+                  // 서버 결제 API 성공시 로직
+                  console.log(result.data);
+                  if(result.data.status != 'failed') {
+                    //DB로 저장될 정보 전송
+                    // axios로 HTTP 요청
+                    axios.post('/api/orders', {
+                      param: {
+                        recipient : result.data.buyer_name,
+                        dlv_addr : result.data.buyer_addr,
+                        orders_date : '2024-03-05',
+                        orders_state : 's1',
+                        total_orders_amount : this.orderInfo.total_orders_amount,
+                        dc_amount : this.orderInfo.dc_amount,
+                        total_pay_amount : result.data.amount,
+                        phone : result.data.buyer_tel,
+                        dlv_amount : 3000,
+                        orders_no : 32,
+                        user_no : 2,
+                        pay_type : this.selectedPayCode,
+                        pay_result : result.data.status
+                      },
+                    })
+                    let msg = '결제가 완료되었습니다.';
+                    alert(msg);
+                  }
+                  else {
+                    let msg = '결제가 취소되었습니다.';
+                    alert(msg);
+                  }
+                })
+                console.log(rsp);
+            } else {
+              console.log(rsp);
+              let msg = '결제에 실패하였습니다.';
+              alert(msg);
+            }
+          });
+        }
       }
     }
   }

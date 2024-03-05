@@ -3,15 +3,9 @@ const cartRouter = express.Router();
 const db = require("../db.js");
 
 // 주문목록
-cartRouter.get("/", async (request, response) => {
-    let result = await db.connection('cart', 'cartList');
-    response.send(result);
-});
-
-// 단건조회
-cartRouter.get("/:cno", async (request, response) => {
-    let data = request.params.cno;
-    let result = (await db.connection('cart', 'cartInfo', data))[0];
+cartRouter.get("/:uno", async (request, response) => {
+    let data = request.params.uno;
+    let result = await db.connection('cart', 'cartList', data);
     response.send(result);
 });
 
