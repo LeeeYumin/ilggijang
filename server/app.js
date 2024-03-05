@@ -9,6 +9,7 @@ const axios = require('axios');
 
 // 장효은
 const userRankRouter = require('./router/userRankRouter.js'); // 회원등급 전체조회
+const fileRouter = require('./router/fileRouter.js'); // 파일 등록
 
 // 도승민
 const userRouter = require('./router/userRouter.js'); //회원 전체조회
@@ -38,6 +39,7 @@ app.use(express.urlencoded({extended : false})); // query
 
 // 장효은
 app.use('/userranks', userRankRouter); // 회원등급 전체조회 (get방식), http://localhost:3000/userrank
+app.use('/files', fileRouter); // 파일업로드
 
 // 도승민
 app.use('/user', userRouter); //회원 전체조회 (get방식), http://localhost:3000/userList
