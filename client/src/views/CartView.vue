@@ -25,7 +25,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr v-bind:key="idx" v-for="(list, idx) in cartList">
                     <td>
                         <div class="book_info">
                             <div class="check_box">
@@ -38,15 +38,15 @@
                                     >
                                 </b-form-checkbox>
                             </div>
-                            <span class="img">{{ bookInfo.book_img }}</span>
+                            <span class="img">{{ list.book_img }}</span>
                             <div class="txt">
-                                <p>{{ bookInfo.book_name }}</p>
-                                <span>{{ bookInfo.title }}</span>
+                                <p>{{ list.book_name }}</p>
+                                <span>{{ list.title }}</span>
                             </div>
                         </div>
                     </td>
                     <td class="tc">
-                        <p class="price"><i class="point">{{ bookInfo.book_price }}</i>원</p>
+                        <p class="price"><i class="point">{{ list.book_price }}</i>원</p>
                         <div class="btn_num">
                             <button><span><i>수량 빼기</i></span></button>
                             <input type="text" value="1">
@@ -142,12 +142,6 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            bookInfo : {
-                book_img : '',
-                book_name : '',
-                title : '',
-                book_price : ''
-            },
             cartList : []
         }
     },
@@ -157,7 +151,7 @@ export default {
         },
         totalBookPrice() {
             let result = 0;
-            result = + this.bookInfo.book_price;
+            result = + this.cartList.book_price;
             return result;
         },
         makeComma() {
@@ -173,14 +167,16 @@ export default {
     },
     created(){
         // let searchNo = this.$route.query.userNo;
-        this.getBookInfo();
+        this.getCartList();
     },
     methods : {
-        async getBookInfo(){
-            let result = await axios.get('/api/books/BK240228001') // + no
-            .catch(err => console.log(err));
-            console.log(result);
-            this.bookInfo = result.data;
+        async getCartList(){
+            let userNo = this.$store.state.userNo;  
+            console.log('회원번호', userNo);
+            let result = await axios.get(`/api/user/${userNo}`) 
+                                    .catch(err => console.log(err)); // catch -> 오류가 나지 않으면 실행이 안되고 
+            let list = result.data;
+            this.cartList = list;
         }
     }
 }
