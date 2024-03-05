@@ -1,5 +1,5 @@
 // 추천도서 목록 (연령대별 구매순)
-const ageLikeBookList =
+const recdBookList =
 `SELECT DISTINCT p.book_name
 		, p.book_img
         , p.title
@@ -21,7 +21,7 @@ ON (o.user_no = u.user_no)
 WHERE u.age_code = ?
 ORDER BY ordercnt, p.book_name DESC
 LIMIT ?, 8`; // 연령대 코드 필요, 페이지 값 필요
-const ageLikePageCnt =
+const recdPageCnt =
 `SELECT COUNT(DISTINCT p.prdt_no) AS pcnt
 FROM prdt p
 JOIN ordersdetail od
@@ -95,7 +95,7 @@ WHERE category_code = ?
 ORDER BY ordercnt, book_name DESC`; // 카테고리 코드 필요
 
 module.exports = {
-    ageLikeBookList, ageLikePageCnt
+    recdBookList, recdPageCnt
     , bestSellerBookList, bestSellerPageCnt
     , newPublBookList, newPublPageCnt
     , categoryBookList
