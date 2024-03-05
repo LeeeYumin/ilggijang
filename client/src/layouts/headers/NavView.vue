@@ -1,8 +1,10 @@
 <template>
     <div class="container">
         <!-- 메뉴 -->
-        <b-nav pills>
-            <b-nav-item active>추천도서</b-nav-item>
+        <b-nav pills class="py-3">
+            <router-link to="/mainBookList">
+                <b-nav-item active>추천도서</b-nav-item>
+            </router-link>
             <b-nav-item>베스트셀러</b-nav-item>
             <b-nav-item-dropdown id="my-nav-dropdown" text="분야별 추천도서" toggle-class="nav-link-custom" right>
                 <b-dropdown-item>시/소설</b-dropdown-item>

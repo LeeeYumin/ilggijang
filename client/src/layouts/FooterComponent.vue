@@ -3,7 +3,9 @@
     <div class="container">
       <div class="row">
         <div class="col-2">
-          <span><img src="#">로고이미지</span>
+          <router-link to="main">
+            <img src="@/assets/ilggijang_logo.png" style="width: 100px;">
+          </router-link>
         </div>
         <div class="col-8 mx-auto text-center mt-1">
           <p class="mb-3 text-secondary">

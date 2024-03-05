@@ -2,6 +2,7 @@ require("dotenv").config({ path: "./db/db.env" });
 const express = require("express");
 const app = express();
 // const session = require('express-session');
+const axios = require('axios');
 
 
 
@@ -72,10 +73,13 @@ app.get("/", async (request, response) => {
 // 서버측 아임포트-토큰발급 + 결제단건 메소드
 app.post("/complete", async (req, res) => {
   try {
-    // req의 body에서 imp_uid추출
-    // const { imp_uid } = req.body.param;
-    const data = req.body.param;
-    console.log(data)
+    const { imp_uid } = req.body; // req의 body에서 imp_uid추출
+    /** 클라이언트 쪽에서 들어와야 할 body
+    {
+      "imp_uid" : "imp_427462517173",
+      "merchant_uid" : "merchant_1709556462172"
+    }
+    */
 
     // 액세스 토큰(access token) 발급 받기
     const getToken = await axios({
@@ -87,20 +91,27 @@ app.post("/complete", async (req, res) => {
         imp_secret: "8du8ISTcXenIgm3sySvTzfhMMHFCVMf8McZ34XLagnYYzaLnGvVKxY1K1kLrtDlVerJ2kOel4lOUzPEQ" // REST API Secret
       }
     });
-    console.log(getToken);
-    // const { access_token } = getToken.data; // 인증 토큰
-    // // imp_uid로 포트원 서버에서 결제 정보 조회
-    // const getPaymentData = await axios({
-    //   // imp_uid 전달
-    //   url: `https://api.iamport.kr/payments/${imp_uid}`, 
-    //   // GET method
-    //   method: "get", 
-    //   // 인증 토큰 Authorization header에 추가
-    //   headers: { "Authorization": access_token } 
-    // });
+    // console.log(getToken);
+    console.log(getToken.data.response.access_token); // 인증 토큰
+
+    // 인증 토큰
+    let accessToken = getToken.data.response.access_token;
+
+    // imp_uid로 포트원 서버에서 결제 정보 조회
+    const getPaymentData = await axios({
+      // imp_uid 전달
+      url: `https://api.iamport.kr/payments/${imp_uid}`, 
+      // GET method
+      method: "get", 
+      // 인증 토큰 Authorization header에 추가
+      headers: { "Authorization": accessToken } 
+    });
     
-    // const paymentData = getPaymentData.data; // 조회한 결제 정보
-    // console.log(paymentData);
+    const paymentData = getPaymentData.data; // 조회한 결제 정보
+    console.log(paymentData);
+    console.log(paymentData.response.status);
+
+    res.send(paymentData.response.status); // 클라이언트쪽에 결제 상태값을 응답해줌
   } 
   catch (e) {
     res.status(400).send(e);

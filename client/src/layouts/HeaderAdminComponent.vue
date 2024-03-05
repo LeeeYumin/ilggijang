@@ -1,18 +1,19 @@
 <template>
-    <div class="header">
-        <div class="container">
-            <h1>관리자</h1>
-            <Gnb />
-        </div>
-    </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <span class="text-light p-3">관리자님, 오늘도 좋은 하루 되세요 :)</span>
+    <form class="form-inline">
+      <router-link to="/main">
+        <button class="btn btn-outline-success" type="button">메인사이트로 이동</button>
+      </router-link>
+      <button class="btn btn-outline-success" type="button">로그아웃</button>
+    </form>
+  </nav>
 </template>
 
 <script>
-import Gnb from '../layouts/headers/GnbView.vue';
 
 export default {
     components: {
-        Gnb
     }
 }
 

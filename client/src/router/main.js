@@ -7,8 +7,6 @@ import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
 import MenuBookListView from '../views/MenuBookListView.vue';
 import BookSearchListView from '../views/BookSearchListView.vue';
-
-import UserListview from '../views/UserListview.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
 
 
@@ -71,14 +69,6 @@ export default {
         component: MenuBookListView
     },
     // 도승민
-
-    {// admin 에 넣어야함
-
-        path: 'userList',
-        name: 'userList',
-        component: UserListview
-
-    },
   
     
 
