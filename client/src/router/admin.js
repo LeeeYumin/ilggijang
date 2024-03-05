@@ -26,6 +26,7 @@ export default {
         path: 'bookInsert',
         name: 'bookInsert',
         component: BookInsertView
+      },
       {// admin 에 넣어야함
         path: 'notice',
         name: 'notice',
