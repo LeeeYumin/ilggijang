@@ -1,17 +1,7 @@
 <template>
   <div class="books">
-    <h3>도서 목록</h3>
-    <div class="booklist" :key="i" v-for="i in 4">
-      <b-card :title="bookList[i - 1].book_name" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-        tag="article" style="max-width: 20rem;" class="mb-2">
-        <b-card-text>
-          <p>{{ this.bookList[i - 1].category_code }}</p>
-          <p>{{ this.bookList[i - 1].title }}</p>
-        </b-card-text>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-      </b-card>
-    </div>
-    <!-- <div class="booklist" :key="i" v-for="(book, i) in bookList">
+    <h3>오늘의 추천도서</h3>
+    <div class="booklist" :key="i" v-for="(book, i) in bookList">
       <b-card :title="book.book_name" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
         tag="article" style="max-width: 20rem;" class="mb-2">
         <b-card-text>
@@ -20,32 +10,8 @@
         </b-card-text>
         <b-button href="#" variant="primary">Go somewhere</b-button>
       </b-card>
-    </div> -->
-  </div>
-  <div class="books">
-    <div class="booklist" :key="i" v-for="i in 4">
-      <b-card :title="bookList[i + 3].book_name" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-        tag="article" style="max-width: 20rem;" class="mb-2">
-        <b-card-text>
-          <p>{{ this.bookList[i + 3].category_code }}</p>
-          <p>{{ this.bookList[i + 3].title }}</p>
-        </b-card-text>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-      </b-card>
     </div>
   </div>
-  <!-- <div class="books">
-    <div class="booklist" :key="i" v-for="(book2, i) in bookList2">
-      <b-card :title="book2.book_name" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-        tag="article" style="max-width: 20rem;" class="mb-2">
-        <b-card-text>
-          <p>{{ book2.category_code }}</p>
-          <p>{{ book2.title }}</p>
-        </b-card-text>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
-      </b-card>
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -56,7 +22,6 @@ export default {
   data() {
     return {
       bookList: []
-      // , bookList2: []
     }
   },
   created() {
@@ -70,18 +35,13 @@ export default {
       let result = await axios.get('/api/books')
         .catch(err => console.log(err));
 
-      this.bookList = result.data;
+      this.makeBookList(result.data);
+    },
+    makeBookList(json) {
+      for (let i = 0; i < 8; i++) {
+        this.bookList[i] = json[i];
+      }
     }
-    // makeBookList(json) {
-    //   for (let i = 0; i < 8; i++) {
-    //     // if(i < 4){
-    //     this.bookList[i] = json[i];
-    //     // }
-    //     // else{
-    //     //   this.bookList2[i] = json[i];
-    //     // }
-    //   }
-    // }
   }
 }
 </script>

@@ -28,16 +28,18 @@ const userJoin =
 const userInfo = 
 `select 
     id
+    ,user_no
     ,pw_no
     ,name
     ,birth_date
     ,addr
     ,detail_addr
-    ,mail,phone
+    ,mail
+    ,phone
     ,login_type_code
     ,age_code 
 FROM user
-WHERE user_no = ? `;
+WHERE id = ? `;
 
 //회원정보 수정
 const userUpdate = 

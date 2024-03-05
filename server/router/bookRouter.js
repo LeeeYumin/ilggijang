@@ -8,15 +8,17 @@ bookRouter.get("/", async (request, response) => {
   response.send(result);
 });
 
-// 도서 검색결과
-bookRouter.get("/:pname", async (request, response) => {
+// 도서 검색결과 http://localhost:8081/bookSearch
+bookRouter.get("/search/:pname", async (request, response) => {
   let data = request.params.pname;
-  console.log(data);
+  data = '%'+data+'%';
+  console.log("========"+data);
   let result = await db.connection('books', 'bookSearchList', data);
+                        //sql.js 의 books. books.js 의 bookSearchList.
   response.send(result);
 });
 
-// 상품 상세조회
+// 상품 상세조회 http://localhost:8081/book
 bookRouter.get("/:pno", async (request, response) => { //:prdt_no 에서 수정
   let data = request.params.pno;
   let result = (await db.connection('books', 'bookDetailInfo', data))[0];
@@ -43,7 +45,6 @@ bookRouter.delete("/:pno", async (request, response) => {
   let result = await db.connection('books', 'bookDelete', data);
   response.send(result);
 });
-
 
 // 함수
 

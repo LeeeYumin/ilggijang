@@ -4,12 +4,13 @@ import admin from './admin.js';
 import login from './login.js';
 
 
+
 const routes = [
   main,
   admin
   // 도승민
-  , login
-
+  , ...login
+  
   // 신수지
 
   // 이유민
@@ -17,7 +18,7 @@ const routes = [
   // 박지웅
 
   // 장효은
-  
+
 ]
 
 
