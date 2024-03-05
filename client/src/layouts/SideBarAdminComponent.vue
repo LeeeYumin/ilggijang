@@ -7,7 +7,9 @@
       <b-list-group-item href="#">상품관리</b-list-group-item>
     </router-link>
     <b-list-group-item href="#">판매관리</b-list-group-item>
-    <b-list-group-item href="#">공지사항</b-list-group-item>
+    <router-link to="notice">
+    <b-list-group-item href="#" >공지사항</b-list-group-item>
+  </router-link>
     <b-list-group-item href="#">문의관리</b-list-group-item>
     <b-list-group-item href="#">이벤트</b-list-group-item>
     <b-list-group-item href="#">FAQ</b-list-group-item>

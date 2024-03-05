@@ -11,6 +11,7 @@ module.exports = defineConfig({
         ws: false, // 웹소켓 막기
         pathRewrite: { '^/api' : '/' }// Path 덮어쓰기
       }
+      
     }
   }
 })

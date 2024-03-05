@@ -8,6 +8,8 @@ import MainBookListView from '../views/MainBookListView.vue';
 import MenuBookListView from '../views/MenuBookListView.vue';
 import BookSearchListView from '../views/BookSearchListView.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
+import UserJoinView from '../views/UserJoinView.vue';
+import UserInfoView from '../views/UserInfoView.vue';
 
 
 
@@ -69,7 +71,17 @@ export default {
         component: MenuBookListView
     },
     // 도승민
-  
+    {
+        path: 'userjoin',
+        component: UserJoinView
+      },
+      {
+        path: '/userInfo',
+        component: UserInfoView
+      }
+   
+
+    
     
 
     // 장효은

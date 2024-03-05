@@ -24,15 +24,16 @@
 
 
 
+
 <script>
 import axios from 'axios';
 import Footer from '../layouts/FooterComponent.vue';
-// import NaverLogin from '../components/NaverLogin.vue';
+import NaverLogin from '../components/NaverLogin.vue';
 
 export default {
   components: {
   Footer
-  // ,NaverLogin
+  ,NaverLogin
   },
   data() {
     return {
@@ -82,13 +83,13 @@ export default {
         return
       }
     },
-    async join(){
-      this.validation();
+     join(){
+      this.$router.push({path : '/userjoin'});
     }
-    // ,
-    // naverLogin(){
-    //   this.$router.push({path : '/naverLogin'});
-    // }
+    ,
+    naverLogin(){
+      this.$router.push({path : '/NaverLogin'});
+    }
   },
 
 }
