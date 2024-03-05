@@ -19,7 +19,7 @@ const db = require('../db.js');
 
 //회원조회
 userRouter.get("/", async (request, response) =>{
-    result = await db.connection('user','userList');
+    let result = await db.connection('user','userList');
     response.send(result);
 });
 //회원가입

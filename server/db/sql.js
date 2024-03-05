@@ -1,6 +1,7 @@
 
 // 장효은
 const userranks = require('./userranks.js'); // 회원등급 sql문
+const file = require('./file.js'); // 회원등급 sql문
 
 // 도승민
 const user = require('./user.js'); // 회원 리스트 sql문
@@ -25,6 +26,7 @@ const books = require('./books.js'); // 상품 sql문
 module.exports = {
     // 장효은
     userranks
+    , file
 
     // 도승민
     , user
