@@ -29,7 +29,7 @@ module.exports = {
     // 도승민
     , user
     ,notice
-    
+
 
     // 박지웅
     , reviews
@@ -43,5 +43,5 @@ module.exports = {
     , save
 
     // 이유민
-    ,books
+    , books
 }

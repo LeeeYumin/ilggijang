@@ -1,64 +1,76 @@
 <template>
   <div class="container">
-    <h4> '{{  }}' 에 대한 검색 결과</h4>
+    <h4> '{{ book_name }}' 에 대한 검색 결과</h4>
     <div class="row">
       <div class="result">
-          <div class="selected">
-            <div class="left">상품설명
-              <p>책 이미지 {{ bookSearchList.book_img }} </p>
-              <ul class="prdt_list">
-                <li class="prdt_item">
-                  <p>{{ bookSearchList.book_name }}</p>
-                  <p>{{ bookSearchList.title }}</p>
-                  <p>{{ bookSearchList.publ_date }}</p>
-                  <p>{{ bookSearchList.book_price }}</p>
-                </li>
-              </ul>
-            </div>
+        <div class="selected" :key="i" v-for= "(book, i) in bookSearchList">
+          <div class="left">책표지
+            <img src="{{ book.book_img }}" alt="cover">
+          </div>
+          <div>
+            <ul class="prdt_list">
+              <li class="prdt_item">
+                <p> 도서명 : {{ book.book_name }}</p>
+                <p> 저자 : {{ book.title }}</p>
+                <p> 출간일 : {{ book.publ_date }}</p>
+                <p> 가격 : {{ formatPrice(book.book_price) }}</p>
+              </li>
+            </ul>
+          </div>
 
-            <div class="right">
-              <button type="button" class="btn btn-dark">장바구니</button>
-              <button type="button" class="btn btn-dark">찜</button>
-            </div>
-        </div>
-          <div class="selected">
-            <div class="left">상품설명
-              <p>책 이미지  {{ bookSearchList.book_img }} </p>
-              <ul class="prdt_list">
-                <li class="prdt_item">
-                  <p>{{ bookSearchList.book_name }}</p>
-                  <p>{{ bookSearchList.title }}</p>
-                  <p>{{ bookSearchList.publ_date }}</p>
-                  <p>{{ bookSearchList.book_price }}</p>
-                </li>
-              </ul>
-            </div>
-
-            <div class="right">
-              <button type="button" class="btn btn-dark">장바구니</button>
-              <button type="button" class="btn btn-dark">찜</button>
-            </div>
-        </div>
+          <div class="right">
+            <button type="button" class="btn btn-dark">장바구니</button>
+            <button type="button" class="btn btn-dark">찜</button>
+          </div>
       </div>
+    </div>
+
     </div>
   </div>
 </template>
 
 <script>
-//import axios from 'axios';
+import axios from 'axios';
 
 export default {
+  name : "bookSearch",
+
   data() {
     return {
-      bookSearchList: {
-      book_img : '',
-      book_name : '',
-      title : '',
-      publ_date : null,
-      book_price : ''
+      bookSearchList: [ ], //결과를 담는 배열
+      book_name : history.state.text //검색어 수정 전 : this.$route.params.text
+    }
+  },
+  mounted (){
+    this.getBookSearchList()
+  },
+  methods : {
+    async getBookSearchList(){
+      let result = await axios.get('/api/books/search/'+ history.state.text)
+                              .catch(err => console.log(err));
+      console.log(result);
+      this.bookSearchList = result.data;
+    },
+    formatPrice(book_price) {
+      if (book_price > 999) {
+        let priceAry = String(book_price).split("").reverse(); //split 사용해서 앞에 String 으로 감싸주고 씀
+        let idx = 0;
+        while (priceAry.length > idx + 3) {
+          priceAry.splice(idx + 3, 0, ',');
+          idx += 4;
+        }
+        return priceAry.reverse().join('') + '원'  //reverse 함수임
+      } else {
+        return book_price + '원'
       }
     }
   }
+//   , watch 로 검색결과 화면에서 다른 책 검색할 수 있게 watch 사용...
+//   watch: {
+//     message : function(book_name){
+//       console.log(book_name);
+// }
+// }
 }
 </script>
 
@@ -80,7 +92,7 @@ h4{
 }
 .prdt_item {
   display: block;
-  margin: 0;
+  margin-left : 0;
   float : left;
 }
 
