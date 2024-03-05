@@ -23,19 +23,22 @@ userRouter.get("/", async (request, response) =>{
     response.send(result);
 });
 //회원가입
-userRouter.post("/",(request, response)=>{
+userRouter.post("/", async (request, response)=>{
     let data = request.body.param;
     console.log(data);
-    let result =  db.connection('user', 'userJoin',data).then(rlt => {console.log(rlt)}).catch(err=>{console.log(err)});
+    let result = await db.connection('user', 'userJoin', data).then(res=>{
+        console.log(res)
+    })
+    .catch(err => console.log(err));
     response.send(result);
 });
 
 //회원단건 조회
-// userRouter.get("/:user_no", async (request, response)=>{
-//     let data = request.params.user_no;
-//     let result = (await db.connection('user','userInfo', data))[0];
-//     response.send(result);
-// });
+userRouter.get("/:user_no", async (request, response)=>{
+    let data = request.params.user_no;
+    let result = (await db.connection('user','userInfo', data))[0];
+    response.send(result);
+});
 
 //회원단건 조회 : id 기준
 userRouter.get("/:uid", async (request, response)=>{

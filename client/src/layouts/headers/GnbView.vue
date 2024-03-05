@@ -10,9 +10,11 @@ import { turn } from 'core-js/core/array';
                   </b-button>
                 </router-link>
                 
+                <router-link to="/userjoin">
                   <b-button variant="outline-primary">
                     회원가입
                   </b-button>
+                  </router-link>
                 
                 <router-link to="/cart">
                     <b-button variant="outline-primary">
