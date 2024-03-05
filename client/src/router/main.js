@@ -5,7 +5,9 @@ import BookInfoView from '../views/BookInfoView.vue';
 import OrderView from '../views/OrderView.vue';
 import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
-import MenuBookListView from '../views/MenuBookListView.vue';
+import BestSellerListView from '../views/navs/BestSellerListView.vue';
+import RecommendListView from '../views/navs/RecommendListView.vue';
+import CategoryBookListView from '../views/navs/CategoryBookListView.vue';
 import BookSearchListView from '../views/BookSearchListView.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
 import UserJoinView from '../views/UserJoinView.vue';
@@ -66,9 +68,19 @@ export default {
         component: MainBookListView
     },
     {
-        path: 'menuBookList',
-        name: 'menuBookList',
-        component: MenuBookListView
+        path: 'bestSellerList',
+        name: 'bestSellerList',
+        component: BestSellerListView
+    },
+    {
+        path: 'recommendList',
+        name: 'recommendList',
+        component: RecommendListView
+    },
+    {
+        path: 'categoryBookList',
+        name: 'categoryBookList',
+        component: CategoryBookListView
     },
     // 도승민
     {
