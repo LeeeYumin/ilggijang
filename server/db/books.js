@@ -46,7 +46,6 @@ const bookDelete =
 WHERE prdt_no = ?`;
 
 // 도서 리스트 컴포넌트 (검색결과. SQL에서 확인 먼저 해주고 작성해주면 좋음.)
-// let query = "%" + q + "%";
 const bookSearchList =
 `SELECT book_img
       , book_name
@@ -54,7 +53,7 @@ const bookSearchList =
       , publ_date
       , book_price
 FROM prdt
-WHERE book_name LIKE ?`;
+WHERE book_name like ? `;
 
 // 도서 상세정보 컴포넌트 (상+하단)
 const bookDetailSearch =
