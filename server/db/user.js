@@ -34,7 +34,8 @@ const userInfo =
     ,birth_date
     ,addr
     ,detail_addr
-    ,mail,phone
+    ,mail
+    ,phone
     ,login_type_code
     ,age_code 
 FROM user

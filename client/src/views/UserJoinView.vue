@@ -1,4 +1,5 @@
 <template>
+    
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">회원가입</h1>
@@ -33,7 +34,7 @@
                     </div>
                     <div class="form-item col-lg-6">
                         <label class="bold">비밀번호<sup>*</sup></label>
-                        <input type="password" class="form-control" placeholder="비밀번호 입력" id="pw_no" v-model="userInfo.pw">
+                        <input type="password" class="form-control" placeholder="비밀번호 입력" id="pw_no" v-model="userInfo.pw_no">
                     </div>
                     <p class="form-label">- 8~16자, 영문 대/소문자, 숫자, 특수문자(~!@#$%^&*)만 사용 가능</p>
                     <div class="form-item col-lg-6 my-3">
@@ -86,8 +87,8 @@
                         </div>
                     </div>
                     <div class="form-item">
-                        <input type="text" class="form-control" placeholder="도로명주소" id="address" v-model="userInfo.addr" readonly>
-                        <input type="text" class="form-control my-3" placeholder="상세주소" id="address_detail" v-model="userInfo.detail_addr">
+                        <input type="text" class="form-control" placeholder="도로명주소" id="addr" v-model="userInfo.addr" readonly>
+                        <input type="text" class="form-control my-3" placeholder="상세주소" id="detail_addr" v-model="userInfo.detail_addr">
                     </div>
                     <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                         <button type="button" class="btn btn-primary2 border-secondary py-3 px-4 text-uppercase w-100" @click="userInsert()">가입신청</button>
@@ -117,14 +118,17 @@
   </template>
   
   <script>
-  import axios from 'axios';
-  import OpenPostcode from '../../components/OpenPostcode.vue';
+ 
+import OpenPostcode from '../components/OpenPostcode.vue';
+import axios from 'axios';
+
   
   export default {
-      name: 'SignUp',
+      name: 'userJoin',
       data() {
           return {
               userInfo : {
+                
                   id : '',
                   pw_no : '',
                   pw_no_confirm : '',
@@ -134,12 +138,12 @@
                   birth_date: null,
                   gender : '',
                   postcode : '',
-                  type : 'b01',
+                  type : '',
                   addr : '',
                   detail_addr : '',
-                  status : 'c01',
                   quit_date : null,
-                  token : ''
+                  token : '',
+                  user_rank_no : 1
               },
               userList : [],
               check : false
@@ -157,18 +161,20 @@
   
               let data = {
                   param : {
+                      user_no : this.userInfo.user_no,
                       id : this.userInfo.id,
                       pw_no : this.userInfo.pw_no,
                       name : this.userInfo.name,
                       phone : this.userInfo.phone,
                       mail : this.userInfo.mail,
                       birth_date: this.userInfo.birth_date,
-                      gender : this.userInfo.gender,
-                      postcode : this.userInfo.postcode,
-                      member_type : this.userInfo.type,
+                      gender_code : this.userInfo.gender_code,
+                    //   postcode : this.userInfo.postcode,
+                    //   member_type : this.userInfo.type,
                       addr : this.userInfo.addr,
                       detail_addr : this.userInfo.detail_addr,
-                      token : this.userInfo.token
+                      token : this.userInfo.token,
+                      user_rank_no : this.userInfo.user_rank_no
                   }
               };
               let result = await axios.post("/api/user", data)
@@ -177,7 +183,7 @@
               if(info > 0) {
                   alert('회원가입이 완료되었습니다.');
               }
-              this.$router.push({path : '/'})
+              this.$router.push({path : '/main'})
           },
           validation() {
               if(this.userInfo.id == '') {
@@ -220,7 +226,7 @@
                   alert('비밀번호는 8~16자, 영문 대/소문자, 숫자, 특수문자(~!@#$%^&*)만 사용 가능합니다.');
                   return false;
               }
-              if(!(this.userInfo.pw == this.userInfo.pw_no_confirm)) {
+              if(!(this.userInfo.pw_no == this.userInfo.pw_no_confirm)) {
                   alert('비밀번호가 일치하지 않습니다.');
                   return false;
               }
@@ -231,19 +237,19 @@
   
               return true;
           },
-          // openPostcode() {
-          //     new window.daum.Postcode({
-          //         oncomplete : (data) => {
-          //             this.userInfo.postcode = data.zonecode;
-          //             this.userInfo.address = data.roadAddress;
-          //         }
-          //     }).open();
-          // },
+          openPostcode() {
+              new window.daum.Postcode({
+                  oncomplete : (data) => {
+                      this.userInfo.postcode = data.zonecode;
+                      this.userInfo.addr = data.roadAddress;
+                  }
+              }).open();
+          },
           getCode(zonecode, roadAddress) {
               this.userInfo.postcode = zonecode;
-              this.userInfo.address = roadAddress;
+              this.userInfo.addr = roadAddress;
           },
-          async getMemberList() {
+          async getUserList() {
               let result = await axios.get('/api/user')
                               .catch(err => console.log(err));
               this.userList = result.data;
@@ -296,7 +302,6 @@
   
   .page-header {
       position: relative;
-      background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../../assets/img/snack.jpg);
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
