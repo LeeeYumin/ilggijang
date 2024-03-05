@@ -14,7 +14,7 @@
       </div>
       </div>
     <div>
-      <b-pagination v-model="currentPage" pills :total-rows="bookList.length" :per-Page="perPage" @click="makeBookList(bookList, currentPage)"></b-pagination>
+      <b-pagination v-model="currentPage" pills :total-rows="9" :per-Page="startCnt" @click="getBookList(currentPage)"></b-pagination>
     </div>
   </div>
 </template>
@@ -22,34 +22,37 @@
 <script>
 import axios from 'axios';
 
-export default {
+export default { // listNO: 목록 식별, startCnt: 페이지마다 표시할 상품 인덱스 시작 단위 
   data() {
     return {
-      bookList: [],
       currentList: [],
       currentPage: 1,
-      perPage: 8
+      listNo: 2, 
+      startCnt: 8,
+      pages: 0
     }
   },
-  async created() {
-    await this.getBookList();
-    this.makeBookList(this.bookList, this.currentPage);
+  created() {
+    this.getBookList(this.currentPage);
+    // this.makeList();
+    this.makePage();
   },
   computed: {
-    
-    
+    // makeList(){
+    //   let result = this.currentPage;
+    //   return result;
+    // }
   },
   methods: {
-    async getBookList() {
-      let result = await axios.get('/api/bookLists/2')
+    async getBookList(pgno) {
+      let result = await axios.get(`/api/bookLists/${((pgno-1)*this.startCnt)}/${this.listNo}`)
         .catch(err => console.log(err));
-
-      this.bookList = result.data;
+      this.currentList = result.data;
     },
-    makeBookList(json, pgno){
-      for (let i = (pgno-1)*this.perPage; i<(pgno*this.perPage); i++){
-        this.currentList[i] = json[i];
-      }
+    async makePage(){
+      let result = await axios.get(`/api/bookLists/bestpage`)
+        .catch(err => console.log(err));
+      this.pages = result.data.pcnt;
     }
   }
 }
