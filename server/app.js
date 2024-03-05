@@ -109,9 +109,9 @@ app.post("/complete", async (req, res) => {
     
     const paymentData = getPaymentData.data; // 조회한 결제 정보
     console.log(paymentData);
-    console.log(paymentData.response.status);
+    console.log(paymentData.response);
 
-    res.send(paymentData.response.status); // 클라이언트쪽에 결제 상태값을 응답해줌
+    res.send(paymentData.response); // 클라이언트쪽에 결제 상태값을 응답해줌
   } 
   catch (e) {
     res.status(400).send(e);

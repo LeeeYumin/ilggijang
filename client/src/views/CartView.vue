@@ -46,11 +46,12 @@
                         </div>
                     </td>
                     <td class="tc">
-                        <p class="price"><i class="point">{{ list.book_price }}</i>원</p>
+                        <p class="price"><i class="point" v-bind="list.book_price" :key="idx">{{ list.book_price }}</i>원</p> 
+                        <!-- 이전에 한거 perTotalPrice(idx, list.book_price) -->
                         <div class="btn_num">
-                            <button><span><i>수량 빼기</i></span></button>
-                            <input type="text" value="1">
-                            <button><span><i>수량 더하기</i></span></button>
+                            <button @click="quantityMin(idx)"><span><i>수량 빼기</i></span></button>
+                                <input type="text" v-model="this.cartList[idx].quantity">
+                            <button @click="quantityPlus(idx)"><span><i>수량 더하기</i></span></button>
                         </div>
                     </td>
                     <td class="tc">
@@ -142,7 +143,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            cartList : []
+            cartList : [],
         }
     },
     computed : {
@@ -151,7 +152,11 @@ export default {
         },
         totalBookPrice() {
             let result = 0;
-            result = + this.cartList.book_price;
+            console.log('여기요 여기', this.cartList);
+            for(let i = 0; i < this.cartList.length; i++){
+                result += this.cartList[i].book_price;
+                console.log('값', result);
+            }
             return result;
         },
         makeComma() {
@@ -163,20 +168,49 @@ export default {
             // x(?!y) -> "x" 뒤에 "y"가 없는 경우에만 "x"와 일치
             
             return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");       
+        },
+        changTotal() {
+            let result = 0;
+            // 여기다가 뭘 해야할까?
+            // 결과 = 책 금액 * 수량
+            for(let i = 0; i < this.cartList.length; i++) {
+                result = this.cartList[i].book_price * this.cartList[i].quantity;
+            }
+            return result;
         }
     },
     created(){
         // let searchNo = this.$route.query.userNo;
         this.getCartList();
+        // this.quantityPlus(i);
+        // this.quantityMin(i);
     },
     methods : {
         async getCartList(){
             let userNo = this.$store.state.userNo;  
             console.log('회원번호', userNo);
-            let result = await axios.get(`/api/user/${userNo}`) 
+            let result = await axios.get('/api/cart/' + userNo) 
                                     .catch(err => console.log(err)); // catch -> 오류가 나지 않으면 실행이 안되고 
             let list = result.data;
+            console.log(list);
             this.cartList = list;
+            console.log('데이터', this.cartList);
+        },
+        quantityPlus(i) {
+            this.cartList[i].quantity += 1;
+        },
+        quantityMin(i) {
+            if(this.cartList[i].quantity <= 1){
+                this.cartList[i].quantity = 1;
+                alert('1개 이하의 수량은 선택하실 수 없습니다.');
+            } else {
+                this.cartList[i].quantity -= 1;
+            }
+        },
+        perTotalPrice(i, price) {
+            let result = price * this.cartList[i].quantity;
+            console.log('결과값 : ',  result);
+            return result;
         }
     }
 }
