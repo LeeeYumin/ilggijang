@@ -3,8 +3,8 @@
 <template>
     <div>
         <div>
-          <b-button-group>
-           
+
+          <b-button-group>         
               <b-button  type="button" v-if="isLogin"  @click="logout" variant="outline-primary" >
                 로그아웃 
               </b-button>
@@ -12,8 +12,7 @@
                 <b-button variant="outline-primary">
                   로그인
                 </b-button>
-              </router-link>
-     
+              </router-link>   
                 <router-link to="/userjoin">
                   <b-button variant="outline-primary">
                     회원가입
@@ -64,6 +63,18 @@ export default{
 
 </script>
 
+
+<script>
+export default {
+  components: {
+  },
+  data() {
+    return {
+      isLogin: this.$store.state.isLogin
+    }
+  }
+}
+</script>
 
 <style scoped>
 div {
