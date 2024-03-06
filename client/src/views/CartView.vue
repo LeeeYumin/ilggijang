@@ -194,6 +194,7 @@ export default {
         }
     },
     created(){
+        // let bno = this.$route.query.bno;
         this.getCartList();
     },
     methods : {

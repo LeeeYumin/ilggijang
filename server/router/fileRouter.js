@@ -10,6 +10,10 @@ const storage = multer.diskStorage({ // 디스크 저장소 정의
     cb(null, 'files/'); // 콜백함수를 통해 전송된 파일 저장 디렉터리 설정
   },
   filename : function(req, file, cb) { // file : 넘어온 파일에 대한 정보가 있음
+    // 한글 파일명 깨짐 해결
+    file.originalname = Buffer.from(file.originalname, "latin1").toString(
+      "utf8"
+    );
     let rename = (new Date()).getMilliseconds() + file.originalname;
     cb(null, rename); // 밀리초+파일이름으로 파일이름 재설정(파일 이름 충돌방지)
   }
@@ -25,25 +29,35 @@ fileRouter.post('/photos', upload.array('fileList'), async (req, res) => {
   // ★ multer가 인식할 수 있도록 array('이름과') <input name="이름"> 이 같게 ★
   let imgUrlList = [];
   for(let file of req.files){
+  
     let imgUrl = `files${staticUrl}/${file.filename}`;
 
     // 문자열 잘라서 파일명만 담기
-    // let newfileName = file.filename.
+    let newfileName = file.filename.split('.');
+    //console.log('파일명과 확장자 분리하기', newfileName[0], newfileName[1]);
 
     let data = {
         file_path: `files${staticUrl}`, // 파일경로
-        file_name: file.filename, // 파일 이름
-        extension: ".jpg", // 확장자명
+        file_name: newfileName[0], // 파일 이름
+        extension: newfileName[1], // 확장자명
         seq: 1, // 배치순서
         table_type_code: "f2", // f1 공지사항, f2 리뷰, f3 1:1문의
         table_row_no: 1 // 테이블 행 번호
     }
     // DB insert 첨부파일 정보를 DB에 저장
-    let result = await db.connection('file', 'fileInsert', data);
+    await db.connection('file', 'fileInsert', data)
+    .then((result) => {
+      if(result.affectedRows > 0) {
+        res.send('OK');
+      }
+    }).catch ((err) => {
+      console.log(err);
+      res.send('err');
+    })
 
     imgUrlList.push(imgUrl);
+    console.log(imgUrlList);
   }
-  res.send(result); // 결과반환
 });
 
 
