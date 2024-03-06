@@ -3,24 +3,32 @@ const reviewRouter = express.Router();
 const db = require("../db.js");
 
 // 도서 상세 리뷰 목록
-reviewRouter.get("/list/:pno/:odno", async (request, response) => {
-    let data = [request.params.pno, request.params.odno];
+reviewRouter.get("/rvlist/:pno/:odno/:pgno", async (request, response) => {
+    let data = [request.params.pno, parseInt(request.params.odno), parseInt(request.params.pgno)];
     let result = await db.connection('reviews', 'detailReviewList', data);
     response.send(result);
 });
+reviewRouter.get("/rvlist/:pno", async (request, response) => {
+    let data = request.params.pno;
+    let result = await db.connection('reviews', 'detailReviewCnt', data);
+    response.send(result);
+});
+
 
 // 도서 상세 내 리뷰 목록
-reviewRouter.get("/mlist/:uno/:pno", async (request, response) => {
-    let data = [request.params.uno, request.params.pno];
+reviewRouter.get("/mrvlist/:uno/:pno", async (request, response) => {
+    let data = [parseInt(request.params.uno), request.params.pno];
     let result = await db.connection('reviews', 'detailMyReviewList', data);
     response.send(result);
 });
+
 
 // 관리자 리뷰 목록
 reviewRouter.get("/admin", async (request, response) => {
     let result = await db.connection('reviews', 'adminReviewList');
     response.send(result);
 });
+
 
 // 리뷰 등록
 reviewRouter.post("/", async (request, response) => {

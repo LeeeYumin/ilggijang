@@ -5,9 +5,11 @@ import BookInfoView from '../views/BookInfoView.vue';
 import OrderView from '../views/OrderView.vue';
 import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
-import BestSellerListView from '../views/navs/BestSellerListView.vue';
-import RecommendListView from '../views/navs/RecommendListMenuView.vue';
-import CategoryBookListView from '../views/navs/CategoryBookListView.vue';
+import BookListView from '../views/BookListView.vue';
+import RecommendBookMenuView from '../views/navs/RecommendBookMenuView.vue';
+import BestsellerBookMenuView from '../views/navs/BestsellerBookMenuView.vue';
+import CategoryBookMenuView from '../views/navs/CategoryBookMenuView.vue';
+import BookReviewView from '../views/BookReviewView.vue';
 import BookSearchListView from '../views/BookSearchListView.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
 import UserJoinView from '../views/UserJoinView.vue';
@@ -68,19 +70,29 @@ export default {
         component: MainBookListView
     },
     {
-        path: 'bestSellerList',
-        name: 'bestSellerList',
-        component: BestSellerListView
+        path: 'recommendBookMenu',
+        name: 'recommendBookMenu',
+        component: RecommendBookMenuView
     },
     {
-        path: 'recommendList',
-        name: 'recommendList',
-        component: RecommendListView
+        path: 'bestsellerBookMenu',
+        name: 'bestsellerBookMenu',
+        component: BestsellerBookMenuView
     },
     {
-        path: 'categoryBookList',
-        name: 'categoryBookList',
-        component: CategoryBookListView
+        path: 'categoryBookMenu',
+        name: 'categoryBookMenu',
+        component: CategoryBookMenuView
+    },
+    {
+        path: 'bookList',
+        name: 'bookList',
+        component: BookListView
+    },
+    {
+        path: 'bookReview',
+        name: 'bookReview',
+        component: BookReviewView
     },
     // 도승민
     {

@@ -24,7 +24,7 @@ bookListRouter.get("/bestlist/:pgno", async (request, response) => {
 });
 // 베스트셀러 목록 페이징 (3개월 내 판매량 순)
 bookListRouter.get("/bestlist", async (request, response) => {
-  let result = (await db.connection('bookLists', 'bestSellerPageCnt'))[0];
+  let result = await db.connection('bookLists', 'bestSellerPageCnt');
   response.send(result);
 }); 
 
