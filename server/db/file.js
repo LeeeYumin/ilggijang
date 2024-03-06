@@ -9,10 +9,18 @@ const fileList =
         , table_row_no
 FROM file`;
 
-// 첨부파일 저장
+// 첨부파일 등록
 const fileInsert = 
-`INSERT INTO file
-SET ?`;
+`INSERT INTO file 
+      (
+      file_path
+      , file_name
+      , extension
+      , seq
+      , table_type_code
+      , table_row_no
+      )
+VALUES ?`;
 
 
 

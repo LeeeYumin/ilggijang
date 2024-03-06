@@ -4,7 +4,13 @@ import { turn } from 'core-js/core/array';
     <div>
         <div>
             <b-button-group>
-                <router-link to="/login">
+                <router-link to="/login" v-if="isLogin">
+                  <b-button variant="outline-primary">
+                    로그아웃
+                  </b-button>
+                </router-link>
+
+                <router-link to="/login" v-else>
                   <b-button variant="outline-primary">
                     로그인
                   </b-button>
@@ -30,6 +36,18 @@ import { turn } from 'core-js/core/array';
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  components: {
+  },
+  data() {
+    return {
+      isLogin: this.$store.state.isLogin
+    }
+  }
+}
+</script>
 
 <style scoped>
 div {
