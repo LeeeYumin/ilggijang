@@ -9,7 +9,7 @@
 
 
 #### 팀원 소개
-| <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/077a9bee-b19b-4a47-a64d-be637bb0817c.png" width="100" height="100"> | <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/3f5925a9-3818-4ec2-8699-e62e2aeaa69d.png" width="100" height="100"> | 도승민 | 박지웅 | 이유민 |
+| <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/077a9bee-b19b-4a47-a64d-be637bb0817c.png" width="100" height="100"> | <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/3f5925a9-3818-4ec2-8699-e62e2aeaa69d.png" width="100" height="100"> | 도승민 | 박지웅 | <img src="https://github.com/LeeeYumin/ilggijang/edit/main/README.md](https://github.com/LeeeYumin/ilggijang/assets/152114081/15340e5e-ba1b-4eb3-acb3-82e07fd90cab.png" width="100" height="100">  |
 | 장효은 | 신수지 | 도승민 | 박지웅 | 이유민 |
 | ------ | ------ | ------ | ------ |------ |
 | 팀장 | 부팀장  | 개발환경구축  | DB  | 깃허브  |
