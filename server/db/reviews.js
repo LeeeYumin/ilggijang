@@ -2,7 +2,7 @@
 const detailReviewList = 
 `SELECT RPAD(SUBSTR(u.id, 1, 2), LENGTH(u.id), '*') AS writer
         , r.content
-        , r.write_date
+        , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
         , r.grade
         , (SELECT COUNT(*) FROM likes WHERE review_no = r.review_no) AS likes
 FROM review r 
@@ -11,13 +11,22 @@ ON (u.user_no = r.user_no)
 JOIN prdt p
 ON (p.prdt_no = r.prdt_no)
 WHERE p.prdt_no = ?
-ORDER BY ? DESC`; // 정렬번호(3~5), 상품 번호 필요
+ORDER BY ? DESC
+LIMIT ?, 10`; // 상품 번호, 정렬번호(3~5), 페이지 값 필요
+const detailReviewCnt =
+`SELECT count(*) AS pcnt
+FROM review r 
+JOIN user u
+ON (u.user_no = r.user_no)
+JOIN prdt p
+ON (p.prdt_no = r.prdt_no)
+WHERE p.prdt_no = ?`; // 상품 번호 필요
 
 // 도서 상세 내 리뷰 목록
 const detailMyReviewList =
 `SELECT u.id
         , r.content
-        , r.write_date
+        , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
         , r.grade
         , (SELECT COUNT(*) FROM likes WHERE review_no = r.review_no) AS likes
 FROM review r
@@ -26,12 +35,12 @@ ON (u.user_no = r.user_no)
 JOIN prdt p
 ON (p.prdt_no = r.prdt_no)
 WHERE u.user_no = ? AND p.prdt_no = ?
-ORDER BY r.write_date DESC`; // 최신 순 정렬. 회원 번호, 상품 번호 필요
+ORDER BY r.write_date DESC`; // 회원 번호, 상품 번호 필요. 최신 순 정렬
 
 // 관리자 리뷰 목록
 const adminReviewList =
 `SELECT r.review_no
-        , r.write_date
+        , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
         , p.prdt_no
         , p.book_name
         , u.id
@@ -62,7 +71,7 @@ const reviewDelete =
 WHERE review_no = ? `;
 
 module.exports = {
-    detailReviewList
+    detailReviewList, detailReviewCnt
     , detailMyReviewList
     , adminReviewList
     , reviewInsert
