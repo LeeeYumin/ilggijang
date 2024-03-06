@@ -180,7 +180,7 @@ export default {
         }
     },
     created(){
-        // let searchNo = this.$route.query.userNo;
+        // let bno = this.$route.query.bno;
         this.getCartList();
         // this.quantityPlus(i);
         // this.quantityMin(i);

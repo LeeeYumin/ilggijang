@@ -22,7 +22,7 @@
           <p>부가 설명 ex. 3시 이전 주문시 당일 출고</p>
         </div>
         <div class="btn">
-          <button type="button" class="btn btn-dark">장바구니</button>
+          <button type="button" class="btn btn-dark" @click="goCart(this.bno)">장바구니</button>
           <button type="button" class="btn btn-dark">찜</button>
           <button type="button" class="btn btn-dark">바로구매</button>
           <!--@click="" 추가할 것..?-->
@@ -74,11 +74,12 @@ export default {
         }
   },
   created(){
-    this.getBookInfo()
+    let bno = this.$route.query.bookNo; // 넘겨받은 책 번호
+    this.getBookInfo(bno)
   },
   methods : {
-    async getBookInfo(){
-      let result = await axios.get('/api/books/BK000001')
+    async getBookInfo(bno){
+      let result = await axios.get('/api/books/' + bno)
                               .catch(err => console.log(err));
       console.log(result);
       this.bookInfo = result.data;
@@ -95,6 +96,10 @@ export default {
       } else {
         return book_price + '원'
       }
+    },
+    goCart(bno) {
+      console.log('책정보', this.bookInfo);
+      this.$router.push({path : '/cart', query : { 'bookNo' : bno }});
     }
   }
 }

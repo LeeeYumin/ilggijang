@@ -6,9 +6,10 @@
         <label for="formFileMultiple" class="form-label">다중파일 업로드</label>
         <input class="form-control" type="file" name="fileList" 
                 multiple
-                @change="showThumbnail()"
+                
                 ref="images"> <!-- ★multer가 인식할 수 있도록 array('이름과') name="이름" 이 같게 -->
-        <button>멀티 파일 전송</button>
+                <!-- @change="showThumbnail()" -->
+        <button @click="sendFiles()">멀티 파일 전송</button>
       </form>
     </div>
     
@@ -32,9 +33,12 @@ import axios from 'axios';
       }
     },
     created() {
-      this.getFile();
+      //this.getFile();
     },
     methods: {
+      async sendFiles() { // 파일 전송하기
+        //await axios
+      },
       showThumbnail () {
         this.input.image = this.$refs.images.files
         console.log(this.input.image);
@@ -44,7 +48,7 @@ import axios from 'axios';
         axios.get('/api/files')
               .then(result => {
                 this.files = result.data[0];
-                let dbImgUrl = `${result.data[0].file_path}/${result.data[0].file_name}${result.data[0].extension}`;
+                let dbImgUrl = `${result.data[0].file_path}/${result.data[0].file_name}.${result.data[0].extension}`;
                 console.log(dbImgUrl);
                 let localhost = "http://localhost:3000/";
                 this.imgUrl = localhost + dbImgUrl;
