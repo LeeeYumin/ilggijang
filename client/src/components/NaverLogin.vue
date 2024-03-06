@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="naverIdLogin"></div>
-        <button type="button" @click="logout">로그아웃</button>
+        <button type="button" v-on:click="logout">로그아웃</button>
     </div>
 
 </template>
@@ -13,6 +13,7 @@ export default{
     data(){
         return{
             naverLogin: null,
+            
            
         };
     },
@@ -25,10 +26,11 @@ export default{
             loginButton: {
                 color: "green", type: 2, height: 45
             },
+           
         });
         //설정 정보를 초기화 하고 연동을 준비
         this.naverLogin.init();
-
+// this.$router.push({path : '/main'});
         this.naverLogin.getLoginStatus((status)=>{
             if(status){
                 console.log(status);
@@ -44,24 +46,34 @@ export default{
                     this.naverLogin.reprompt();
                     return;
                     
+                } else {
+                    this.$router.push({path : '/main'});
                 }
             }else{
                 console.log("callback 처리에 실패하였습니다.");
             }
+            
         });
+        
+        
     },
     methods: {
     logout() {
-      const accessToken = this.naverLogin.accessToken.accessToken;
+      const accessToken = this.naverLogin.accessToken.accessToken; //eslint-disable-line no-unused-vars
       const url = `/oauth2.0/token?grant_type=delete&client_id=PGCgN8zYBUdI154CV8eJ&client_secret=cphD3Ktu8q&access_token=${accessToken}&service_provider=NAVER`;
-      console.log("logout");
-      axios.get(url).then((res) => {        
+ 
+      axios.get(url).then((res) => {   
+        localStorage.removeItem('com.naver.nid.oauth.state_token');
+        localStorage.removeItem('com.naver.nid.access_token');
+        
+        this.$router.push({path : '/main'});
         console.log(res.data);
       });
  
-      //https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=WNRtIMhdk7k0zJMnMik0&client_secret=ugja7husCU&access_token=AAAAOOCeX4fAa_NxKPAmJW8C1UeLxGT3nM0wRV33irhyHyRua1JJrfrp0jZwfbOD0r502Id9mbhb0YiA9_NvCXGAwws&service_provider=NAVER
-    },
-  },
+      
+    }
+
+  }
 };
     
 

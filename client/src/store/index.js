@@ -7,18 +7,23 @@ const store = createStore({
             id: {},
             isLogin: {},
             userNo: {}
+            
         }
     },
     mutations : {
-     setId(state, data){
-        state.id = data;
-     },
-     setIsLogin(state, data){
-        state.isLogin = data;
-     },
-     setUserNo(state, data){
-        state.userNo = data;
-     }
+        setId(state, data){
+           state.id = data;
+        },
+        setIsLogin(state, data){
+           state.isLogin = data;
+        },
+        setUserNo(state, data){
+           state.userNo = data;
+        }
+   
+   
+   
+   
 
     },
     plugins : [
