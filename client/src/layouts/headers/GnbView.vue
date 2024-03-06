@@ -41,8 +41,6 @@ export default{
   data(){
     return{
       isLogin:this.$store.state.isLogin,
-     
-     
     }
   },
   methods:{
@@ -52,27 +50,10 @@ export default{
         this.$store.commit('setId', '');
         this.$store.commit('setUserNo', '');
       location.href="/main"
-     
-      
     }
     
   }
   
-}
-
-
-</script>
-
-
-<script>
-export default {
-  components: {
-  },
-  data() {
-    return {
-      isLogin: this.$store.state.isLogin
-    }
-  }
 }
 </script>
 

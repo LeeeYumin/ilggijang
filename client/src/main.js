@@ -1,3 +1,9 @@
+// Font Awesome
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -11,3 +17,7 @@ app.use(BootstrapVue3)
 app.use(router)
 app.use(store)
 app.mount('#app')
+
+// Font Awesome
+library.add(fas, far);
+app.component('font-awesome-icon', FontAwesomeIcon)
