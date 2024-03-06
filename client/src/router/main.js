@@ -1,6 +1,21 @@
 import CommonMainView from '../views/CommonMainView.vue';
 import MainView from '../views/MainView.vue';
 import GuideView from '../views/GuideView.vue';
+import BookInfoView from '../views/BookInfoView.vue';
+import OrderView from '../views/OrderView.vue';
+import CartView from '../views/CartView.vue';
+import MainBookListView from '../views/MainBookListView.vue';
+import BookListView from '../views/BookListView.vue';
+import RecommendBookMenuView from '../views/navs/RecommendBookMenuView.vue';
+import BestsellerBookMenuView from '../views/navs/BestsellerBookMenuView.vue';
+import CategoryBookMenuView from '../views/navs/CategoryBookMenuView.vue';
+import BookReviewView from '../views/BookReviewView.vue';
+import BookSearchListView from '../views/BookSearchListView.vue';
+import OrderCompleteView from '../views/OrderCompleteView.vue';
+import UserJoinView from '../views/UserJoinView.vue';
+import UserInfoView from '../views/UserInfoView.vue';
+
+
 
 
 export default {
@@ -18,7 +33,82 @@ export default {
         path: 'guide',
         name: 'guide',
         component: GuideView
-    }
+    },
+    // 이유민
+    {
+        path: 'book',
+        name: 'book',
+        component: BookInfoView // 책 검색 후 도서 상세화면
+    },
+    {
+        path: 'bookSearch',
+        name: 'bookSearch',
+        component: BookSearchListView // 검색하고 해당 도서 검색 결과 목록
+    },
+    // 신수지
+    {
+        path: 'order',
+        name: 'order',
+        component: OrderView
+    },
+    {
+        path: 'complete',
+        name: 'complete',
+        component: OrderCompleteView
+
+    },
+    {
+        path: 'cart',
+        name: 'cart',
+        component: CartView
+
+    },
+    // 박지웅
+    {
+        path: 'mainBookList',
+        name: 'mainBookList',
+        component: MainBookListView
+    },
+    {
+        path: 'recommendBookMenu',
+        name: 'recommendBookMenu',
+        component: RecommendBookMenuView
+    },
+    {
+        path: 'bestsellerBookMenu',
+        name: 'bestsellerBookMenu',
+        component: BestsellerBookMenuView
+    },
+    {
+        path: 'categoryBookMenu',
+        name: 'categoryBookMenu',
+        component: CategoryBookMenuView
+    },
+    {
+        path: 'bookList',
+        name: 'bookList',
+        component: BookListView
+    },
+    {
+        path: 'bookReview',
+        name: 'bookReview',
+        component: BookReviewView
+    },
+    // 도승민
+    {
+        path: 'userjoin',
+        component: UserJoinView
+      },
+      {
+        path: '/userInfo',
+        component: UserInfoView
+      }
+   
+
+    
+    
+
+    // 장효은
+
     ]
 }
-    
