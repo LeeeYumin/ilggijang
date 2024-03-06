@@ -28,8 +28,6 @@ const store = createStore({
     },
     plugins : [
         persistedstate()
-           
-        
     ]
 });
 

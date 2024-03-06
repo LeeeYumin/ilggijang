@@ -18,8 +18,7 @@
                                 id="checkbox-1"
                                 name="checkbox-1"
                                 value="accepted"
-                                unchecked-value="not_accepted"
-                                v-model="checkAll"
+                                v-model="selectAll"
                                 ><i class="point">전체선택</i>
                             </b-form-checkbox>
                         </div>
@@ -31,10 +30,9 @@
                             <div class="check_box">
                                 <b-form-checkbox
                                     id="checkbox-1"
-                                    v-model="checkBox"
                                     name="checkbox-1"
-                                    value="accepted"
-                                    unchecked-value="not_accepted"
+                                    :value="list.prdt_no"
+                                    v-model="selected"
                                     >
                                 </b-form-checkbox>
                             </div>
@@ -55,7 +53,7 @@
                         </div>
                     </td>
                     <td class="tc">
-                        <button class="btn btn-outline-primary mr-0">삭제</button>
+                        <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">삭제</button>
                     </td>
                 </tr>
             </tbody>
@@ -144,7 +142,7 @@ export default {
     data() {
         return {
             cartList : [],
-            checkBox : []
+            selected: []
         }
     },
     computed : {
@@ -153,17 +151,22 @@ export default {
         },
         totalBookPrice() {
             let result = 0;
-            for(let i = 0; i < this.cartList.length; i++){
-                result += this.cartList[i].total_price;
-                console.log('값', result);
+            if(this.selected.length > 0){
+                for(let i = 0; i < this.cartList.length; i++){
+                    if(this.selected.includes(this.cartList[i].prdt_no)){
+                        result += this.cartList[i].total_price;
+                        console.log('1', this.selectAll);
+                        console.log('2', this.selected);
+                        console.log('값', result);
+                    }
+                }
             }
             return result;
         },
         dlvAmount() {
             let result = 0;
             for(let i = 0; i < this.cartList.length; i++){
-                let total_price = this.cartList[i].quantity * this.cartList[i].book_price;
-                if(total_price < 15000) {
+                if(this.totalBookPrice < 15000) {
                     result = 3000;
                 }
             }
@@ -174,22 +177,25 @@ export default {
             result = this.totalBookPrice + this.dlvAmount;
             return result;
         },
-        checkAll : { 
+        selectAll : { 
+            //getter
             get: function(){
-                if((this.checkBox.length != this.cartList.length) || this.cartList.length == 0)
+                if((this.selected.length != this.cartList.length) || this.cartList.length == 0)
                     return false;
                 else
                     return true;							
             },
+            //setter
             set: function(e){
-                if(e){
+                console.log('e', e)
+                if(e){                    
                     for(let i = 0; i < this.cartList.length; i++){
-                        this.checkBox.push(this.cartList[i].checkBox);
-                    }	
+                        this.selected.push(this.cartList[i].prdt_no);
+                    }
                 }
                 else{
-                    this.checkBox = [];
-                }          
+                    this.selected = [];
+                }        
             }
         }
     },
@@ -211,6 +217,7 @@ export default {
         quantityPlus(i) {
             this.cartList[i].quantity += 1;
             this.cartList[i].total_price = this.cartList[i].quantity * this.cartList[i].book_price;
+            this.cartUpdate(i);
         },
         quantityMin(i) {
             if(this.cartList[i].quantity <= 1){
@@ -219,6 +226,7 @@ export default {
             } else {
                 this.cartList[i].quantity -= 1;
                 this.cartList[i].total_price = this.cartList[i].quantity * this.cartList[i].book_price;
+                this.cartUpdate(i)
             }
         },
         formatPrice(book_price) {
@@ -234,8 +242,67 @@ export default {
                 return book_price
             }
         },
-        allCheck() {
+        cartUpdate(i) {
+            // 실제 보낼 데이터 선별
+            let data = {
+                param : {
+                    quantity : this.cartList[i].quantity
+                }
+            };
 
+            // axios를 이용해 ajax
+            axios
+            .put(`/api/cart/${this.cartList[i].cart_no}`, data) // 누구걸 수정할건지 반드시 경로에 붙여야함
+            .then(result => {
+                // 3) 결과처리
+                let count = result.changedRows; // changedRows -> 수정에만 쓰임
+                if(count == 0) {
+                    alert(`수량이 수정되지 않았습니다}`);
+                }else {
+                    alert(`수량이 수정되었습니다.`);
+                    this.$router.push({ path : '/cart', query : { "cno" : this.cartList.cart_no }}); // push를 해서 component를 불러오는걸 재확인
+                }
+            })
+            .catch(err => console.log(err));
+        },
+        getSendData() {
+            let obj = this.cartList;
+            let delData = ["cart_no", "user_no", "prdt_no"]; // update되면 안되는 대상(body에 들어가면 안됨)
+            let newObj = {};
+            let isTargeted = null;    
+            for( let field in obj){ 
+                isTargeted = false;
+                for(let target of delData){
+                    if(field == target) {
+                        isTargeted = true;
+                        break;
+                    }            
+                }
+                if(!isTargeted){
+                    newObj[field] = obj[field];
+                }
+            }
+
+            let sendData = {
+                "param" : newObj
+            }
+            return sendData;
+        },
+        async cartDelete(cno){
+            // 서버에 해당 데이터를 삭제
+            axios
+            .delete(`/api/cart/${cno}`) 
+            .then(result => {
+                if(result.data.affectedRows != 0 && result.data.changedRows == 0) {
+                    alert(`정상적으로 삭제되었습니다.`);
+                    this.$router.push({ path : '/cart'});
+                    this.getCartList();
+                }else {
+                    alert(`삭제되지 않았습니다`);
+                }
+            })
+
+            console.log('cno', cno);
         }
     }
 }
