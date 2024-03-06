@@ -40,6 +40,7 @@
                             <div class="txt">
                                 <p>{{ list.book_name }}</p>
                                 <span>{{ list.title }}</span>
+                                <span><i class="s_point">{{ formatPrice(list.book_price) }}</i>원</span>
                             </div>
                         </div>
                     </td>
@@ -75,7 +76,7 @@
         <p>결제 예정 금액</p>
         <span><i>{{ formatPrice(totalPrice) }}</i>원</span>
         </div>
-        <button class="btn btn-primary btn_order" @click="getImPort()">주문하기 ({{ count }})</button>
+        <button class="btn btn-primary btn_order" @click="orderLink(cartList.user_id)">주문하기</button>
     </div>
     </div> 
 </div>
@@ -118,7 +119,7 @@ table ul li button:hover{background:#eee;}
 .book_info > *{display:inline-block; vertical-align:top;}
 .book_info .img{background:#ddd;}
 .book_info .txt{margin-left:10px;}
-.book_info .txt p{margin-bottom:10px; font-size:15px; font-weight:700;}
+.book_info .txt p{margin-bottom:5px; font-size:15px; font-weight:700;}
 .book_info .txt span{display:block; font-size:14px;}
 .btn_num{display:inline-block; position:relative; padding:2px 0; border:1px solid #ddd; border-radius:5px; box-sizing:border-box;}
 .btn_num > *{display:inline-block; vertical-align:middle;}
@@ -133,6 +134,7 @@ table ul li button:hover{background:#eee;}
 .price{margin-bottom:5px;}
 .mr-0{margin-right:0;}
 .all_box{padding:5px 0;}
+.s_point{display:inline-block; margin-top:10px; font-style:normal; font-size:15px; font-weight:700;}
 </style>
 
 <script>
@@ -207,7 +209,7 @@ export default {
         async getCartList(){
             let userNo = this.$store.state.userNo;  
             console.log('회원번호', userNo);
-            let result = await axios.get('/api/cart/' + userNo) 
+            let result = await axios.get('/api/cart/user/' + userNo) 
                                     .catch(err => console.log(err)); // catch -> 오류가 나지 않으면 실행이 안되고 
             let list = result.data;
             console.log(list);
@@ -257,7 +259,7 @@ export default {
                 // 3) 결과처리
                 let count = result.changedRows; // changedRows -> 수정에만 쓰임
                 if(count == 0) {
-                    alert(`수량이 수정되지 않았습니다}`);
+                    alert(`수량이 수정되지 않았습니다.`);
                 }else {
                     alert(`수량이 수정되었습니다.`);
                     this.$router.push({ path : '/cart', query : { "cno" : this.cartList.cart_no }}); // push를 해서 component를 불러오는걸 재확인
@@ -298,12 +300,18 @@ export default {
                     this.$router.push({ path : '/cart'});
                     this.getCartList();
                 }else {
-                    alert(`삭제되지 않았습니다`);
+                    alert(`삭제되지 않았습니다.`);
                 }
             })
-
             console.log('cno', cno);
-        }
+        },
+        orderLink(userId){
+            if(this.totalBookPrice <= 0){
+                alert('상품을 선택해주세요.');
+            } else {
+                this.$router.push({ path : '/order', query : { "id" : userId } });
+            }
+        },
     }
 }
 </script>

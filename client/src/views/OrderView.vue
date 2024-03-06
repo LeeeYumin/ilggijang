@@ -41,7 +41,7 @@
             <tbody>
               <tr class="border_bottom">
                 <th>주문상품</th>
-                <td>총 <span class="point">1</span>개</td>
+                <td>총 <span class="point">{{ count }}</span>개</td>
               </tr>
             </tbody>
           </table>
@@ -53,11 +53,11 @@
               <col span="2" style="width:15%;">
           </colgroup>
             <tbody>
-              <tr>
-                <td><img src="" alt="">{{ bookInfo.book_img }}</td>
-                <td>{{ bookInfo.book_name }}</td>
-                <td>1개</td>
-                <td>{{ bookInfo.book_price }}</td>
+              <tr v-bind:key="idx" v-for="(list, idx) in bookInfo">
+                <td><img src="" alt="">{{ list.book_img }}</td>
+                <td>{{ list.book_name }}</td>
+                <td>{{ list.quantity }}</td>
+                <td>{{ list.book_price }}</td>
               </tr>
             </tbody>
           </table>
@@ -214,6 +214,9 @@ i.point{font-style:normal; font-size:16px;}
       }
     },
     computed : {
+      count() {
+          return this.bookInfo.length;
+      },
       totalBookPrice() {
         let result = 0;
         result += this.bookInfo.book_price;
@@ -242,8 +245,8 @@ i.point{font-style:normal; font-size:16px;}
       }
     },
     created(){
-        // let searchNo = this.$route.query.userNo;
-        this.getUserInfo();
+        let orderId = this.$route.query.userId;
+        this.getUserInfo(orderId);
         this.getBookInfo();
         this.getUserRankInfo();
         this.orderInfo.orders_date = this.getToday();
