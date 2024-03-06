@@ -44,6 +44,13 @@ export default {
   mounted (){
     this.getBookSearchList()
   },
+  // 검색결과 화면에서 다른 책 검색할 수 있게 watch 사용함
+  watch: {
+    book_name(newValue, oldValue) {
+      if (newValue != oldValue){
+        this.bookSearchList;
+    }
+  },
   methods : {
     async getBookSearchList(){
       let result = await axios.get('/api/books/search/'+ history.state.text)
@@ -65,12 +72,7 @@ export default {
       }
     }
   }
-//   , watch 로 검색결과 화면에서 다른 책 검색할 수 있게 watch 사용...
-//   watch: {
-//     message : function(book_name){
-//       console.log(book_name);
-// }
-// }
+}
 }
 </script>
 
