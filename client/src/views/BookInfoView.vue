@@ -25,7 +25,7 @@
           <button type="button" class="btn btn-dark" @click="goCart(this.bno)">장바구니</button>
           <button type="button" class="btn btn-dark">찜</button>
           <button type="button" class="btn btn-dark">바로구매</button>
-          <!--@click="" 추가할 것..?-->
+          <!--@click="methods이름(this.받는값)" 추가-->
         </div>
       </div>
     </div>
@@ -57,7 +57,8 @@ export default {
         detail_exp: '',
         publ_date: null,
         category_code: ''
-      }
+      },
+      cartAlert : false
     }
   },
   computed : {
@@ -75,11 +76,11 @@ export default {
   },
   created(){
     let bno = this.$route.query.bookNo; // 넘겨받은 책 번호
-    this.getBookInfo(bno)
+    this.getBookInfo(bno) // 클릭이벤트 관련 created() 임
   },
   methods : {
     async getBookInfo(bno){
-      let result = await axios.get('/api/books/' + bno)
+      let result = await axios.get('/api/books/' + bno) // 기존 BK000001 에서 받는값(bno)으로 변경
                               .catch(err => console.log(err));
       console.log(result);
       this.bookInfo = result.data;
@@ -97,12 +98,33 @@ export default {
         return book_price + '원'
       }
     },
-    goCart(bno) {
+    goCart() { //(bno)
       console.log('책정보', this.bookInfo);
-      this.$router.push({path : '/cart', query : { 'bookNo' : bno }});
+      if(this.$store.state.isLogin){
+        this.addCart()
+      }else{
+        alert("로그인 후 이용해주세요")
+      }
+    },
+    async addCart(){
+      let data = {
+          param : {
+            quantity : 1,
+            user_no :this.$store.state.userNo,
+            prdt_no : this.bookInfo.prdt_no
+          }
+        };
+      let result = await axios.post("/api/cart", data)
+                              .catch(err => console.log(err));
+      let info = result.data.insertId;
+      if(info > 0) {
+        alert("장바구니에 추가되었습니다")
+        this.$router.push({path : '/cart'}); // 클릭이벤트 추가 methods... query 지움
+    }
     }
   }
 }
+
 </script>
 
 <style>
