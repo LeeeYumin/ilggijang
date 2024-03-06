@@ -296,6 +296,7 @@ export default {
                 if(result.data.affectedRows != 0 && result.data.changedRows == 0) {
                     alert(`정상적으로 삭제되었습니다.`);
                     this.$router.push({ path : '/cart'});
+                    this.getCartList();
                 }else {
                     alert(`삭제되지 않았습니다`);
                 }
