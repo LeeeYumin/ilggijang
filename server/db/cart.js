@@ -8,6 +8,7 @@ const cartList =
         , p.title
         , p.book_price
         , c.quantity
+        , p.book_price * c.quantity as 'total_price'
         , c.user_no
         , p.prdt_no
 FROM cart c JOIN prdt p
