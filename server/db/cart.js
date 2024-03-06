@@ -1,7 +1,7 @@
 // cart.js
 
 // 장바구니목록
-const cartList = 
+const cartList =
 `SELECT c.cart_no
         , p.book_name
         , p.book_img
@@ -16,24 +16,35 @@ FROM cart c JOIN prdt p
 WHERE c.user_no = ?`;
 
 // 장바구니등록
-const cartInsert = 
+const cartInsert =
 `INSERT INTO cart
 SET ?`;
 
 // 장바구니수정
-const cartUpdate = 
+const cartUpdate =
 `UPDATE cart
 SET ?
-WHERE cart_no = ?`; 
+WHERE cart_no = ?`;
 
 // 장바구니삭제
-const cartDelete = 
+const cartDelete =
 `DELETE FROM cart
 WHERE cart_no = ?`;
+
+// 장바구니 (중복체크) 만들고 cartRouter 에 넣기
+const cartCheck =
+`SELECT cart_no
+        , quantity
+        , user_no
+        ,prdt_no
+FROM cart
+WHERE user_no = ?
+AND   prdt_no = ?`;
 
 module.exports = {
     cartList,
     cartInsert,
     cartUpdate,
-    cartDelete
+    cartDelete,
+    cartCheck
   }

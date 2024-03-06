@@ -14,6 +14,7 @@
     <button v-on:click="login" type="submit" class="w3-button w3-green w3-round">Login</button>
    <NaverLogin />
     <button v-on:click="join"  class="w3-button w3-green w3-round" >회원가입</button>
+    
 
         </form>
       </div>
@@ -69,7 +70,11 @@ export default {
         console.log(this.$store.state.id);
         console.log(this.$store.state.userNo);
 
-        this.$router.push({path : '/main'});
+        if(this.id=='admin'){
+          this.$router.push({path : '/admin'});
+        }else{
+          this.$router.push({path : '/main'});
+        }
       }
     },
     validation() {
@@ -89,8 +94,24 @@ export default {
     ,
     naverLogin(){
       this.$router.push({path : '/NaverLogin'});
+      
+      
+    },
+    logout() {
+      axios.get().then((res) => {   
+        localStorage.removeItem('vuex');
+        
+        this.$router.push({path : '/main'});
+        console.log(res.data);
+      });
+ 
+      
     }
-  },
-
+  }
 }
+
+
+  
+
+  
 </script>
