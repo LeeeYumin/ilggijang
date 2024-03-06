@@ -6,7 +6,7 @@ import OrderView from '../views/OrderView.vue';
 import CartView from '../views/CartView.vue';
 import MainBookListView from '../views/MainBookListView.vue';
 import BestSellerListView from '../views/navs/BestSellerListView.vue';
-import RecommendListView from '../views/navs/RecommendListView.vue';
+import RecommendListView from '../views/navs/RecommendListMenuView.vue';
 import CategoryBookListView from '../views/navs/CategoryBookListView.vue';
 import BookSearchListView from '../views/BookSearchListView.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
