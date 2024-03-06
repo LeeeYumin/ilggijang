@@ -22,9 +22,7 @@ const store = createStore({
 
     },
     plugins : [
-        persistedstate({
-            paths : ['main', 'order', 'cart']
-        })
+        persistedstate()
     ]
 });
 
