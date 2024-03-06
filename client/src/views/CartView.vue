@@ -16,10 +16,10 @@
                         <div class="all_box">
                             <b-form-checkbox
                                 id="checkbox-1"
-                                v-model="status"
                                 name="checkbox-1"
                                 value="accepted"
                                 unchecked-value="not_accepted"
+                                v-model="checkAll"
                                 ><i class="point">전체선택</i>
                             </b-form-checkbox>
                         </div>
@@ -31,7 +31,7 @@
                             <div class="check_box">
                                 <b-form-checkbox
                                     id="checkbox-1"
-                                    v-model="status"
+                                    v-model="checkBox"
                                     name="checkbox-1"
                                     value="accepted"
                                     unchecked-value="not_accepted"
@@ -46,7 +46,7 @@
                         </div>
                     </td>
                     <td class="tc">
-                        <p class="price"><i class="point" v-bind="list.book_price" :key="idx">{{ list.book_price }}</i>원</p> 
+                        <p class="price"><i class="point">{{ formatPrice(list.total_price) }}</i>원</p> 
                         <!-- 이전에 한거 perTotalPrice(idx, list.book_price) -->
                         <div class="btn_num">
                             <button @click="quantityMin(idx)"><span><i>수량 빼기</i></span></button>
@@ -66,16 +66,16 @@
         <ul>
             <li>
                 <p>상품금액</p>
-                <span><i class="point">{{ totalBookPrice }}</i>원</span>
+                <span><i class="point">{{ formatPrice(totalBookPrice) }}</i>원</span>
             </li>
             <li>
                 <p>배송비</p>
-                <span>0원</span>
+                <span>{{ formatPrice(dlvAmount) }}원</span>
             </li>
         </ul>
         <div class="total">
         <p>결제 예정 금액</p>
-        <span><i>{{ totalBookPrice }}</i>원</span>
+        <span><i>{{ formatPrice(totalPrice) }}</i>원</span>
         </div>
         <button class="btn btn-primary btn_order" @click="getImPort()">주문하기 ({{ count }})</button>
     </div>
@@ -144,6 +144,7 @@ export default {
     data() {
         return {
             cartList : [],
+            checkBox : []
         }
     },
     computed : {
@@ -152,38 +153,49 @@ export default {
         },
         totalBookPrice() {
             let result = 0;
-            console.log('여기요 여기', this.cartList);
             for(let i = 0; i < this.cartList.length; i++){
-                result += this.cartList[i].book_price;
+                result += this.cartList[i].total_price;
                 console.log('값', result);
             }
             return result;
         },
-        makeComma() {
-            let total = this.totalBookPrice;
-            // toString() 숫자 -> 문자열
-            // replace(정규표현식, "대체문자열")
-            // 정규표현식 \B(63개 문자에 일치하는 경계), {n}(n개) \d(숫자) g(전역검색)
-            // x(?=y) -> "x" 뒤에 "y"가 오는 경우에만 "x"와 일치
-            // x(?!y) -> "x" 뒤에 "y"가 없는 경우에만 "x"와 일치
-            
-            return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");       
-        },
-        changTotal() {
+        dlvAmount() {
             let result = 0;
-            // 여기다가 뭘 해야할까?
-            // 결과 = 책 금액 * 수량
-            for(let i = 0; i < this.cartList.length; i++) {
-                result = this.cartList[i].book_price * this.cartList[i].quantity;
+            for(let i = 0; i < this.cartList.length; i++){
+                let total_price = this.cartList[i].quantity * this.cartList[i].book_price;
+                if(total_price < 15000) {
+                    result = 3000;
+                }
             }
             return result;
+        },
+        totalPrice() {
+            let result = 0;
+            result = this.totalBookPrice + this.dlvAmount;
+            return result;
+        },
+        checkAll : { 
+            get: function(){
+                if((this.checkBox.length != this.cartList.length) || this.cartList.length == 0)
+                    return false;
+                else
+                    return true;							
+            },
+            set: function(e){
+                if(e){
+                    for(let i = 0; i < this.cartList.length; i++){
+                        this.checkBox.push(this.cartList[i].checkBox);
+                    }	
+                }
+                else{
+                    this.checkBox = [];
+                }          
+            }
         }
     },
     created(){
         // let bno = this.$route.query.bno;
         this.getCartList();
-        // this.quantityPlus(i);
-        // this.quantityMin(i);
     },
     methods : {
         async getCartList(){
@@ -198,6 +210,7 @@ export default {
         },
         quantityPlus(i) {
             this.cartList[i].quantity += 1;
+            this.cartList[i].total_price = this.cartList[i].quantity * this.cartList[i].book_price;
         },
         quantityMin(i) {
             if(this.cartList[i].quantity <= 1){
@@ -205,12 +218,24 @@ export default {
                 alert('1개 이하의 수량은 선택하실 수 없습니다.');
             } else {
                 this.cartList[i].quantity -= 1;
+                this.cartList[i].total_price = this.cartList[i].quantity * this.cartList[i].book_price;
             }
         },
-        perTotalPrice(i, price) {
-            let result = price * this.cartList[i].quantity;
-            console.log('결과값 : ',  result);
-            return result;
+        formatPrice(book_price) {
+            if (book_price > 999) {
+                let priceAry = String(book_price).split("").reverse(); //split 사용해서 앞에 String 으로 감싸주고 씀
+                let idx = 0;
+                while (priceAry.length > idx + 3) {
+                priceAry.splice(idx + 3, 0, ',');
+                idx += 4;
+                }
+                return priceAry.reverse().join('') //reverse 함수임
+            } else {
+                return book_price
+            }
+        },
+        allCheck() {
+
         }
     }
 }
