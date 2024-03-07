@@ -9,10 +9,10 @@
             </div>
             <div class="a">
                 <div class="selectmenu">
-                    <select name="select" id="select">
-                        <option value="likes">좋아요순</option>
-                        <option value="dates">최신순</option>
-                        <option value="grades">평점순</option>
+                    <select name="select" id="select" v-model="solt">
+                        <option value="3" >좋아요순</option>
+                        <option value="4">최신순</option>
+                        <option value="5">평점순</option>
                     </select>
                 </div>
                 <div class="btn">
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="previews">
-            <Reviews listId="/rvlist" pcode="/BK240228002" soltno="/5" />
+            <Reviews listId="/rvlist" pcode="/BK240228002" :soltno="`/`+solt" />
             <!-- Reviews로 정보를 넘겨주는 곳. 상품 코드, 정렬 컬럼번호(3~5)를 받아야함-->
         </div>
     </div>
@@ -33,7 +33,12 @@ import Reviews from '../views/ReviewView.vue'
 export default {
     components: {
         Reviews
-    }
+    },
+    data(){
+        return {
+            solt: 3
+        }
+    },
 }
 </script>
 
