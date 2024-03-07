@@ -107,10 +107,14 @@ export default {
         alert("장바구니에 추가되었습니다")
         this.$router.push({path : '/cart'}); // 클릭이벤트 추가. query 지움
       }
+    },
+     //검색결과 화면에서 다른 책 검색할 수 있게 watch 사용
+    watch: {
+      bookSearchList(newVal, oldVal) {
+        console.log('다른 도서 :', newVal);
+        console.log('현재 검색 도서 :', oldVal);
+      }
     }
-    // 검색결과 화면에서 다른 책 검색할 수 있게 watch 사용
-    //watch: {
-    //}
   }
 }
 
