@@ -22,10 +22,20 @@ const fileInsert =
       )
 VALUES ?`;
 
+// 리뷰 이미지 조회
+const reviewFileList = 
+`SELECT 	r.*
+        , f.*
+        FROM review r
+        JOIN file f
+        ON r.review_no = f.table_row_no
+WHERE r.prdt_no = ?`;
+
 
 
 
 module.exports = {
   fileList,
-  fileInsert
+  fileInsert,
+  reviewFileList
 }
