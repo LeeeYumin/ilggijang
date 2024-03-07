@@ -19,7 +19,7 @@
           </div>
 
           <div class="right">
-            <button type="button" class="btn btn-dark" @click="goCart(this.book.prdt_no)">장바구니</button>
+            <button type="button" class="btn btn-dark" @click="goCart(book.prdt_no)">장바구니</button>
             <button type="button" class="btn btn-dark">찜</button>
           </div>
       </div>
@@ -63,24 +63,25 @@ export default {
           priceAry.splice(idx + 3, 0, ',');
           idx += 4;
         }
-        return priceAry.reverse().join('') + '원' //reverse 함수임
+        return priceAry.reverse().join('') + '원'  //reverse 함수임
       } else {
         return book_price + '원'
       }
     },
-    goCart() { //(bno)
+    goCart(prdt_no) { //(bno)
       //console.log('책정보', bno);
       if(this.$store.state.isLogin){
-          this.addCart()
+          this.addCart(prdt_no)
       }else{
         alert("로그인 후 이용해주세요")
       }
     },
-    async addCart(){ // *중복체크 + 담기
+
+    async addCart(prdt_no){ // *중복체크 + 담기
       let uno = this.$store.state.userNo;
-      let pno = this.book.prdt_no;
+      // let pno = this.book.prdt_no;
       // 장바구니 중복체크
-      await axios.get("/api/cart/cartCheck?uno="+ uno + "&pno=" + pno)
+      await axios.get("/api/cart/cartCheck?uno="+ uno + "&pno=" + prdt_no)
                   .then(result=>{
                     console.log("=======", result.data);
                     if(result.data){
