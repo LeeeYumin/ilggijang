@@ -123,7 +123,7 @@ fileRouter.get('/download', async (req, res) => {
     filename.push(ele.file_name);
   });
   console.log(path+filename[0]+'.jpg')
-  fs.createReadStream(path+filename[0]+'.jpg', { encoding : 'utf-8' }).pipe(res);
+  fs.createReadStream(path+filename[0]+'.jpg').pipe(res);
   // res.send(result);
 })
 

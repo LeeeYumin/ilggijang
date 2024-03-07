@@ -18,7 +18,7 @@
     </div>
 
     <div>
-      <!-- <img :src="this.getImgUrl"> -->
+      <img src="http://localhost:3000/files/download?pno=BK240228002">
       <button @click="getFile('BK240228002')">파일 가져오기</button>
     </div>
   </div>
@@ -74,6 +74,7 @@ import axios from 'axios';
         await axios.get('/api/files/download?pno=' + pno)
                     .then(result => {
                       console.log('파일 담기',result)
+                      // http://localhost:3000/files/download?pno=BK240228002
                       // return new URL(this.url + '/files/download?pno=' + pno);
         });
       }
