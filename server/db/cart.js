@@ -31,10 +31,16 @@ const cartDelete =
 `DELETE FROM cart
 WHERE cart_no = ?`;
 
-// 주문목록 장바구니 삭제
+// 주문목록 장바구니 삭제(장바구니에서 구매시)
 const cartPickDelete =
 `DELETE FROM cart
-WHERE prdt_no = ?`;
+WHERE prdt_no = ?
+AND user_no = ?`;
+
+// 주문목록 장바구니 삭제
+// const cartPickDelete =
+// `DELETE FROM cart
+// WHERE prdt_no = ?`;
 
 // 장바구니 (중복체크) 만들고 cartRouter 에 넣기
 const cartCheck =

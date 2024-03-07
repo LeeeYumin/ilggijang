@@ -22,6 +22,7 @@ const bookListRouter = require('./router/bookListRouter.js'); // 도서 목록 �
 
 // 신수지
 const ordersRouter = require('./router/ordersRouter.js') // 주문
+const ordersdetailRouter = require('./router/ordersdetailRouter.js') // 주문상세
 const cartRouter = require('./router/cartRouter.js') // 장바구니
 const saveRouter = require('./router/saveRouter.js') // 찜
 
@@ -53,6 +54,7 @@ app.use('/bookLists', bookListRouter); // 도서 목록 파라미터 워딩
 
 // 신수지
 app.use('/orders', ordersRouter); // 주문
+app.use('/ordersdetail', ordersdetailRouter); // 주문
 app.use('/cart', cartRouter); // 장바구니
 app.use('/save', saveRouter); // 찜
 
@@ -121,28 +123,39 @@ app.post("/complete", async (req, res) => {
 }); 
 
 app.post("/afterpay", async (req, res) => {
+  let result = {};
   try {
+    let orderData = req.body.orderInfo;
     await db.trsConnection('START TRANSACTION'); // 트랜잭션 시작
       // 주문 입력
-      let orderData = request.body.orderInfo;
       let orderResult = await db.connection('orders', 'orderInsert', orderData);
-      console.log(orderResult);
-      // 주문 상세 입력
+      console.log('주문결과==============', orderResult);
 
-      let orderDetailData = request.body.orderDetailInfo;
-      let orderDetailResult = await db.connection('orderdetail', 'orderDetailInsert', orderDetailData);
-      console.log(orderDetailResult);
+      // 주문 상세 입력
+      let orderDetailData = req.body.orderDetailInfo;
+      console.log('잘들어오니?', orderDetailData)
+      let orderDetailResult = await db.connection('ordersdetail', 'orderDetailInsert', orderDetailData).catch(err => console.log(err));
+      console.log('주문상세결과==============',orderDetailResult);
     
+      // 바로 구매의 경우 카트번호가 없음!
+      // 카트번호 유무로 구분해야할듯 카트삭제를 진행 할지 말지 결정해야함
       // 카트 삭제
-      let cartInfo = request.body.cartInfo;
+      let cartInfo = [req.body.cartInfo.user_no, req.body.cartInfo.prdt_no]
+      console.log(cartInfo);
       let cartInfoResult = await db.connection('cart', 'cartPickDelete', cartInfo);
-      console.log(cartInfoResult);
+      console.log('장바구니 삭제==============', cartInfoResult);
+
     await db.trsConnection('COMMIT'); // 커밋
 
+    result = {
+      orderResult,
+      orderDetailResult,
+      cartInfoResult
+    }
   }
   catch {
+    console.log('에러발생')
     await db.trsConnection('ROLLBACK'); // 롤백
-
   }
-  await db.trsConnection('');
+  res.send(result); // 클라이언트에게 결과전송
 });
