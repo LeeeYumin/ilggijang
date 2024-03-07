@@ -1,18 +1,14 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="logo col-2 my-3">
+      <div class="logo">
         <router-link to="main">
             <img src="@/assets/ilggijang_logo.png" style="width: 100px;">
         </router-link>
       </div>
-      <div class="search_input col-10 my-3">
-        <b-navbar  type="light" variant="light" class="my-3">
-          <b-nav-form>
-            <b-form-input class="mr-2 p-1" placeholder="도서명을 입력해주세요" v-model="text"></b-form-input>  <!--@keyup.enter="searchWord(this.text)"-->
-            <b-button variant="outline-success" class="my-2 my-sm-0" type="submit" @click="searchWord()">검색</b-button>
-          </b-nav-form>
-        </b-navbar>
+      <div class="search_input">
+          <input class="search" placeholder="도서명을 입력해주세요" v-model="text"> <!--@keyup.enter="searchWord(this.text)"-->
+          <button variant="outline-success" class="btn_search" type="submit" @click="searchWord()"><font-awesome-icon icon="fa-solid fa-magnifying-glass" size="lg" style="color:#3a4ca8;" /><span>검색</span></button>
       </div>
     </div>
   </div>
@@ -50,6 +46,14 @@
 
 <style scoped>
 .logo {
+  margin-top:20px;
   float: left;
 }
+.logo img{width:90px !important;}
+.row{position:relative;}
+.search_input{position:absolute; left:50%; top:50%; width:500px; height:50px; border:2px solid #3a4ca8; border-radius:50px; transform:translate(-50%, -50%);}
+.search_input .search{width:420px; padding:12px; border:0; background:none;}
+.search_input .search:focus-visible{outline:0;}
+.search_input .btn_search{border:0; background:none;}
+.search_input .btn_search span{display:block; text-indent:100%; overflow:hidden; white-space:nowrap;}
 </style>

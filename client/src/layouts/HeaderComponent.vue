@@ -1,12 +1,12 @@
 <template>
-    <div class="header">
-        <div class="container">
+    <div class="header container">
+        <div class="gnb">
             <Gnb />
         </div>
-        <div class="container">
+        <div>
             <Search />
         </div>
-        <div class="container">
+        <div>
             <Nav />
         </div>
     </div>
@@ -29,10 +29,12 @@ export default {
 
 <style scoped>
 .header {
+    position:relative;
     width: 100%;
     margin: 0 auto;
-    background: #eee;
+    background: #fff;
 }
+.gnb{position:absolute; top:20px; right:0; z-index:1;}
 
 
 </style>

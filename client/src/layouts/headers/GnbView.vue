@@ -2,33 +2,33 @@
 
 <template>
   <div>
-    <div>
-
+    <div class="top_box">
       <b-button-group>
-        <b-button type="button" v-if="isLogin" @click="logout" variant="outline-primary">
-          로그아웃
+        <b-button class="btn_top" v-if="isLogin" @click="logout">
+          <p>로그아웃</p>
         </b-button>
 
         <router-link v-else to="/login">
-          <b-button variant="outline-primary">
-            로그인
+          <b-button class="btn_top">
+            <p>로그인</p>
           </b-button>
         </router-link>
 
         <router-link to="/userjoin">
-          <b-button variant="outline-primary">
-            회원가입
+          <b-button class="btn_top">
+            <p>회원가입</p>
           </b-button>
         </router-link>
 
         <router-link to="/cart">
-          <b-button variant="outline-primary">
-            장바구니
+          <b-button class="btn_top">
+            <p>장바구니</p>
           </b-button>
         </router-link>
-        <router-link to="/order">
-          <b-button variant="outline-primary">
-            주문/결제(임시)
+
+        <router-link to="">
+          <b-button class="btn_top">
+            <p class="last">고객센터</p>
           </b-button>
         </router-link>
       </b-button-group>
@@ -89,7 +89,13 @@ export default {
 </script>
 
 <style scoped>
-div {
-  text-align: right;
-}
+.top_box{text-align:right;}
+.top_box button{position:relative; margin:0; text-align:center; background:#fff !important; border-color:#fff !important;}
+.btn_top{margin-left:5px; background:none; border:0;}
+.btn_top:hover,
+.btn_top:focus,
+.btn_top:visited{background:none;}
+.top_box p{position:relative; color:#555; font-size:13px; letter-spacing:-0.5px;}
+.top_box p:after{content:''; display:block; position:absolute; right:-12px; top:4px; width:1px; height:13px; border-left:1px solid #ccc;}
+.top_box p.last:after{display:none;}
 </style>
