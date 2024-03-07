@@ -8,7 +8,7 @@
           <p>{{ book.category_code }}</p>
           <p>{{ book.title }}</p>
         </b-card-text>
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <b-button variant="primary" @click="goDetailBook(book.prdt_no)">상세보기</b-button>
       </b-card>
     </div>
   </div>
@@ -41,6 +41,9 @@ export default {
       for (let i = 0; i < 8; i++) {
         this.bookList[i] = json[i];
       }
+    },
+    goDetailBook(bno) {
+      this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
     }
   }
 }

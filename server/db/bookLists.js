@@ -4,6 +4,7 @@ const recdBookList =
 		, p.book_img
         , p.title
         , p.category_code
+        , p.prdt_no
         , (SELECT COUNT(*)
 			FROM user uc
             JOIN orders oc

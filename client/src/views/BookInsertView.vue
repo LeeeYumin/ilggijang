@@ -2,19 +2,24 @@
   <div class="container">
     <h3>첨부파일</h3>
     <div class="mb-3">
-      <form action="http://localhost:3000/files/photos" method="post" enctype="multipart/form-data">
-        <label for="formFileMultiple" class="form-label">다중파일 업로드</label>
-        <input class="form-control" type="file" name="fileList" 
+      <!-- <form action="http://localhost:3000/files/photos" method="post" enctype="multipart/form-data"> -->
+        <label class="form-label">다중파일 업로드</label>
+        <input class="form-control" type="file" ref="images" accept="image/*"
                 multiple
                 @change="showThumbnail()"
-                ref="images"> <!-- ★multer가 인식할 수 있도록 array('이름과') name="이름" 이 같게 -->
-        <button>멀티 파일 전송</button>
-      </form>
+                name="fileList">
+        <button class="btn" @click="sendFiles()">멀티 파일 전송</button>
+      <!-- </form> -->
     </div>
     
     <div>
+      <h6>업로드 할 파일 미리보기(1개만 보임)</h6>
       <img :src="this.imgUrl">
-      <!-- http://localhost:3000/files/images/262cat_cute.jpg -->
+    </div>
+
+    <div>
+      <img src="http://localhost:3000/files/download?pno=BK240228002">
+      <button @click="getFile('BK240228002')">파일 가져오기</button>
     </div>
   </div>
 </template>
@@ -28,27 +33,50 @@ import axios from 'axios';
         imgUrl : '',
         input: {
           image: ''
-        }
+        },
+        getImgUrl : ''
       }
     },
     created() {
-      this.getFile();
+      //this.getFile();
     },
     methods: {
+      async sendFiles() { // 파일 전송하기
+        const formData = new FormData();
+        for(let file of this.input.image){
+          // console.log(file)
+          formData.append('fileList', file);
+        }
+
+        await axios.post('/api/files/uploading', formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then((result) => {
+          if(result.status == 200) {
+            alert('파일이 등록 되었습니다.');
+          } else if (result.status != 200) {
+            alert('파일이 등록이 실패했습니다. 관리자에게 문의해주세요.');
+          }
+        })
+        .catch(err => console.log(err))
+      },
       showThumbnail () {
+        // refs 속성을 이용해 input 태그에 접근함
         this.input.image = this.$refs.images.files
         console.log(this.input.image);
-        URL.createObjectURL
+        // URL.createObjectURL로 사용자가 올린 이미지를 URL로 만들어서 화면에 표시할 수 있게 한다. img 태그의 src값에 바인딩해준다
+        this.imgUrl = URL.createObjectURL(this.input.image[0])
+        console.log(this.imgUrl)
       },
-      getFile() {
-        axios.get('/api/files')
-              .then(result => {
-                this.files = result.data[0];
-                let dbImgUrl = `${result.data[0].file_path}/${result.data[0].file_name}${result.data[0].extension}`;
-                console.log(dbImgUrl);
-                let localhost = "http://localhost:3000/";
-                this.imgUrl = localhost + dbImgUrl;
-              });
+      async getFile(pno) { // DB에서 파일 가져오기
+        await axios.get('/api/files/download?pno=' + pno)
+                    .then(result => {
+                      console.log('파일 담기',result)
+                      // http://localhost:3000/files/download?pno=BK240228002
+                      // return new URL(this.url + '/files/download?pno=' + pno);
+        });
       }
     }
   }

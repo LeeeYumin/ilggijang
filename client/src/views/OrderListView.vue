@@ -1,6 +1,6 @@
 <template>
 <div class="container mt-5">
-    <h3 class="mb-4 title">장바구니 ({{ count }})</h3>
+    <h3 class="mb-4 title">주문/배송 조회</h3>
     <div class="content">
     <div class="left">
         <div>
@@ -328,7 +328,7 @@ export default {
                     let selectItem = [];
                     for(let i = 0; i < this.cartList.length; i++){
                         if(this.selected.includes(this.cartList[i].prdt_no)){
-                            selectItem.push({ book_no : this.cartList[i].prdt_no, book_name : this.cartList[i].book_name, quantity : this.cartList[i].quantity, book_img : this.cartList[i].book_img, book_price : this.cartList[i].book_price});
+                            selectItem.push({ book_name : this.cartList[i].book_name, quantity : this.cartList[i].quantity, book_img : this.cartList[i].book_img, book_price : this.cartList[i].book_price});
                             localStorage.setItem("selectItem", JSON.stringify(selectItem));
                         }
                     }

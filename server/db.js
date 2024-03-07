@@ -23,5 +23,16 @@ module.exports = {
           resolve(results);
         };
       }));
+    },
+    trsConnection(trs) {
+      return new Promise((resolve, reject) => dbPool.query(trs, (error, results) => {
+        if (error) {
+          console.log(error); // DB연결 에러를 콘솔에서 보기.         
+          reject({error});
+        } else {
+          console.log(results); // DB연결 성공결과를 콘솔에서 보기.
+          resolve(results);
+        };
+      }));
     }
   };

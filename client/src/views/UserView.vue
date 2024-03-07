@@ -14,6 +14,7 @@
     <button v-on:click="login" type="submit" class="w3-button w3-green w3-round">Login</button>
    <NaverLogin />
     <button v-on:click="join"  class="w3-button w3-green w3-round" >회원가입</button>
+    
 
         </form>
       </div>
@@ -38,8 +39,10 @@ export default {
   data() {
     return {
       id: '',
-      pw_no: '',
-      IsLogin: ''
+      pw_no: ''
+      
+      
+      
     }
   },
   methods: {
@@ -55,7 +58,9 @@ export default {
       let uid = result.data.id;
       let upw = result.data.pw_no;
       let userNo = result.data.user_no;
-
+      let loginTypeCode = result.data.loginTypeCode;
+      
+    
 
       //console.log(uid, upw);
 
@@ -63,13 +68,25 @@ export default {
         this.$store.commit('setIsLogin', true);
         this.$store.commit('setId', uid);
         this.$store.commit('setUserNo', userNo);
+        this.$store.commit('setLoginTypeCode', loginTypeCode);
+        
+        
         alert('로그인 되었습니다.');
 
         console.log(this.$store.state.isLogin);
         console.log(this.$store.state.id);
         console.log(this.$store.state.userNo);
+       
+       
 
-        this.$router.push({path : '/main'});
+        if(this.id=='admin'){
+          this.$router.push({path : '/admin'});
+        }else{
+          this.$router.push({path : '/main'});
+        }
+      }else{
+        alert('아이디 또는 비밀번호를 다시 입력해주세요.');
+       
       }
     },
     validation() {
@@ -89,8 +106,26 @@ export default {
     ,
     naverLogin(){
       this.$router.push({path : '/NaverLogin'});
+      
+      
+    },
+    logout() {
+      axios.get().then((res) => {   
+        localStorage.removeItem('vuex');
+        
+        this.$router.push({path : '/main'});
+        console.log(res.data);
+      });
+ 
+      
     }
   },
 
+  
 }
+
+
+  
+
+  
 </script>

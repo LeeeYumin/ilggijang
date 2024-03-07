@@ -1,4 +1,35 @@
 <template>
+  <div v-if="popupView === true" class="popup">
+    <div class="con">
+      <div class="title">
+        <h2>배송지 변경</h2>
+        <button @click="popupView = false" class="btn_close"><font-awesome-icon icon="fa-solid fa-x" size="xl" /></button>
+      </div>
+      <div class="row">
+          <div class="col-md-12 col-lg-6 my-3">
+              <div class="form-item w-100">
+                  <label class="bold">기본주소<sup>*</sup></label>
+                  <input type="text" class="form-control" placeholder="우편번호" id="postcode" v-model="userInfo.postcode" readonly>
+              </div>
+          </div>
+          <div class="col-md-12 col-lg-6">
+              <div class="form-item w-100"><br><br>
+                <div>
+                    <OpenPostcode @postcode="getCode" />
+                </div>
+                <!-- <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button> -->
+              </div>
+          </div>
+      </div>
+      <div class="form-item">
+          <input type="text" class="form-control" placeholder="도로명주소" id="addr" v-model="userInfo.addr" readonly>
+          <input type="text" class="form-control my-3" placeholder="상세주소" id="detail_addr" v-model="userInfo.detail_addr">
+      </div>
+      <div class="btn_save">
+       <button class="btn btn-primary" @click="popupView = false">저장</button>
+      </div>
+    </div>
+  </div>
   <div class="container mt-5">
     <h3 class="mb-4 title">주문/결제</h3>
     <div class="content">
@@ -12,11 +43,11 @@
           <tbody>
             <tr>
               <th>배송지 정보</th>
-              <td>
-                <div class="addr_info">
-                  <p>{{ userInfo.name }}</p>
-                  <p>{{ userInfo.name }} / {{ userInfo.phone }}</p>
-                  <p>{{ userInfo.addr }}</p>
+                <td>
+                  <div class="addr_info">
+                    <p><i class="point color va_m"><font-awesome-icon icon="fa-solid fa-location-dot" size="sm" style="color : #0d6efd; "/> {{ userInfo.name }}</i> <button class="btn btn-outline-secondary btn-sm" @click="popupView = true">변경</button></p>
+                    <p>{{ userInfo.name }} / {{ userInfo.phone }}</p>
+                    <p>[{{ userInfo.postcode }}] {{ userInfo.addr }} {{ userInfo.detail_addr }}</p>
                 </div>
               </td>
             </tr>
@@ -39,25 +70,25 @@
               <col span="1" style="width:75%;">
           </colgroup>
             <tbody>
-              <tr class="border_bottom">
+              <tr class="border_bottom pb-20">
                 <th>주문상품</th>
-                <td>총 <span class="point">1</span>개</td>
+                <td>총 <span class="point color">{{ selectList.length }}</span>개</td>
               </tr>
             </tbody>
           </table>
 
-          <table class="table">
+          <table class="table tbl_st">
             <colgroup>
               <col span="1" style="width:20%;">
               <col span="1" >
               <col span="2" style="width:15%;">
           </colgroup>
             <tbody>
-              <tr>
-                <td><img src="" alt="">{{ bookInfo.book_img }}</td>
-                <td>{{ bookInfo.book_name }}</td>
-                <td>1개</td>
-                <td>{{ bookInfo.book_price }}</td>
+              <tr v-bind:key="idx" v-for="(info, idx) in selectList">
+                <td><img src="" alt="">{{ info.book_img }}</td>
+                <td>{{ info.book_name }}</td>
+                <td>{{ info.quantity }}개</td>
+                <td><i class="point">{{ formatPrice(info.book_price) }}</i>원</td>
               </tr>
             </tbody>
           </table>
@@ -110,20 +141,20 @@
         <ul>
           <li>
             <p>상품금액</p>
-            <span><i class="point" v-bind="orderInfo.total_orders_amount">{{ totalBookPrice }}</i>원</span>
+            <span><i class="point" v-bind="orderInfo.total_orders_amount">{{ formatPrice(totalBookPrice) }}</i>원</span>
           </li>
           <li>
             <p>배송비</p>
-            <span v-bind="orderInfo.dlv_amount">0원</span>
+            <span v-bind="orderInfo.dlv_amount">{{ formatPrice(dlvAmount) }}원</span>
           </li>
           <li>
             <p>상품할인</p>
-            <span><i class="color" v-bind="orderInfo.dc_amount">- {{ totalDcPrice }}</i>원</span>
+            <span><i class="color" v-bind="orderInfo.dc_amount">- {{ formatPrice(totalDcPrice) }}</i>원</span>
           </li>
         </ul>
         <div class="total">
           <p>최종 결제 금액</p>
-          <span><i v-bind="orderInfo.total_orders_amount">{{ totalPrice }}</i>원</span>
+          <span><i v-bind="orderInfo.total_pay_amount">{{ formatPrice(totalPrice) }}</i>원</span>
         </div>
         <button class="btn btn-primary btn_order" @click="getImPort()">결제하기</button>
       </div>
@@ -132,6 +163,7 @@
 </template>
 
 <style scoped>
+.container{position:relative;}
 .title{font-weight:700;}
 .content{position:relative; margin-bottom:50px;}
 .content:after{content:''; display:block; clear:both;}
@@ -167,23 +199,39 @@ i.point{font-style:normal; font-size:16px;}
 .pay_list label span{display:block; width:120px; height:50px; line-height:50px; font-weight:700; text-align:center; border:1px solid #ddd; background:#fff; border-radius:5px; cursor:pointer;}
 .option_box{padding:20px; background:#eee; border-radius:10px; box-sizing:border-box;}
 .addr_info p{margin-bottom:10px;}
+.pb-20 td{padding-bottom:20px;}
+.tbl_st tbody tr td{padding:20px 0;}
+.va_m{vertical-align:middle;}
+.popup{position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.5); z-index:100;}
+.popup .con{position:absolute; left:50%; top:50%; width:500px; height:380px; padding:30px 20px; background:#fff; border-radius:15px; z-index:100; transform:translate(-50%, -50%); box-sizing:border-box; box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);}
+.popup .con h2{font-size:25px; font-weight:700;}
+.popup .bold{margin-bottom:5px; font-weight:700;}
+.popup .btn_close{background:none; border:0;}
+.popup .title{display:flex; justify-content:space-between; align-items:center;}
+.popup .btn_save{margin:30px auto 0; text-align:center;}
+.popup .btn_save button{padding:10px 30px;}
 </style>
 
 <script>
+  import OpenPostcode from '../components/OpenPostcode.vue';
   import axios from 'axios';
 
   export default {
     data() {
       return {
+        popupView : false,
         userInfo: {
           name : '',
           addr : '',
-          phone : ''
+          phone : '',
+          user_rank_no : ''
         },
-        bookInfo : {
-          book_img : '',
+        cartList : {
           book_name : '',
-          book_price : ''
+          book_img : '',
+          title : '',
+          book_price : '',
+          quantity : ''
         },
         userRankInfo : {
           user_rank : '',
@@ -201,23 +249,40 @@ i.point{font-style:normal; font-size:16px;}
           dlv_addr : this.addr,
           orders_date : this.date,
           orders_state : 's1',
-          total_orders_amount : 0,
-          dc_amount : 0,
+          total_orders_amount : this.total_orders_amount,
+          dc_amount : this.dc_amount,
           total_pay_amount : 0,
           phone : this.phone,
-          dlv_amount : 0,
+          dlv_amount : this.dlv_amount,
           orders_no : this.orders_no,
           user_no : this.usr_no,
           pay_type : null,
           pay_result : null
-        }
+        },
+        selectList: JSON.parse(localStorage.getItem("selectItem"))
+
       }
     },
     computed : {
+      count() {
+          return this.cartList.length;
+      },
       totalBookPrice() {
-        let result = 0;
-        result += this.bookInfo.book_price;
-        return result;
+          let result = 0;
+          for(let i = 0; i < this.selectList.length; i++){
+            result += this.selectList[i].book_price;
+            console.log('값', result);
+          }
+          return result;
+      },
+      dlvAmount() {
+          let result = 0;
+          for(let i = 0; i < this.selectList.length; i++){
+              if(this.totalBookPrice < 15000) {
+                  result = 3000;
+              }
+          }
+          return result;
       },
       totalDcPrice() {
         let total = this.totalBookPrice;
@@ -225,50 +290,43 @@ i.point{font-style:normal; font-size:16px;}
         return result;
       },
       totalPrice() {
-        let total = this.totalBookPrice;
-        let dc = total * (this.userRankInfo.dc_rate / 100);
-        let result =  (total - dc);
+        let result = 0;
+        result = (this.totalBookPrice + this.dlvAmount) - this.totalDcPrice;
         return result;
-      },
-      makeComma() {
-        let total = this.totalBookPrice;
-        // toString() 숫자 -> 문자열
-        // replace(정규표현식, "대체문자열")
-        // 정규표현식 \B(63개 문자에 일치하는 경계), {n}(n개) \d(숫자) g(전역검색)
-        // x(?=y) -> "x" 뒤에 "y"가 오는 경우에만 "x"와 일치
-        // x(?!y) -> "x" 뒤에 "y"가 없는 경우에만 "x"와 일치
-
-        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
     },
     created(){
-        // let searchNo = this.$route.query.userNo;
-        this.getUserInfo();
-        this.getBookInfo();
+        let orderId = this.$route.query.userId;
+        this.getUserInfo(orderId);
+        this.getCartList();
         this.getUserRankInfo();
         this.orderInfo.orders_date = this.getToday();
     },
+    components : {
+      OpenPostcode
+    },
     methods : {
       async getUserInfo(){
-          let userId = this.$store.state.id;
-          console.log('회원번호', userId);
-          let result = await axios.get('/api/user/' + userId) // + no
-                        .catch(err => console.log(err));
-          console.log(result);
-          this.userInfo = result.data;
+        let userId = this.$store.state.id;
+        console.log('회원번호', userId);
+        let result = await axios.get('/api/user/' + userId) // + no
+                      .catch(err => console.log(err));
+        console.log(result);
+        this.userInfo = result.data;
       },
-      async getBookInfo(){
-          let result = await axios.get('/api/books/BK240228001') // + no
-          .catch(err => console.log(err));
-          console.log(result);
-          this.bookInfo = result.data;
+      async getCartList(){
+        let userNo = this.$store.state.userNo;
+        let result = await axios.get('/api/cart/user/' + userNo) // + no
+        .catch(err => console.log(err));
+        console.log('결과', result);
+        this.cartList = result.data;
       },
       async getUserRankInfo(){
-          let result = await axios.get('/api/userranks/1') // + no
-          .catch(err => console.log(err));
-
-          console.log(result);
-          this.userRankInfo = result.data;
+        let userNo = this.$store.state.userNo;
+        let result = await axios.get('/api/userranks/' + userNo) // + no
+        .catch(err => console.log(err));
+        console.log(result);
+        this.userRankInfo = result.data;
       },
       goToPayment() {
         this.show = !this.show;
@@ -280,6 +338,36 @@ i.point{font-style:normal; font-size:16px;}
             let day = ('0' + date.getDate()).slice(-2);
             return `${year}-${month}-${day}`;
         },
+      formatPrice(book_price) {
+          if (book_price > 999) {
+              let priceAry = String(book_price).split("").reverse(); //split 사용해서 앞에 String 으로 감싸주고 씀
+              let idx = 0;
+              while (priceAry.length > idx + 3) {
+              priceAry.splice(idx + 3, 0, ',');
+              idx += 4;
+              }
+              return priceAry.reverse().join('') //reverse 함수임
+          } else {
+              return book_price
+          }
+      },
+      async cartPickDelete(){
+        let pno = '';
+        for(let i = 0; i < this.selectList.length; i++){
+          pno = this.selectList[i].prdt_no;
+        }
+        axios
+        .delete(`/api/cart/` + pno) 
+        .then(result => {
+            if(result.data.affectedRows != 0 && result.data.changedRows == 0) {
+                alert(`정상적으로 삭제되었습니다.`);
+                this.$router.push({ path : '/cart'});
+            }else {
+                alert(`삭제되지 않았습니다.`);
+            }
+        })
+        console.log('pno', pno);
+      }, 
       // getImPort() {
       //   let IMP = window.IMP; // 생략가능
 
@@ -399,6 +487,7 @@ i.point{font-style:normal; font-size:16px;}
         console.log('function', this.selectPay);
       },
       async getImPort() {
+        // 결제 완료시 아임포트 API 및 DB 연결
         let IMP = window.IMP; // 생략가능
         IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
         
@@ -436,25 +525,43 @@ i.point{font-style:normal; font-size:16px;}
                   if(result.data.status != 'failed') {
                     //DB로 저장될 정보 전송
                     // axios로 HTTP 요청
-                    axios.post('/api/orders', {
-                      param: {
-                        recipient : result.data.buyer_name,
-                        dlv_addr : result.data.buyer_addr,
-                        orders_date : '2024-03-05',
-                        orders_state : 's1',
-                        total_orders_amount : this.orderInfo.total_orders_amount,
-                        dc_amount : this.orderInfo.dc_amount,
-                        total_pay_amount : result.data.amount,
-                        phone : result.data.buyer_tel,
-                        dlv_amount : 3000,
-                        orders_no : 32,
-                        user_no : 2,
-                        pay_type : this.selectedPayCode,
-                        pay_result : result.data.status
-                      },
-                    })
+                    // 주문 insert, 주문상세 insert, 카트삭제 delete, transaction
+                    axios.post('/api/afterpay', {
+                      data : {
+                        orderInfo: {
+                          recipient : result.data.buyer_name,
+                          dlv_addr : result.data.buyer_addr,
+                          orders_date : this.orderInfo.orders_date,
+                          orders_state : 's1',
+                          total_orders_amount : this.totalBookPrice,
+                          dc_amount : this.totalDcPrice,
+                          total_pay_amount : result.data.amount,
+                          phone : result.data.buyer_tel,
+                          dlv_amount : this.dlvAmount,
+                          user_no : this.$store.state.userNo,
+                          pay_type : this.selectedPayCode,
+                          pay_result : result.data.status
+                        },
+                        orderDetailInfo : {
+                          quantity : this.cartList.quantity,
+                          orders_no : '',
+                          prdt_no : '', 
+                          unit_price : 0,
+                          orders_amount : 0
+                        },
+                        cartInfo : {
+
+
+                        }
+
+                      }
+                    }),
+                    // 장바구니 삭제
+                    this.cartPickDelete();
+
                     let msg = '결제가 완료되었습니다.';
                     alert(msg);
+                    this.$router.push({ path: '/complete' });
                   }
                   else {
                     let msg = '결제가 취소되었습니다.';
@@ -469,6 +576,21 @@ i.point{font-style:normal; font-size:16px;}
             }
           });
         }
+      },
+      openPostcode() {
+        new window.daum.Postcode({
+            oncomplete : (data) => {
+                this.userInfo.postcode = data.zonecode;
+                this.userInfo.addr = data.roadAddress;
+            }
+        }).open();
+      },
+      getCode(zonecode, roadAddress) {
+          this.userInfo.postcode = zonecode;
+          this.userInfo.addr = roadAddress;
+      },
+      closePop() {
+        this.$emit('close');
       }
     }
   }

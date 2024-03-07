@@ -15,6 +15,7 @@ const bookLists = require('./bookLists.js'); // 도서 목록 sql문
 
 // 신수지
 const orders = require('./orders.js'); // 주문 sql문
+const ordersdetail = require('./ordersdetail.js'); // 주문상세 sql문
 const cart = require('./cart.js') // 장바구니 sql문
 const save = require('./save.js') // 찜 sql문
 
@@ -41,6 +42,7 @@ module.exports = {
 
     // 신수지
     , orders
+    , ordersdetail
     , cart
     , save
 

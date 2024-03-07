@@ -22,10 +22,10 @@
           <p>부가 설명 ex. 3시 이전 주문시 당일 출고</p>
         </div>
         <div class="btn">
-          <button type="button" class="btn btn-dark">장바구니</button>
+          <button type="button" class="btn btn-dark" @click="goCart(this.bno)">장바구니</button>
           <button type="button" class="btn btn-dark">찜</button>
           <button type="button" class="btn btn-dark">바로구매</button>
-          <!--@click="" 추가할 것..?-->
+          <!--@click="methods이름(this.받는값)" 추가-->
         </div>
       </div>
     </div>
@@ -52,12 +52,14 @@ export default {
         book_img: '',
         title: '',
         publ_co: '',
-        book_price: '', //null 하면 여러건 나오는데 왜 그런거지??
+        book_price: '',
         book_intro: '',
         detail_exp: '',
         publ_date: null,
         category_code: ''
-      }
+      },
+      cartAlert : false,
+      //existCart : false
     }
   },
   computed : {
@@ -74,11 +76,12 @@ export default {
         }
   },
   created(){
-    this.getBookInfo()
+    let bno = this.$route.query.bookNo; // 넘겨받은 책 번호
+    this.getBookInfo(bno) // 클릭이벤트 관련 created() 임
   },
   methods : {
-    async getBookInfo(){
-      let result = await axios.get('/api/books/BK000001')
+    async getBookInfo(bno){
+      let result = await axios.get('/api/books/' + bno) // 기존 BK000001 에서 받는값(bno)으로 변경
                               .catch(err => console.log(err));
       console.log(result);
       this.bookInfo = result.data;
@@ -95,9 +98,49 @@ export default {
       } else {
         return book_price + '원'
       }
+    },
+    goCart() { //(bno)
+      console.log('책정보', this.bookInfo);
+      if(this.$store.state.isLogin){
+          this.addCart()
+      }else{
+        alert("로그인 후 이용해주세요")
+      }
+    },
+    async addCart(){ // *중복체크 + 담기
+      let uno = this.$store.state.userNo;
+      let pno = this.bookInfo.prdt_no;
+      // 장바구니 중복체크
+      await axios.get("/api/cart/cartCheck?uno="+ uno + "&pno=" + pno)
+                  .then(result=>{
+                    console.log("=======", result.data);
+                    if(result.data){
+                      this.cartInsert();// 장바구니에 추가
+                    }else{
+                      alert("이미 담긴 도서입니다")
+                    }
+                  })
+                  .catch(err => console.log(err));
+    },
+    async cartInsert(){
+      let data = {
+        param : {
+          quantity : 1,
+          user_no : this.$store.state.userNo,
+          prdt_no : this.bookInfo.prdt_no
+        }
+      }
+      let result = await axios.post("/api/cart", data)
+                              .catch(err => console.log(err));
+      let info = result.data.insertId;
+      if(info > 0) {
+        alert("장바구니에 추가되었습니다")
+        this.$router.push({path : '/cart'}); // 클릭이벤트 추가. query 지움
+      }
     }
   }
 }
+
 </script>
 
 <style>
