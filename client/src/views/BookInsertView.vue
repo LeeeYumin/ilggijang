@@ -8,13 +8,18 @@
                 multiple
                 @change="showThumbnail()"
                 name="fileList">
-        <button @click="sendFiles()">멀티 파일 전송</button>
+        <button class="btn" @click="sendFiles()">멀티 파일 전송</button>
       <!-- </form> -->
     </div>
     
     <div>
       <h6>업로드 할 파일 미리보기(1개만 보임)</h6>
       <img :src="this.imgUrl">
+    </div>
+
+    <div>
+      <img src="http://localhost:3000/files/download?pno=BK240228002">
+      <button @click="getFile('BK240228002')">파일 가져오기</button>
     </div>
   </div>
 </template>
@@ -28,7 +33,8 @@ import axios from 'axios';
         imgUrl : '',
         input: {
           image: ''
-        }
+        },
+        getImgUrl : ''
       }
     },
     created() {
@@ -49,7 +55,9 @@ import axios from 'axios';
         })
         .then((result) => {
           if(result.status == 200) {
-            alert('파일이 등록 되었습니다.')
+            alert('파일이 등록 되었습니다.');
+          } else if (result.status != 200) {
+            alert('파일이 등록이 실패했습니다. 관리자에게 문의해주세요.');
           }
         })
         .catch(err => console.log(err))
@@ -62,15 +70,13 @@ import axios from 'axios';
         this.imgUrl = URL.createObjectURL(this.input.image[0])
         console.log(this.imgUrl)
       },
-      getFile() { // DB에서 파일 가져오기
-        axios.get('/api/files')
-              .then(result => {
-                this.files = result.data[0];
-                let dbImgUrl = `${result.data[0].file_path}/${result.data[0].file_name}.${result.data[0].extension}`;
-                console.log(dbImgUrl);
-                let localhost = "http://localhost:3000/";
-                this.imgUrl = localhost + dbImgUrl;
-              });
+      async getFile(pno) { // DB에서 파일 가져오기
+        await axios.get('/api/files/download?pno=' + pno)
+                    .then(result => {
+                      console.log('파일 담기',result)
+                      // http://localhost:3000/files/download?pno=BK240228002
+                      // return new URL(this.url + '/files/download?pno=' + pno);
+        });
       }
     }
   }
