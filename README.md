@@ -33,7 +33,7 @@
     </td>
     <td>
         <a href="https://github.com/LeeeYumin">
-            <img src="<img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/15340e5e-ba1b-4eb3-acb3-82e07fd90cab.png" width="100" height="100">
+            <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/15340e5e-ba1b-4eb3-acb3-82e07fd90cab.png" width="100" height="100">
         </a>
     </td>
   </tr>
