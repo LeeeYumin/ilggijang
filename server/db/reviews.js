@@ -4,7 +4,7 @@ const detailReviewList =
         , r.content
         , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
         , r.grade
-        , (SELECT COUNT(*) FROM likes WHERE review_no = r.review_no) AS likes
+        , r.review_no
 FROM review r 
 JOIN user u
 ON (u.user_no = r.user_no)
@@ -28,7 +28,7 @@ const detailMyReviewList =
         , r.content
         , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
         , r.grade
-        , (SELECT COUNT(*) FROM likes WHERE review_no = r.review_no) AS likes
+        , r.review_no
 FROM review r
 JOIN user u
 ON (u.user_no = r.user_no)
@@ -70,6 +70,24 @@ const reviewDelete =
 `DELETE FROM review
 WHERE review_no = ? `;
 
+// 좋아요 추가 삭제
+const likeInsert = 
+`INSERT INTO likes
+SET ? `;
+const likeCheck = // DB체크
+`SELECT *
+FROM likes
+WHERE user_no = ? AND review_no = ? `;
+const likeDelete =
+`DELETE FROM likes
+WHERE user_no = ? AND review_no = ? `;
+
+// 좋아요 수
+const likeCnt =
+`SELECT COUNT(*) AS lcnt 
+FROM likes 
+WHERE review_no = ? `;
+
 module.exports = {
     detailReviewList, detailReviewCnt
     , detailMyReviewList
@@ -77,4 +95,5 @@ module.exports = {
     , reviewInsert
     , reviewUpdate
     , reviewDelete
+    , likeCheck, likeInsert, likeDelete, likeCnt
 }

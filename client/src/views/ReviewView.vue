@@ -1,6 +1,7 @@
 <template>
   <div class="reviews">
     <h3 v-if="listId == '/mrvlist' && userno != ''">내가 쓴 리뷰</h3>
+    <h4 v-if="currentList == ''">아직 리뷰가 없습니다.</h4>
     <div class="reviewlist" :key="i" v-for="i in currentList">
       <div class="top">
         <div class="writerdate">
@@ -17,7 +18,7 @@
       </div>
       <div class="likes" v-if="listId == '/rvlist'">
         <span>Like
-          <Likes :cnt="i.likes" />
+          <Likes :rno="i.review_no"/>
         </span>
       </div>
     </div>
@@ -37,7 +38,6 @@ export default {
     pcode: { type: String, default: '' },
     listId: { type: String, default: '' },
     soltno: { type: String, default: '' },
-    userno: { type: String, default: '' }
   },
   components: {
     Likes
@@ -48,7 +48,8 @@ export default {
       currentPage: 1,
       startCnt: 10,
       pages: 0,
-      currentCode: null
+      currentCode: null,
+      userno : this.$store.state.userNo
     }
   },
   created() {
@@ -71,7 +72,7 @@ export default {
       this.pages = result.data[0].pcnt;
     },
     async getMyReviewList() {
-      let result = await axios.get(`/api/reviews${this.listId}${this.userno}${this.pcode}`)
+      let result = await axios.get(`/api/reviews${this.listId}/${this.userno}${this.pcode}`)
         .catch(err => console.log(err));
       this.currentList = result.data;
     },

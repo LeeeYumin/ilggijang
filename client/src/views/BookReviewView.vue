@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="myreviews">
-            <Reviews listId="/mrvlist" pcode="/BK240228002" userno="/1" />
+            <Reviews listId="/mrvlist" pcode="/BK240228002" />
         </div>
         <div class="rtop">
             <div class="title">
