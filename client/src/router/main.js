@@ -14,6 +14,8 @@ import BookSearchListView from '../views/BookSearchListView.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
 import UserJoinView from '../views/UserJoinView.vue';
 import UserInfoView from '../views/UserInfoView.vue';
+import UserUpdateView from '../views/UserUpdateView.vue';
+
 
 
 
@@ -102,6 +104,10 @@ export default {
       {
         path: '/userInfo',
         component: UserInfoView
+      },
+      {
+        path: '/userUpdate',
+        component: UserUpdateView
       }
    
 

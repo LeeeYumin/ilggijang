@@ -8,31 +8,31 @@
             <td class="text-center">{{ noticeInfo.notice_no }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">제목</th>
             <td class="text-center">{{ noticeInfo.title }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">내용</th>
             <td class="text-center">{{ noticeInfo.content }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">등록날짜</th>
             <td class="text-center">{{ noticeInfo.reg_date }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">조회수</th>
             <td class="text-center">{{ noticeInfo.hit_cnt }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">유형</th>
             <td class="text-center">{{ noticeInfo.type }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">고정시작일</th>
             <td class="text-center">{{ noticeInfo.fix_start_date }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">고정마감일</th>
             <td class="text-center">{{ noticeInfo.fix_end_date }}</td>
         </tr>
         
@@ -58,10 +58,15 @@ export default{
             noticeInfo : {}
         }
     },
+    created(){
+      let noticeNo = this.$route.query.noticeNo;
+      console.log(noticeNo);
+      this.getNoticeInfo(noticeNo)
+    },
   
   methods : {
-    async getNoticeInfo(Id) {
-      let result = await axios.get('/api/admin/notice/' + notice_id)
+    async getNoticeInfo(noticeNo) {
+      let result = await axios.get('/api/notice/' + noticeNo)
                               .catch(err => console.log(err));
       let info = result.data;
       this.noticeInfo = info; 
@@ -80,16 +85,16 @@ export default{
     }
   }
 ,
-    goToUpdate(Id) {
+    goToUpdate(noticeNo) {
       // 수정폼 컴포넌트 호출
       //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
-      this.$router.push({ path: '/noticeForm', query: {'notice_id' : notice_id}});
+      this.$router.push({ path: '/noticeInfo', query: {'notice_no' : noticeNo}});
     },
-    deleteInfo(Id) {
+    deleteInfo(noticeNo) {
       // 서버의 해당 데이터 삭제
-      console.log(Id);
+      
       axios
-      .delete(`/api/admin/notice/${notice_id}`)
+      .delete(`/api/admin/notice/${noticeNo}`)
       .then(result => {
           if(result.data.affectedRows != 0 && result.data.changedRows == 0){
               alert(`정상적으로 삭제되었습니다.`);

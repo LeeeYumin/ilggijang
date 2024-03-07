@@ -21,10 +21,23 @@ const noticeUpdate =
 SET ?
 WHERE notice_no = ?`;
 
+//공지사항 단건 조회
+const noticeInfo =
+`select notice_no
+       ,title
+       ,content
+       ,reg_date
+       ,hit_cnt
+       ,type
+       ,fix_start_date
+       ,fix_end_date
+from notice`;
+
 
 
 module.exports = {
     noticeList,
     noticeInsert,
-    noticeUpdate
+    noticeUpdate,
+    noticeInfo
 }
