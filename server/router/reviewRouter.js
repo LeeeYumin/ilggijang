@@ -52,17 +52,16 @@ reviewRouter.delete("/:rno", async (request, response) => {
 });
 
 // 좋아요 추가 삭제
-reviewRouter.get("/like/:uno/:rno", async (request, response, next) => { // DB에서 일치값 찾기
+reviewRouter.get("/like/:uno/:rno", async (request, response) => { // DB에서 일치값 찾기
     let data = [parseInt(request.params.uno), parseInt(request.params.rno)];
     let result = await db.connection('reviews', 'likeCheck', data);
     response.send(checkresult(data, result));
-    next()
-})
-    .get("/like/:rno", async (request, response) => {
-        let data = [parseInt(request.params.rno)];
-        let result = await db.connection('reviews', 'likeCnt', data);
-        response.send(result);
-    });
+});
+reviewRouter.get("/like/:rno", async (request, response) => {
+    let data = parseInt(request.params.rno);
+    let result = await db.connection('reviews', 'likeCnt', data);
+    response.send(result);
+});
 function checkresult(data, result) {
     if (result == '') {
         let nos = { user_no: data[0], review_no: data[1] };

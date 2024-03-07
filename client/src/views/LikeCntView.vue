@@ -26,7 +26,8 @@ export default {
     async getLikeCnt() {
       let result = await axios.get(`/api/reviews/like/${this.rno}`)
         .catch(err => console.log(err));
-        this.likec = result.data;
+        console.log(result.data);
+        this.likec = result.data[0].lcnt;
     }
   }
 }

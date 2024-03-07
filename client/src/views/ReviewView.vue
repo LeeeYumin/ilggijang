@@ -1,7 +1,7 @@
 <template>
   <div class="reviews">
     <h3 v-if="listId == '/mrvlist' && userno != ''">내가 쓴 리뷰</h3>
-    <h4 v-if="currentList == ''">아직 리뷰가 없습니다.</h4>
+    <h4 v-if="currentList == '' && userno != ''">아직 리뷰가 없습니다.</h4>
     <div class="reviewlist" :key="i" v-for="i in currentList">
       <div class="top">
         <div class="writerdate">
