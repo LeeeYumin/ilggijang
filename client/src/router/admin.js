@@ -5,6 +5,8 @@ import BookInsertView from '../views/BookInsertView.vue';
 import NoticeView from '../views/NoticeView.vue';
 import NoticeFormView from '../views/NoticeFormView.vue';
 import NoticeInfoView from '../views/NoticeInfoView.vue';
+import UserInfoview from '../views/UserInfoView.vue';
+import UserFormView from '../views/UserFormView.vue';
 
 
 export default {
@@ -41,6 +43,16 @@ export default {
         path: 'userList',
         name: 'userList',
         component: UserListview
+      },
+      {
+        path: 'userInfo',
+        name: 'userInfo',
+        component: UserInfoview
+      },
+      {
+        path: 'userForm',
+        name: 'userForm',
+        component: UserFormView
       },
       
       // 장효은

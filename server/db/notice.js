@@ -31,7 +31,8 @@ const noticeInfo =
        ,type
        ,fix_start_date
        ,fix_end_date
-from notice`;
+from notice
+WHERE notice_no = ?`;
 
 
 
