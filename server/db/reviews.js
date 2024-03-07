@@ -2,6 +2,7 @@
 const detailReviewList = 
 `SELECT RPAD(SUBSTR(u.id, 1, 2), LENGTH(u.id), '*') AS writer
         , r.content
+        , (SELECT COUNT(*) FROM likes WHERE review_no = r.review_no) AS likes
         , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
         , r.grade
         , r.review_no
@@ -11,7 +12,7 @@ ON (u.user_no = r.user_no)
 JOIN prdt p
 ON (p.prdt_no = r.prdt_no)
 WHERE p.prdt_no = ?
-ORDER BY ? DESC
+ORDER BY ?, r.write_date DESC
 LIMIT ?, 10`; // 상품 번호, 정렬번호(3~5), 페이지 값 필요
 const detailReviewCnt =
 `SELECT count(*) AS pcnt
@@ -26,6 +27,7 @@ WHERE p.prdt_no = ?`; // 상품 번호 필요
 const detailMyReviewList =
 `SELECT u.id
         , r.content
+        , (SELECT COUNT(*) FROM likes WHERE review_no = r.review_no) AS likes
         , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
         , r.grade
         , r.review_no
@@ -84,8 +86,8 @@ WHERE user_no = ? AND review_no = ? `;
 
 // 좋아요 수
 const likeCnt =
-`SELECT COUNT(*) AS lcnt 
-FROM likes 
+`SELECT COUNT(*) AS lcnt
+FROM likes
 WHERE review_no = ? `;
 
 module.exports = {

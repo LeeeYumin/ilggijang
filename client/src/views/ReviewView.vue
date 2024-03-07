@@ -18,7 +18,7 @@
       </div>
       <div class="likes" v-if="listId == '/rvlist'">
         <span>Like
-          <Likes :rno="i.review_no"/>
+          <Likes :rno="i.review_no" :cnt="i.likes" />
         </span>
       </div>
     </div>
@@ -49,7 +49,7 @@ export default {
       startCnt: 10,
       pages: 0,
       currentCode: null,
-      userno : this.$store.state.userNo
+      userno: this.$store.state.userNo
     }
   },
   created() {
@@ -58,6 +58,16 @@ export default {
       this.getReviewList(this.currentPage);
     } else if (this.userno != '') {
       this.getMyReviewList();
+    }
+  },
+  watch: {
+    soltno() {
+      if (this.listId != '/mrvlist') {
+        this.makePage();
+        this.getReviewList(this.currentPage);
+      } else if (this.userno != '') {
+        this.getMyReviewList();
+      }
     }
   },
   methods: {
