@@ -52,13 +52,14 @@ export default {
         book_img: '',
         title: '',
         publ_co: '',
-        book_price: '', //null 하면 여러건 나오는데 왜 그런거지??
+        book_price: '',
         book_intro: '',
         detail_exp: '',
         publ_date: null,
         category_code: ''
       },
-      cartAlert : false
+      cartAlert : false,
+      //existCart : false
     }
   },
   computed : {
@@ -101,26 +102,41 @@ export default {
     goCart() { //(bno)
       console.log('책정보', this.bookInfo);
       if(this.$store.state.isLogin){
-        this.addCart()
+          this.addCart()
       }else{
         alert("로그인 후 이용해주세요")
       }
     },
-    async addCart(){
+    async addCart(){ // *중복체크 + 담기
+      let uno = this.$store.state.userNo;
+      let pno = this.bookInfo.prdt_no;
+      // 장바구니 중복체크
+      await axios.get("/api/cart/cartCheck?uno="+ uno + "&pno=" + pno)
+                  .then(result=>{
+                    console.log("=======", result.data);
+                    if(result.data){
+                      this.cartInsert();// 장바구니에 추가
+                    }else{
+                      alert("이미 담긴 도서입니다")
+                    }
+                  })
+                  .catch(err => console.log(err));
+    },
+    async cartInsert(){
       let data = {
-          param : {
-            quantity : 1,
-            user_no :this.$store.state.userNo,
-            prdt_no : this.bookInfo.prdt_no
-          }
-        };
+        param : {
+          quantity : 1,
+          user_no : this.$store.state.userNo,
+          prdt_no : this.bookInfo.prdt_no
+        }
+      }
       let result = await axios.post("/api/cart", data)
                               .catch(err => console.log(err));
       let info = result.data.insertId;
       if(info > 0) {
         alert("장바구니에 추가되었습니다")
-        this.$router.push({path : '/cart'}); // 클릭이벤트 추가 methods... query 지움
-    }
+        this.$router.push({path : '/cart'}); // 클릭이벤트 추가. query 지움
+      }
     }
   }
 }

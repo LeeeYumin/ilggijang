@@ -36,7 +36,7 @@ const cartCheck =
 `SELECT cart_no
         , quantity
         , user_no
-        ,prdt_no
+        , prdt_no
 FROM cart
 WHERE user_no = ?
 AND   prdt_no = ?`;

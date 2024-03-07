@@ -41,8 +41,17 @@ cartRouter.get("/cartCheck", async (request, response) => {
     let data = [queryData.uno, queryData.pno]
     console.log(data)
     let result = await db.connection('cart', 'cartCheck', data);
-    response.send(result);
-});
+    let exist = '';
+    if (result.length > 0){
+        exist = false;
+        console.log("중복값 없음")
+      }else{
+        exist = true;
+        console.log("중복값 있음")
+      }
+      response.send(exist);
+    }
+    );
 
 // 함수
 

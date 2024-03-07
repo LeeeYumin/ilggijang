@@ -52,6 +52,7 @@ const bookSearchList =
       , title
       , publ_date
       , book_price
+      , prdt_no
 FROM prdt
 WHERE book_name like ? `;
 
