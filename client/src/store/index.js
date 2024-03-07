@@ -1,13 +1,17 @@
 import { createStore } from 'vuex'
 import persistedstate from 'vuex-persistedstate';
 
+
 const store = createStore({
     state () {
         return {
-            id: {},
-            isLogin: {},
-            userNo: {}
+            id: "",
+            isLogin: false,
+            userNo: '',
+            loginTypeCode:''
             
+           
+
         }
     },
     mutations : {
@@ -19,8 +23,10 @@ const store = createStore({
         },
         setUserNo(state, data){
            state.userNo = data;
+        },
+        setLoginTypeCode(state, data){
+            state.loginTypeCode = data;
         }
-   
    
    
    

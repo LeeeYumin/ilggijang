@@ -8,39 +8,39 @@
             <td class="text-center">{{ userInfo.user_no }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">아이디</th>
             <td class="text-center">{{ userInfo.id }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">이름</th>
             <td class="text-center">{{ userInfo.name }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">생년월일</th>
             <td class="text-center">{{ userInfo.birth_date }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">주소</th>
             <td class="text-center">{{ userInfo.addr }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">상세주소</th>
             <td class="text-center">{{ userInfo.detail_addr }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">메일</th>
             <td class="text-center">{{ userInfo.mail }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">연락처</th>
             <td class="text-center">{{ userInfo.phone }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">로그인타입</th>
             <td class="text-center">{{ userInfo.login_type_code }}</td>
         </tr>
         <tr>
-            <th class="text-right table-primary">No.</th>
+            <th class="text-right table-primary">나이</th>
             <td class="text-center">{{ userInfo.age_code }}</td>
         </tr>
 
@@ -87,7 +87,7 @@ export default{
     goToUpdate(Id) {
       // 수정폼 컴포넌트 호출
       //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
-      this.$router.push({ path: '/userForm', query: {'Id' : Id}});
+      this.$router.push({ path: '/userUpdate', query: {'Id' : Id}});
     },
     deleteInfo(Id) {
       // 서버의 해당 데이터 삭제

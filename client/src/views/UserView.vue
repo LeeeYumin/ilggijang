@@ -39,8 +39,10 @@ export default {
   data() {
     return {
       id: '',
-      pw_no: '',
-      IsLogin: ''
+      pw_no: ''
+      
+      
+      
     }
   },
   methods: {
@@ -56,7 +58,9 @@ export default {
       let uid = result.data.id;
       let upw = result.data.pw_no;
       let userNo = result.data.user_no;
-
+      let loginTypeCode = result.data.loginTypeCode;
+      
+    
 
       //console.log(uid, upw);
 
@@ -64,17 +68,25 @@ export default {
         this.$store.commit('setIsLogin', true);
         this.$store.commit('setId', uid);
         this.$store.commit('setUserNo', userNo);
+        this.$store.commit('setLoginTypeCode', loginTypeCode);
+        
+        
         alert('로그인 되었습니다.');
 
         console.log(this.$store.state.isLogin);
         console.log(this.$store.state.id);
         console.log(this.$store.state.userNo);
+       
+       
 
         if(this.id=='admin'){
           this.$router.push({path : '/admin'});
         }else{
           this.$router.push({path : '/main'});
         }
+      }else{
+        alert('아이디 또는 비밀번호를 다시 입력해주세요.');
+       
       }
     },
     validation() {
@@ -107,7 +119,9 @@ export default {
  
       
     }
-  }
+  },
+
+  
 }
 
 

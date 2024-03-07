@@ -74,19 +74,20 @@
                         <div class="col-md-12 col-lg-6 my-3">
                             <div class="form-item w-100">
                                 <label class="bold">기본주소<sup>*</sup></label>
-                                <input type="text" class="form-control" placeholder="우편번호" id="postcode" v-model="userInfo.addr" readonly>
+                                <input type="text" class="form-control" placeholder="우편번호" id="postcode" v-model="userInfo.postcode" readonly>
                             </div>
                         </div>
-                        <div class="col-md-12 col-lg-6">
-                            <div class="form-item w-100"><br><br>
+                         <div class="col-md-12 col-lg-6">
+                             <div class="form-item w-100"><br><br>
                               <div>
                                   <OpenPostcode @postcode="getCode" />
                               </div>
-                              <!-- <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button> -->
-                            </div>
-                        </div>
+                               <!-- <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button> -->
+                            </div> 
+                        </div> 
                     </div>
                     <div class="form-item">
+                        <!-- <input type="text" class="form-control" placeholder="우편번호" id="postcode" v-model="userInfo.postcode" readonly>  -->
                         <input type="text" class="form-control" placeholder="도로명주소" id="addr" v-model="userInfo.addr" readonly>
                         <input type="text" class="form-control my-3" placeholder="상세주소" id="detail_addr" v-model="userInfo.detail_addr">
                     </div>
@@ -169,7 +170,7 @@ import axios from 'axios';
                       mail : this.userInfo.mail,
                       birth_date: this.userInfo.birth_date,
                       gender_code : this.userInfo.gender_code,
-                    //   postcode : this.userInfo.postcode,
+                      postcode : this.userInfo.postcode,
                     //   member_type : this.userInfo.type,
                       addr : this.userInfo.addr,
                       detail_addr : this.userInfo.detail_addr,
