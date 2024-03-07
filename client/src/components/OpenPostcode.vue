@@ -1,6 +1,10 @@
 <template>
-    <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button>
+    <button type="button" class="btn px-4 btn-outline-primary" @click="openPostcode()">우편번호 검색</button>
 </template>
+
+<style scoped>
+    button{margin-top:-4px;}
+</style>
 
 <script>
 export default {
