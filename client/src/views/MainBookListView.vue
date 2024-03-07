@@ -1,17 +1,21 @@
 <template>
   <div class="books">
     <h3>오늘의 추천도서</h3>
-    <div class="booklist" :key="i" v-for="(book, i) in bookList">
-      <b-card :title="book.book_name" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-        tag="article" style="max-width: 20rem;" class="mb-2">
-        <b-card-text>
-          <p>{{ book.category_code }}</p>
-          <p>{{ book.title }}</p>
-        </b-card-text>
-        <b-button variant="primary" @click="goDetailBook(book.prdt_no)">상세보기</b-button>
-      </b-card>
-    </div>
+    <div class="booklist">
+    <ul>
+      <li :key="i" v-for="(book, i) in bookList">
+        <div>
+        <span class="img" @click="goDetailBook(book.prdt_no)"><img src="../assets/img_book_sample.jpg"></span>
+          <div class="text">
+            <p class="tit">{{ book.book_name }}</p>
+            <p>{{ book.category_code }}</p>
+            <p>{{ book.title }}</p>
+          </div>
+      </div>
+    </li>
+  </ul>
   </div>
+</div>
 </template>
 
 <script>
@@ -52,10 +56,20 @@ export default {
 <style scoped>
 .books {
   text-align: center;
-  margin: 0 auto;
+  margin:auto 0;
 }
-
-.booklist {
-  display: inline-block;
-}
+h3{text-align:left; color:#333; font-size:25px; font-weight:700; letter-spacing:-1px;}
+.booklist ul{padding:0 !important; list-style:none; margin-top:30px;}
+.booklist li{float:left; width:18.4%; margin:0 1% 30px;}
+.booklist li:nth-child(5n + 1){margin-left:0;}
+.booklist li:nth-child(5n + 5){float:right; margin-right:0;}
+.booklist ul:after{content:''; display:block; clear:both;}
+.booklist li > div{width:100%;}
+.booklist .img{display:block; position:relative; width:100%; height:350px; border:1px solid #ddd; cursor:pointer;}
+.booklist .img:hover:before{content:''; display:block; position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.2);}
+.booklist .img:hover:after{content:'+'; display:block; position:absolute; left:50%; top:50%; color:#fff; font-size:50px; transform:translate(-50%, -50%);}
+.booklist img{display:block; width:100%; height:100%;}
+.booklist .text{margin-top:10px; padding:5px; text-align:left; box-sizing:border-box;}
+.booklist .text > *{margin-bottom:3px; letter-spacing:-1px; color:#777; font-size:15px;}
+.booklist .text .tit{margin-bottom:3px; color:#333; font-size:16px; font-weight:700;}
 </style>
