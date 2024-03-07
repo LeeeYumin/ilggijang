@@ -20,6 +20,10 @@
             <td class="text-center">{{ userInfo.birth_date }}</td>
         </tr>
         <tr>
+            <th class="text-right table-primary">성별</th>
+            <td class="text-center">{{ userInfo.gender_code }}</td>
+        </tr>
+        <tr>
             <th class="text-right table-primary">주소</th>
             <td class="text-center">{{ userInfo.addr }}</td>
         </tr>
@@ -48,9 +52,9 @@
 
         </div>
         <div class="row">
-      <button class="btn btn-info col-4" @click="goToUpdate(userInfo.id)">수정</button>
+      <button class="btn btn-info col-4" @click="goToUpdate(userInfo.Id)">수정</button>
       <router-link to="/" class="btn btn-success col-4">목록</router-link>
-      <button class="btn btn-warning col-4" @click="deleteInfo(userInfo.id)">삭제</button>
+      <button class="btn btn-warning col-4" @click="deleteInfo(userInfo.Id)">삭제</button>
     </div>
     </div>
 
@@ -69,31 +73,39 @@ export default{
     // 성별: 남녀
     Gender() {
       let result = null;
-      if(this.userInfo.gender == 'M'){
-        result = '남성'
+      if(this.userInfo.gender_code == 'M1'){
+        result = '남'
       }
-      else if(this.userInfo.gender == 'F'){
-        result =  '여성'
+      else if(this.userInfo.gender_code == 'M2'){
+        result =  '여'
       }
-      return result
+      return result;
+    }
+    
+    
     },
+  created(){
+    let user_no = this.$route.query.user_no;
+    console.log(user_no);
+    this.getUserInfo(user_no);
+  },
   methods : {
-    async getUserInfo(Id) {
-      let result = await axios.get('/api/user/' + Id)
+    async getUserInfo(user_no) {
+      let result = await axios.get('/api/user/' + user_no)
                               .catch(err => console.log(err));
       let info = result.data;
       this.userInfo = info; 
     },
-    goToUpdate(Id) {
+    goToUpdate(user_no) {
       // 수정폼 컴포넌트 호출
       //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
-      this.$router.push({ path: '/userUpdate', query: {'Id' : Id}});
+      this.$router.push({ path: '/userInfo', query: {'user_no' : user_no}});
     },
-    deleteInfo(Id) {
+    deleteInfo(user_no) {
       // 서버의 해당 데이터 삭제
-      console.log(Id);
+      console.log(user_no);
       axios
-      .delete(`/api/user/${Id}`)
+      .delete(`/api/admin/user/${user_no}`)
       .then(result => {
           if(result.data.affectedRows != 0 && result.data.changedRows == 0){
               alert(`정상적으로 삭제되었습니다.`);
@@ -106,7 +118,7 @@ export default{
     }
   }
 }
-}
+
 
 
 
