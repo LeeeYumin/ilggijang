@@ -9,10 +9,49 @@
 
 
 #### 팀원 소개
-| <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/077a9bee-b19b-4a47-a64d-be637bb0817c.png" width="100" height="100"> | <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/3f5925a9-3818-4ec2-8699-e62e2aeaa69d.png" width="100" height="100"> | 도승민 | 박지웅 | <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/15340e5e-ba1b-4eb3-acb3-82e07fd90cab.png" width="100" height="100">  |
-| 장효은 | 신수지 | 도승민 | 박지웅 | 이유민 |
-| ------ | ------ | ------ | ------ |------ |
-| 팀장 | 부팀장  | 개발환경구축  | DB  | 깃허브  |
+<table>
+  <tr>
+    <td>
+        <a href="https://github.com/rebeca3081">
+            <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/077a9bee-b19b-4a47-a64d-be637bb0817c.png" width="100" height="100">
+        </a>
+    </td>
+    <td>
+        <a href="https://github.com/sinsuji">
+            <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/3f5925a9-3818-4ec2-8699-e62e2aeaa69d.png" width="100" height="100">
+        </a>
+    </td>
+    <td>
+        <a href="">
+            <>
+        </a>
+    </td>
+    <td>
+        <a href="">
+            <>
+        </a>
+    </td>
+    <td>
+        <a href="https://github.com/LeeeYumin">
+            <img src="<img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/15340e5e-ba1b-4eb3-acb3-82e07fd90cab.png" width="100" height="100">
+        </a>
+    </td>
+  </tr>
+  <tr>
+    <td><b>장효은</b></td>
+    <td><b>신수지</b></td>
+    <td><b>도승민</b></td>
+    <td><b>박지웅</b></td>
+    <td><b>이유민</b></td>
+  </tr>
+  <tr>
+    <td><b>팀장</b></td>
+    <td><b>부팀장</b></td>
+    <td><b>개발환경구축</b></td>
+    <td><b>DB</b></td>
+    <td><b>깃허브</b></td>
+  </tr>
+</table>
 
 
 #### 기술 스택 ✏
