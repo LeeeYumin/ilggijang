@@ -15,7 +15,7 @@ import OrderCompleteView from '../views/OrderCompleteView.vue';
 import UserJoinView from '../views/UserJoinView.vue';
 import UserInfoView from '../views/UserInfoView.vue';
 import UserUpdateView from '../views/UserUpdateView.vue';
-
+import OrderListView from '../views/OrderListView.vue';
 
 
 
@@ -63,6 +63,12 @@ export default {
         path: 'cart',
         name: 'cart',
         component: CartView
+
+    },
+    {
+        path: 'orderlist',
+        name: 'orderlist',
+        component: OrderListView
 
     },
     // 박지웅
