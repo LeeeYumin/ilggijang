@@ -19,7 +19,7 @@
           </div>
 
           <div class="right">
-            <button type="button" class="btn btn-dark">장바구니</button>
+            <button type="button" class="btn btn-dark" @click="goCart(book.prdt_no)">장바구니</button>
             <button type="button" class="btn btn-dark">찜</button>
           </div>
       </div>
@@ -41,15 +41,12 @@ export default {
       book_name : history.state.text //검색어 수정 전 : this.$route.params.text
     }
   },
+  created(){
+    let bno = this.$route.query.bookNo; // 넘겨받은 책 번호
+    this.getBookSearchList(bno) // 클릭이벤트 관련 created() 임
+  },
   mounted (){
     this.getBookSearchList()
-  },
-  // 검색결과 화면에서 다른 책 검색할 수 있게 watch 사용함
-  watch: {
-    book_name(newValue, oldValue) {
-      if (newValue != oldValue){
-        this.bookSearchList;
-    }
   },
   methods : {
     async getBookSearchList(){
@@ -70,10 +67,53 @@ export default {
       } else {
         return book_price + '원'
       }
+    },
+    goCart(prdt_no) { //(bno)
+      //console.log('책정보', bno);
+      if(this.$store.state.isLogin){
+          this.addCart(prdt_no)
+      }else{
+        alert("로그인 후 이용해주세요")
+      }
+    },
+
+    async addCart(prdt_no){ // *중복체크 + 담기
+      let uno = this.$store.state.userNo;
+      // let pno = this.book.prdt_no;
+      // 장바구니 중복체크
+      await axios.get("/api/cart/cartCheck?uno="+ uno + "&pno=" + prdt_no)
+                  .then(result=>{
+                    console.log("=======", result.data);
+                    if(result.data){
+                      this.cartInsert();// 장바구니에 추가
+                    }else{
+                      alert("이미 담긴 도서입니다")
+                    }
+                  })
+                  .catch(err => console.log(err));
+    },
+    async cartInsert(){
+      let data = {
+        param : {
+          quantity : 1,
+          user_no : this.$store.state.userNo,
+          prdt_no : this.book.prdt_no
+        }
+      }
+      let result = await axios.post("/api/cart", data)
+                              .catch(err => console.log(err));
+      let info = result.data.insertId;
+      if(info > 0) {
+        alert("장바구니에 추가되었습니다")
+        this.$router.push({path : '/cart'}); // 클릭이벤트 추가. query 지움
+      }
     }
+    // 검색결과 화면에서 다른 책 검색할 수 있게 watch 사용
+    //watch: {
+    //}
   }
 }
-}
+
 </script>
 
 <style scope>
