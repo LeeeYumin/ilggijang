@@ -11,12 +11,13 @@ noticeRouter.get("/", async (request, response) =>{
 // 공지사항 등록
 noticeRouter.post("/", async (request,response) =>{
     let data = request.body.param;
+    
     let result = await db.connection('notice', 'noticeInsert', data);
     response.send(result);
 });
 
 //공지사항 수정
-noticeRouter.put("/:nno", async (request, response)=>{
+noticeRouter.put("/:notice_no", async (request, response)=>{
     let data = [request.body.param, request.params.nno];
     let result = await db.connection('notice', 'noticeUpdate',data);
     response.send(result);
@@ -27,6 +28,13 @@ noticeRouter.get("/:notice_no", async (request, response)=>{
     let result = (await db.connection('notice','noticeInfo', data))[0];
     response.send(result);
 });
+
+//공지사항 삭제
+noticeRouter.delete("/:notice_no",async (request, response)=>{
+    let data = request.params.notice_no;
+    let result = (await db.connection('notice','deleteInfo', data))[0];
+    response.send(result);
+})
 
 //함수
 module.exports = noticeRouter;

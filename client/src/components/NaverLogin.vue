@@ -41,7 +41,7 @@ export default{
             callbackUrl: "http://localhost:8081/login",
             isPopup: false,
             loginButton: {
-                color: "green", type: 2, height: 45
+                color: "green", type: 3, height: 50
             },
            
         });

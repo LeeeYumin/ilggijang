@@ -2,107 +2,93 @@
 <div class="container mt-5">
     <h3 class="mb-4 title">주문/배송 조회</h3>
     <div class="content">
-    <div class="left">
-        <div>
-            <table class="table">
+        <table class="table">
+        <colgroup>
+            <col span="1">
+            <col span="2" style="width:10%;">
+            <col span="1" style="width:15%;">
+        </colgroup>
+        <tbody>
+            <tr>
+                <td colspan="3"><i class="point p-2">배송</i></td>
+            </tr>
+            <tr v-bind:key="idx" v-for="(list, idx) in cartList">
+                <td>
+                    <div class="book_info">
+                        <span class="img">{{ list.book_img }}</span>
+                        <div class="txt">
+                            <p>{{ list.book_name }}</p>
+                            <span>수량 : {{ list.quantity }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="tc"><i class="point">{{ formatPrice(totalPrice) }}</i>원</td>
+                <td class="tc">{{ list.orders_state }}</td>
+                <td class="tc">
+                    <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+
+        <h5>배송정보</h5>
+        <table class="table">
             <colgroup>
-                <col span="1">
-                <col span="1" style="width:15%;">
-                <col span="1" style="width:10%;">
+                <col span="1" style="width:20%;">
+                <col span="1" style="width:80%;">
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3">
-                        <div class="all_box">
-                            <b-form-checkbox
-                                id="checkbox-1"
-                                name="checkbox-1"
-                                value="accepted"
-                                v-model="selectAll"
-                                ><i class="point">전체선택</i>
-                            </b-form-checkbox>
-                        </div>
-                    </td>
-                </tr>
-                <tr v-bind:key="idx" v-for="(list, idx) in cartList">
-                    <td>
-                        <div class="book_info">
-                            <div class="check_box">
-                                <b-form-checkbox
-                                    id="checkbox-1"
-                                    name="checkbox-1"
-                                    :value="list.prdt_no"
-                                    v-model="selected"
-                                    >
-                                </b-form-checkbox>
-                            </div>
-                            <span class="img">{{ list.book_img }}</span>
-                            <div class="txt">
-                                <p>{{ list.book_name }}</p>
-                                <span>{{ list.title }}</span>
-                                <span><i class="s_point">{{ formatPrice(list.book_price) }}</i>원</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="tc">
-                        <p class="price"><i class="point">{{ formatPrice(list.total_price) }}</i>원</p> 
-                        <!-- 이전에 한거 perTotalPrice(idx, list.book_price) -->
-                        <div class="btn_num">
-                            <button @click="quantityMin(idx)"><span><i>수량 빼기</i></span></button>
-                                <input type="text" v-model="this.cartList[idx].quantity">
-                            <button @click="quantityPlus(idx)"><span><i>수량 더하기</i></span></button>
-                        </div>
-                    </td>
-                    <td class="tc">
-                        <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">삭제</button>
-                    </td>
+                    <td><p class="fs">기본정보</p></td>
+                    <td class="tc">{{ cartList.orders_state }}</td>
                 </tr>
             </tbody>
-            </table>
+        </table>
+
+        <h5>결제정보</h5>
+        <div class="pay_info">
+            <div class="left">
+                <ul>
+                    <li class="tit">
+                        <p>주문금액</p>
+                        <span><i class="point">3000</i>원</span>
+                    </li>
+                    <li>
+                        <p>상품 금액</p>
+                        <span><i class="point">3000</i>원</span>
+                    </li>
+                    <li>
+                        <p>배송비</p>
+                        <span><i class="point">3000</i>원</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="right">
+                <ul>
+                    <li class="tit">
+                        <p>결제금액</p>
+                        <span><i class="point">3000</i>원</span>
+                    </li>
+                    <li>
+                        <p>네이버페이</p>
+                        <span><i class="point">3000</i>원</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="btn_box">
+            <button class="btn btn-primary">주문/배송 목록</button>
         </div>
     </div>
-    <div class="right">
-        <ul>
-            <li>
-                <p>상품금액</p>
-                <span><i class="point">{{ formatPrice(totalBookPrice) }}</i>원</span>
-            </li>
-            <li>
-                <p>배송비</p>
-                <span>{{ formatPrice(dlvAmount) }}원</span>
-            </li>
-        </ul>
-        <div class="total">
-        <p>결제 예정 금액</p>
-        <span><i>{{ formatPrice(totalPrice) }}</i>원</span>
-        </div>
-        <button class="btn btn-primary btn_order" @click="orderLink(cartList.user_id)">주문하기</button>
-    </div>
-    </div> 
 </div>
 </template>
 
 <style scoped>
 .title{font-weight:700;}
 .content{position:relative; min-height:480px; margin-bottom:50px;}
-.content:after{content:''; display:block; clear:both;}
-.left{float:left; width:calc(100% - 28%);}
-.right{float:right; width:25%; padding:20px; border:1px solid #ddd; border-radius:15px; box-sizing:border-box;}
-.right ul{list-style:none; padding-left:0; margin-bottom:0;}
-.right .total{padding-top:20px; border-top:1px solid #ddd;}
-.right .total p{margin-bottom:0; font-weight:700; line-height:27px;}
-.right .total i{font-size:18px; font-weight:700;}
-.right li:after,
-.right .total:after{content:''; display:block; clear:both;}
-.right p{float:left; font-size:14px;}
-.right span{float:right;}
-.right span i{font-style:normal;}
-.right .btn_order{margin-top:20px; width:100%; padding:10px 0;}
 .all{padding:15px; background:#f7f7f7; border-radius:10px; box-sizing:border-box;}
 .table{margin-bottom:0; border-top:1px solid #111;}
 .table tr{border-bottom:1px solid #ddd;}
-.table tr td{border-left:1px solid #ddd;}
-.table tr td:first-child{border-left:0;}
 .container{padding:0;}
 .gray_box{padding:20px; border:1px solid #ddd; border-radius:15px; box-sizing:border-box;}
 .point{display:inline-block; font-size:18px; font-weight:700;}
@@ -135,6 +121,22 @@ table ul li button:hover{background:#eee;}
 .mr-0{margin-right:0;}
 .all_box{padding:5px 0;}
 .s_point{display:inline-block; margin-top:10px; font-style:normal; font-size:15px; font-weight:700;}
+h5{margin-top:50px; color:#333; font-weight:700;}
+h5 + table{margin-top:15px;}
+.pay_info{margin-top:15px; padding:30px 0; border-top:1px solid #111; border-bottom:1px solid #ddd; box-sizing:border-box;}
+.pay_info ul{margin:0; padding:0; list-style:none;}
+.pay_info li p{float:left; font-size:14px; color:#555; margin-bottom:5px;}
+.pay_info li.tit p{margin-bottom:15px; color:#333; font-size:15px; font-weight:700;}
+.pay_info li span{display:block; float:right; color:#555; font-size:14px;}
+.pay_info li.tit span{color:#333; font-size:15px;}
+.pay_info .left{padding-right:30px; border-right:1px dashed #ddd;}
+.pay_info .right{padding-left:30px;}
+.pay_info > div{float:left; width:50%;}
+.pay_info:after,
+.pay_info li:after{content:''; display:block; clear:both;}
+.fs{font-size:15px;}
+.btn_box{margin-top:30px; text-align:center;}
+.btn_box button{padding:10px 30px;}
 </style>
 
 <script>
