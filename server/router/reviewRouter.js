@@ -35,9 +35,15 @@ reviewRouter.post("/", async (request, response) => {
 
 // 리뷰 수정
 reviewRouter.put("/:rno", async (request, response) => {
-    let data = [request.body.jsons, request.params.rno];
-    let result = await db.connection('reviews', 'reviewUpdate', data);
-    response.send(result);
+    let udata = [request.body[0], parseInt(request.params.rno), request.body[1]]; 
+    let update = await db.connection('reviews', 'reviewUpdate', udata);
+    if(update.changedRows == 0){
+        let idata = [request.body[0], request.body[1]]
+        let insert = await db.connection('reviews', 'reviewInsert', idata);
+        console.log(insert);
+    }
+    console.log(update);
+    response.send(update);
 });
 
 // 리뷰 삭제

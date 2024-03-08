@@ -9,13 +9,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 my-3">
-                        <div class="grade" @click.capture="grade = $event.target.value">
+                        <div class="grade" @click.capture="jsons.grade = parseInt($event.target.value)">
                             <button value="1" class="star">★</button>
                             <button value="2" class="star">★</button>
                             <button value="3" class="star">★</button>
                             <button value="4" class="star">★</button>
                             <button value="5" class="star">★</button>
-                            <input type="text" v-model="grade" readonly />
+                            <input type="text" v-model="jsons.grade" readonly />
                             <div>
                                 <button>첨부파일?</button>
                             </div>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-item">
                     <textarea cols="30" rows="10" class="form-control" placeholder="내용을 입력하세요" id="addr"
-                        v-model="content"></textarea>
+                        v-model="jsons.content"></textarea>
                 </div>
                 <div class="btn_save">
                     <button class="btn btn-primary" @click="updateReview()">확인</button>
@@ -34,56 +34,50 @@
     </div>
     <!-- 데이터 확인용 -->
     <tr>
-        <input type="text" v-model="orders_detail_no" readonly />
+        <input type="text" v-model="jsons.orders_detail_no" readonly />
     </tr>
     <tr>
-        <input type="text" v-model="prdt_no" readonly />
+        <input type="text" v-model="jsons.prdt_no" readonly />
+    </tr>
+    <tr>
+        <input type="text" :value="rno" readonly />
     </tr>
 </template>
 
 <script>
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 export default {
     emits: ['close'],
-    props:{
-        review_no: {type : String, default : ''}
+    props: {
+        rno: { type: String, default: '' }
     },
     data() {
         return {
             boardid: 'reviews',
             jsons: {
-                user_no: 2, //this.$store.state.userNo,
-                write_date: null,
-                orders_detail_no: 100,
+                user_no: 2, // this.$store.state.userNo,
+                // write_date: null, // sysdate
+                orders_detail_no: 100, //
                 grade: 0,
-                prdt_no: 'BK240228001',
-                content: ""
-            }
+                prdt_no: 'BK240228002', //
+                content: ''
+            },
+            write_date: null
         }
-    },
-    watch: {
-        // write_date: function (a, b) {
-        //     console.log(a, b);
-        // },
-        // grade: function (a, b) {
-        //     console.log(a, b);
-        // }
-    },
-    beforeUnmount() {
-        console.log(this.write_date);
     },
     methods: {
         async updateReview() {
-            if(this.grade == 0){
+            if (this.jsons.grade == 0) {
                 return alert('평점을 매겨주세요');
-            } else if(this.content == ''){
+            } else if (this.jsons.content == '') {
                 return alert('내용을 입력해주세요');
             }
-            this.write_date = new Date();
-            let result = await axios.put(`/api/${this.boardid}${this.review_no}`, this.jsons)
+            this.write_date = await dayjs().format('YYYY-MM-DD');
+            let result = await axios.put(`/api/${this.boardid}${this.rno}`, [this.jsons, this.write_date])
                 .catch(err => console.log(err));
-            console.log(result.data);
+            console.log(result.data, this.write_date);
 
             this.$emit('close');
         }
