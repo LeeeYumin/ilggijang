@@ -18,9 +18,11 @@ export default {
   },
   methods: {
     async checkcnt() {
-      let result = await axios.get(`/api/reviews/like/${this.userno}/${this.rno}`)
+      if(this.userno != ''){
+        let result = await axios.get(`/api/reviews/like/${this.userno}/${this.rno}`)
         .catch(err => console.log(err));
         this.likec = result.data.lcnt;
+      }
     },
   }
 }

@@ -5,29 +5,18 @@ const db = require("../db.js");
 // 추천도서 목록 (연령대별 구매순)
 bookListRouter.get("/recdlist/:agecode/:pgno", async (request, response) => {
   let data = [request.params.agecode, parseInt(request.params.pgno)];
-  let result = await db.connection('bookLists', 'recdBookList', data);
-  response.send(result);
+  let list = await db.connection('bookLists', 'recdBookList', data);
+  let pages = await db.connection('bookLists', 'recdPageCnt', data[0]);
+  response.send({list, pages});
 });
-// 추천도서 목록 페이징 (연령대별 구매순)
-bookListRouter.get("/recdlist/:agecode", async (request, response) => {
-  let data = request.params.agecode;
-  let result = await db.connection('bookLists', 'recdPageCnt', data);
-  response.send(result);
-});
-
 
 // 베스트셀러 목록 (3개월 내 판매량 순)
 bookListRouter.get("/bestlist/:pgno", async (request, response) => {
   let data = parseInt(request.params.pgno);
-  let result = await db.connection('bookLists', 'bestSellerBookList', data);
-  response.send(result);
+  let list = await db.connection('bookLists', 'bestSellerBookList', data);
+  let pages = await db.connection('bookLists', 'bestSellerPageCnt');
+  response.send({list, pages});
 });
-// 베스트셀러 목록 페이징 (3개월 내 판매량 순)
-bookListRouter.get("/bestlist", async (request, response) => {
-  let result = await db.connection('bookLists', 'bestSellerPageCnt');
-  response.send(result);
-}); 
-
 
 // // 신간도서 목록 (12개월 내 출판 날짜순)
 // bookListRouter.get("/npubllist/:pgno", async (request, response) => {

@@ -11,7 +11,8 @@ const bookList =
       , detail_exp
       , publ_date
       , category_code
-FROM  prdt`;
+FROM  prdt
+LIMIT 0, 5`;
 
 // 상품 상세보기 컴포넌트 (관리자)
 const bookDetailInfo =

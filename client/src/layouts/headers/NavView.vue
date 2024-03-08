@@ -41,7 +41,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/notice">
+                    <router-link to="/mypage">
                         <span class="my">마이페이지</span>
                     </router-link>
                     <!-- <ul>

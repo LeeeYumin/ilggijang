@@ -34,11 +34,12 @@ userRouter.post("/", async (request, response)=>{
 });
 
 //회원단건 조회
-userRouter.get("/:user_no", async (request, response)=>{
+userRouter.get("/admin/:user_no", async (request, response)=>{
     let data = request.params.user_no;
-    let result = (await db.connection('user','userInfo', data))[0];
+    let result = (await db.connection('user','useradInfo', data))[0];
     response.send(result);
 });
+
 
 //회원단건 조회 : id 기준
 userRouter.get("/:uid", async (request, response)=>{

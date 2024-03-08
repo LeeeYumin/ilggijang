@@ -12,7 +12,7 @@ ON (u.user_no = r.user_no)
 JOIN prdt p
 ON (p.prdt_no = r.prdt_no)
 WHERE p.prdt_no = ?
-ORDER BY ?, r.write_date DESC
+ORDER BY ? DESC, r.write_date DESC
 LIMIT ?, 10`; // 상품 번호, 정렬번호(3~5), 페이지 값 필요
 const detailReviewCnt =
 `SELECT count(*) AS pcnt

@@ -11,9 +11,11 @@
   <div class="mb-3">
     <input name="pw" class="w3-input" placeholder="PW를 입력해주세요" v-model="pw_no" type="password">
   </div>
-    <button v-on:click="login" type="submit" class="w3-button w3-green w3-round">Login</button>
-   <NaverLogin />
+    <button v-on:click="Login" type="submit" class="w3-button w3-green w3-round">Login</button>
     <button v-on:click="join"  class="w3-button w3-green w3-round" >회원가입</button>
+    <button v-on:click="findid"  class="w3-button w3-green w3-round" >아이디찾기</button>
+    <button v-on:click="findpw"  class="w3-button w3-green w3-round" >비밀번호찾기</button>
+    <NaverLogin />
     
 
         </form>
@@ -106,9 +108,8 @@ export default {
     ,
     naverLogin(){
       this.$router.push({path : '/NaverLogin'});
-      
-      
     },
+    
     logout() {
       axios.get().then((res) => {   
         localStorage.removeItem('vuex');

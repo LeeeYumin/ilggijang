@@ -24,8 +24,8 @@ const userJoin =
 `INSERT INTO user
  SET ?`;
 
- //회원상세정보
-const userInfo =
+ //회원단건조회
+const userInfo = 
 `select
     id
     ,user_no
@@ -33,6 +33,25 @@ const userInfo =
     ,name
     ,birth_date
     ,addr
+    ,gender_code
+    ,detail_addr
+    ,mail
+    ,phone
+    ,login_type_code
+    ,age_code 
+FROM user
+WHERE id = ? `;
+
+//관리자용 회원정보 조회
+const useradInfo =
+`select 
+    id
+    ,user_no
+    ,pw_no
+    ,name
+    ,birth_date
+    ,addr
+    ,gender_code
     ,detail_addr
     ,mail
     ,phone
@@ -51,6 +70,6 @@ module.exports = {
     userList,
     userJoin,
     userInfo,
-    userUpdate
-
+    userUpdate,
+    useradInfo
   }
