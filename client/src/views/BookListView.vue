@@ -24,8 +24,8 @@ import axios from 'axios';
 
 export default {
   props: {
-    code: { type: String, default: ''},
-    listId: { type: String, default: ''}
+    code: { type: String, default: '' },
+    listId: { type: String, default: '' }
   },
   data() { // listId: 목록 식별, startCnt: 페이지마다 표시할 상품 인덱스 시작 단위 
     return {
@@ -40,22 +40,17 @@ export default {
   created() {
     // this.currentCode = this.code.slice(-1,-2);
     console.log(this.listId, this.code, this.currentCode);
-    if (this.listId != '/catlist') {
-      this.makePage();
-    }
     this.getBookList(this.currentPage);
-
   },
   methods: {
     async getBookList(pgno) {
       let result = await axios.get(`/api/bookLists${this.listId}${this.code}/${((pgno - 1) * this.startCnt)}`)
         .catch(err => console.log(err));
-      this.currentList = result.data;
-    },
-    async makePage() {
-      let result = await axios.get(`/api/bookLists${this.listId}${this.code}`)
-        .catch(err => console.log(err));
-      this.pages = result.data[0].pcnt;
+        console.log(result);
+      this.currentList = result.data.list;
+      if (this.listId != '/catlist') {
+        this.pages = result.data.pages[0].pcnt;
+      }
     },
   }
 }

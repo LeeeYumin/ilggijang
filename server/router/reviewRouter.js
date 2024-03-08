@@ -5,15 +5,11 @@ const db = require("../db.js");
 // 도서 상세 리뷰 목록
 reviewRouter.get("/rvlist/:pno/:odno/:pgno", async (request, response) => {
     let data = [request.params.pno, parseInt(request.params.odno), parseInt(request.params.pgno)];
-    let result = await db.connection('reviews', 'detailReviewList', data);
-    response.send(result);
+    let list = await db.connection('reviews', 'detailReviewList', data);
+    let pages = await db.connection('reviews', 'detailReviewCnt', data[0]);
+    let res = {list, pages};
+    response.send(res);
 });
-reviewRouter.get("/rvlist/:pno", async (request, response) => {
-    let data = request.params.pno;
-    let result = await db.connection('reviews', 'detailReviewCnt', data);
-    response.send(result);
-});
-
 
 // 도서 상세 내 리뷰 목록
 reviewRouter.get("/mrvlist/:uno/:pno", async (request, response) => {
@@ -39,7 +35,7 @@ reviewRouter.post("/", async (request, response) => {
 
 // 리뷰 수정
 reviewRouter.put("/:rno", async (request, response) => {
-    let data = [request.body.rjson, request.params.rno];
+    let data = [request.body.jsons, request.params.rno];
     let result = await db.connection('reviews', 'reviewUpdate', data);
     response.send(result);
 });
@@ -61,12 +57,12 @@ reviewRouter.get("/like/:uno/:rno", async (request, response) => { // DB에서 �
 async function checkresult(data, result, response) {
     if (result == '') {
         let nos = { user_no: data[0], review_no: data[1] };
-        await db.connection('reviews', 'likeInsert', nos);
+        await db.connection('reviews', 'likeInsert', nos); // 추가
     }
     else {
-        await db.connection('reviews', 'likeDelete', data);
+        await db.connection('reviews', 'likeDelete', data); // 삭제
     };
-    let cnt = (await db.connection('reviews', 'likeCnt', data[1]))[0];
+    let cnt = (await db.connection('reviews', 'likeCnt', data[1]))[0]; // 좋아요 수
     response.send(cnt);
 };
 

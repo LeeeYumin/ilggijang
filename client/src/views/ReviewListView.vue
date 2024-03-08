@@ -7,6 +7,8 @@
         <div class="writerdate">
           <span v-if="listId == '/rvlist'">구매자명 : {{ i.writer }} / </span>
           <span>{{ i.write_date }}</span>
+          <button v-if="listId == '/mrvlist' && userno != ''" @click="$emit('update', i.review_no)">수정</button>
+          <button v-if="listId == '/mrvlist' && userno != ''">삭제</button>
         </div>
         <div class="grade">
           <span :key="g" v-for="g in i.grade">★</span>
@@ -23,7 +25,7 @@
       </div>
     </div>
     <div class="pages" v-if="listId == '/rvlist'">
-      <b-pagination v-model="currentPage" :total-rows="pages" :per-Page="startCnt"
+      <b-pagination v-model="currentPage" :total-rows="pagecnts" :per-Page="startCnt"
         @click="getReviewList(currentPage)"></b-pagination>
     </div>
   </div>
@@ -32,6 +34,7 @@
 <script>
 import axios from 'axios';
 import Likes from '../views/LikeCntView.vue';
+
 
 export default {
   props: {
@@ -42,19 +45,20 @@ export default {
   components: {
     Likes
   },
+  emits : ['allcntevt', 'update'],
   data() { // listId: 목록 식별, startCnt: 페이지마다 표시할 상품 인덱스 시작 단위 
     return {
       currentList: [],
       currentPage: 1,
       startCnt: 10,
-      pages: 0,
+      pagecnts: 0,
       currentCode: null,
       userno: this.$store.state.userNo
     }
   },
   created() {
+    
     if (this.listId != '/mrvlist') {
-      this.makePage();
       this.getReviewList(this.currentPage);
     } else if (this.userno != '') {
       this.getMyReviewList();
@@ -63,7 +67,6 @@ export default {
   watch: {
     soltno() {
       if (this.listId != '/mrvlist') {
-        this.makePage();
         this.getReviewList(this.currentPage);
       } else if (this.userno != '') {
         this.getMyReviewList();
@@ -74,12 +77,9 @@ export default {
     async getReviewList(pgno) {
       let result = await axios.get(`/api/reviews${this.listId}${this.pcode}${this.soltno}/${((pgno - 1) * this.startCnt)}`)
         .catch(err => console.log(err));
-      this.currentList = result.data;
-    },
-    async makePage() {
-      let result = await axios.get(`/api/reviews${this.listId}${this.pcode}`)
-        .catch(err => console.log(err));
-      this.pages = result.data[0].pcnt;
+      this.currentList = result.data.list;
+      this.pagecnts = result.data.pages[0].pcnt;
+      this.$emit('allcntevt', this.pagecnts);
     },
     async getMyReviewList() {
       let result = await axios.get(`/api/reviews${this.listId}/${this.userno}${this.pcode}`)

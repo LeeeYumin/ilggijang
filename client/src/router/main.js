@@ -10,6 +10,7 @@ import RecommendBookMenuView from '../views/navs/RecommendBookMenuView.vue';
 import BestsellerBookMenuView from '../views/navs/BestsellerBookMenuView.vue';
 import CategoryBookMenuView from '../views/navs/CategoryBookMenuView.vue';
 import BookReviewView from '../views/BookReviewView.vue';
+import RegisterModalView from '../views/RegisterModalView.vue';
 import BookSearchListView from '../views/BookSearchListView.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
 import UserJoinView from '../views/UserJoinView.vue';
@@ -105,6 +106,11 @@ export default {
         path: 'bookReview',
         name: 'bookReview',
         component: BookReviewView
+    },
+    {
+        path: 'registerModal',
+        name: 'registerModal',
+        component: RegisterModalView
     },
     // 도승민
     {

@@ -20,7 +20,7 @@ ON (od.orders_no = o.orders_no)
 JOIN user u
 ON (o.user_no = u.user_no)
 WHERE u.age_code = ?
-ORDER BY ordercnt, p.book_name DESC
+ORDER BY ordercnt DESC, p.book_name 
 LIMIT ?, 8`; // 연령대 코드 필요, 페이지 값 필요
 const recdPageCnt =
 `SELECT COUNT(DISTINCT p.prdt_no) AS pcnt
@@ -51,7 +51,7 @@ ON (p.prdt_no = od.prdt_no)
 JOIN orders o
 ON (od.orders_no = o.orders_no)
 WHERE TIMESTAMPDIFF(MONTH, o.orders_date, CURDATE()) < 3
-ORDER BY ordercnt, book_name DESC
+ORDER BY ordercnt DESC, book_name 
 LIMIT ?, 8`; // 페이지 값 필요
 const bestSellerPageCnt =
 `SELECT COUNT(DISTINCT p.prdt_no) AS pcnt
@@ -72,7 +72,7 @@ const newPublBookList =
         , publ_date
 FROM prdt
 WHERE TIMESTAMPDIFF(MONTH, publ_date, CURDATE()) < 12
-ORDER BY publ_date, book_name DESC
+ORDER BY publ_date DESC, book_name 
 LIMIT ?, 8`; // 페이지 값 필요
 const newPublPageCnt =
 `SELECT COUNT(*) AS pcnt
@@ -93,7 +93,7 @@ const categoryBookList =
             WHERE odc.prdt_no = p.prdt_no) AS ordercnt
 FROM prdt p
 WHERE category_code = ?
-ORDER BY ordercnt, book_name DESC`; // 카테고리 코드 필요
+ORDER BY ordercnt DESC, book_name `; // 카테고리 코드 필요
 
 module.exports = {
     recdBookList, recdPageCnt

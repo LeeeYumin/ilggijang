@@ -28,7 +28,7 @@ const userJoin =
 const userInfo = 
 `select 
     id
-    ,user_no
+    ,user_id
     ,pw_no
     ,name
     ,birth_date
@@ -39,7 +39,7 @@ const userInfo =
     ,login_type_code
     ,age_code 
 FROM user
-WHERE user_no = ? `;
+WHERE user_id = ? `;
 
 //회원정보 수정
 const userUpdate = 
