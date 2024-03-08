@@ -17,6 +17,16 @@
       <img :src="this.imgUrl">
     </div>
 
+    <!-- 라디오버튼 -->
+    <div>
+    <b-form-group label="Individual radios" v-slot="{ ariaDescribedby }">
+      <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="some-radios" value="A">Option A</b-form-radio>
+      <b-form-radio v-model="selected" :aria-describedby="ariaDescribedby" name="some-radios" value="B">Option B</b-form-radio>
+    </b-form-group>
+
+    <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+  </div>
+
     <div>
       <img src="http://localhost:3000/files/download?pno=BK240228002">
       <button @click="getFile('BK240228002')">파일 가져오기</button>
@@ -34,7 +44,8 @@ import axios from 'axios';
         input: {
           image: ''
         },
-        getImgUrl : ''
+        getImgUrl : '',
+        selected: ''
       }
     },
     created() {
