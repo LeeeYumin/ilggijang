@@ -34,11 +34,21 @@ const noticeInfo =
 from notice
 WHERE notice_no = ?`;
 
+//공지사항 삭제
+const deleteInfo = 
+`DELETE FROM notice
+WHERE notice_no = ?`
+
+
+
+
+
 
 
 module.exports = {
     noticeList,
     noticeInsert,
     noticeUpdate,
-    noticeInfo
+    noticeInfo,
+    deleteInfo
 }
