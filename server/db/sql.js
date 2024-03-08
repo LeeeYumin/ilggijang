@@ -21,6 +21,7 @@ const save = require('./save.js') // 찜 sql문
 
 // 이유민
 const books = require('./books.js'); // 상품 sql문
+const product = require('./product.js'); // 상품 sql문
 
 
 
@@ -48,4 +49,5 @@ module.exports = {
 
     // 이유민
     , books
+    , product
 }

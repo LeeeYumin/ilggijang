@@ -14,13 +14,13 @@
         </thead>
 
     <tbody>
-      <tr>
-    <td>{{  }}</td>
-    <td>{{  }}</td>
-    <td>{{  }}</td>
-    <td>{{  }}</td>
-    <td>{{  }}</td>
-    <td>{{  }}</td>
+      <tr :key="i" v-for="(product, i) in productList" @click="goToDetail(product.no)">
+    <td>{{ product.book_img }}</td>
+    <td>{{ product.book_name }}</td>
+    <td>{{ product.isbn }}</td>
+    <td>{{ product.title }}</td>
+    <td>{{ product.publ_co }}</td>
+    <td>{{ product.book_price }}</td>
       </tr>
      </tbody>
     </table>
@@ -30,29 +30,31 @@
 <script>
 // import axios from 'axios'
 
-export default {
-    data(){
-        return {
-      
-        }
-    },
-    
-    watch: {
-      // "userList가 바뀌면 뭘 하겠다"
-      userList(newQuestion, oldQuestion) {
-        console.log('이전 : ' + oldQuestion);
-        // alert('데이터가 변경되었습니다.');
-        console.log('이후 : ' + newQuestion);
-      }
-    },
+// export default {
+//   data(){
+//     return {
+//       productList : []
+//     };
+//   },
 
-    created() {
-    },
+//   created() {
+//     this.productList();
 
-    methods : {
+//     },
 
-  }
-}
+//     methods : {
+//       async productList(){
+//         let result = await axios.get('/api/product')
+//                                .catch(err => console.log(err));
+
+//         this.productList = result.data;
+//     }
+//   }
+// }
 
 
 </script>
+
+<style>
+
+</style>

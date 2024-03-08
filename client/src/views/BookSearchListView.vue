@@ -4,15 +4,16 @@
     <div class="row">
       <div class="result">
         <div class="selected" :key="i" v-for= "(book, i) in bookSearchList">
-          <div class="left">책표지
+          <div class="left" @click="goDetailBook(book.prdt_no)">책표지
             <img src="{{ book.book_img }}" alt="cover">
           </div>
+
           <div>
             <ul class="prdt_list">
               <li class="prdt_item">
                 <p> 도서명 : {{ book.book_name }}</p>
                 <p> 저자 : {{ book.title }}</p>
-                <p> 출간일 : {{ book.publ_date }}</p>
+                <p> 출간일 : {{ publDate(book.publ_date) }}</p>
                 <p> 가격 : {{ formatPrice(book.book_price) }}</p>
               </li>
             </ul>
@@ -23,37 +24,63 @@
             <button type="button" class="btn btn-dark">찜</button>
           </div>
       </div>
+      <div>
+      </div>
     </div>
-
     </div>
   </div>
 </template>
 
 <script>
+//import Search from '../layouts/headers/SearchView.vue';
 import axios from 'axios';
 
 export default {
   name : "bookSearch",
-
+  searchList : 'searchList',
+  // components : {
+  //   Search
+  // },
   data() {
-    return {
+    return{
       bookSearchList: [ ], //결과를 담는 배열
-      book_name : history.state.text //검색어 수정 전 : this.$route.params.text
+      book_name : this.$route.query.book_name //history.state.book_name. 검색어 수정 전 : this.$route.params.text
     }
   },
   created(){
-    let bno = this.$route.query.bookNo; // 넘겨받은 책 번호
-    this.getBookSearchList(bno) // 클릭이벤트 관련 created() 임
-  },
-  mounted (){
+    this.book_name = this.$route.query.book_name; // 넘겨받은 책 번호
     this.getBookSearchList()
+    //this.getBookSearchList(bno), // 클릭이벤트 관련 created() 임
+    //console.log(this.$route.params.book_name);
+    this.$watch(
+      () => this.$route.query,
+      () => {
+        if (this.$route.query.book_name){
+          this.bookName = this.$route.query.book_name;
+          this.getBookSearchList()
+        }else {
+          this.bookName = '';
+        }
+      }
+    )
   },
   methods : {
     async getBookSearchList(){
-      let result = await axios.get('/api/books/search/'+ history.state.text)
+      let result = await axios.get('/api/books/search/'+ this.$route.query.book_name)
                               .catch(err => console.log(err));
       console.log(result);
       this.bookSearchList = result.data;
+    },
+    publDate(publ_date) { // computed는 값 1개일때 쓰기. 이 경우는 methods에 넣기 (for문)
+      let result = null;
+      if(publ_date != null){
+          let date = new Date(publ_date);
+          let year = date.getFullYear();
+          let month = ('0' + (date.getMonth() + 1)).slice(-2);
+          let day = ('0' + date.getDate()).slice(-2);
+          result = `${year}년 ${month}월 ${day}일`;
+        }
+      return result;
     },
     formatPrice(book_price) {
       if (book_price > 999) {
@@ -85,19 +112,19 @@ export default {
                   .then(result=>{
                     console.log("=======", result.data);
                     if(result.data){
-                      this.cartInsert();// 장바구니에 추가
+                      this.cartInsert(prdt_no);// 장바구니에 추가
                     }else{
                       alert("이미 담긴 도서입니다")
                     }
                   })
                   .catch(err => console.log(err));
     },
-    async cartInsert(){
+    async cartInsert(prdt_no){
       let data = {
         param : {
           quantity : 1,
           user_no : this.$store.state.userNo,
-          prdt_no : this.book.prdt_no
+          prdt_no : prdt_no
         }
       }
       let result = await axios.post("/api/cart", data)
@@ -108,15 +135,11 @@ export default {
         this.$router.push({path : '/cart'}); // 클릭이벤트 추가. query 지움
       }
     },
-     //검색결과 화면에서 다른 책 검색할 수 있게 watch 사용
-    watch: {
-      bookSearchList(newVal, oldVal) {
-        console.log('다른 도서 :', newVal);
-        console.log('현재 검색 도서 :', oldVal);
-      }
+    goDetailBook(bno) { // 이미지 클릭하면 상세화면으로.
+      this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
     }
   }
-}
+      }
 
 </script>
 
