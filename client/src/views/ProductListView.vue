@@ -14,7 +14,7 @@
         </thead>
 
     <tbody>
-      <tr :key="i" v-for="(product, i) in productList" @click="goToDetail(product.no)">
+      <tr v-for="(product, i) in product" v-bind:key="i" @click="goToDetail(product.book_img)">
     <td>{{ product.book_img }}</td>
     <td>{{ product.book_name }}</td>
     <td>{{ product.isbn }}</td>
@@ -24,33 +24,34 @@
       </tr>
      </tbody>
     </table>
+    <router-link to="/admin/productInsert" class="btn btn-info col-4">도서 추가</router-link>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
-// export default {
-//   data(){
-//     return {
-//       productList : []
-//     };
-//   },
+export default {
+  data(){
+    return {
+      product : [] // productList ?
+    };
+  },
 
-//   created() {
-//     this.productList();
+  created() {
+    this.getproduct();
 
-//     },
+    },
 
-//     methods : {
-//       async productList(){
-//         let result = await axios.get('/api/product')
-//                                .catch(err => console.log(err));
+    methods : {
+      async getproduct(){
+        let result = await axios.get('/api/product')
+                               .catch(err => console.log(err));
 
-//         this.productList = result.data;
-//     }
-//   }
-// }
+        this.productList = result.data;
+    }
+  }
+}
 
 
 </script>
