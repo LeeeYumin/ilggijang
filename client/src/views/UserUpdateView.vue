@@ -47,7 +47,7 @@
           <td class="text-center">
             <input
               class="form-control"
-              type="password"
+              type="text"
               v-model="userInfo.addr"
             />
           </td>
@@ -57,7 +57,7 @@
           <td class="text-center">
             <input
               class="form-control"
-              type="password"
+              type="text"
               v-model="userInfo.phone"
             />
           </td>
@@ -85,12 +85,12 @@ export default {
         name: "",
         addr: "",
         phone: "",
-      },
+      }
     };
   },
   created() {
-    let user_no = this.$route.query.user_no;
-    this.getUserInfo(user_no);
+    let no = this.$route.query.user_no;
+    this.getUserInfo(no);
   },
   methods: {
     async getUserInfo(user_no) {
@@ -120,7 +120,7 @@ export default {
             alert(`정상적으로 수정되었습니다.`);
             this.$router.push({
               path: "/userInfo",
-              query: { user_no: this.userInfo.user_no },
+              query: { 'Id': this.userInfo.user_no },
             });
           }
         })
@@ -152,7 +152,7 @@ export default {
     },
     getSendData() {
       let obj = this.userInfo;
-      let delData = ["user_no", "id", "name", "addr", "phone"];
+      let delData = ["user_no", "id","pw_no", "name", "addr", "phone"];
       let newObj = {};
 
       let isTargeted = null;
