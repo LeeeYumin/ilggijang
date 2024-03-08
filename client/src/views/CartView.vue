@@ -322,19 +322,24 @@ export default {
                 alert('상품을 선택해주세요.');
             } else {
                 let result = confirm(`상품을 주문하시겠습니까?`); // ${this.selectCount}개의 
-                if( result )
-                {
+                if( result ) {
                     // yes 
                     let selectItem = [];
                     for(let i = 0; i < this.cartList.length; i++){
                         if(this.selected.includes(this.cartList[i].prdt_no)){
-                            selectItem.push({ book_no : this.cartList[i].prdt_no, book_name : this.cartList[i].book_name, quantity : this.cartList[i].quantity, book_img : this.cartList[i].book_img, book_price : this.cartList[i].book_price});
-                            localStorage.setItem("selectItem", JSON.stringify(selectItem));
+                            selectItem.push({ 
+                                                book_no : this.cartList[i].prdt_no,
+                                                book_name : this.cartList[i].book_name,
+                                                quantity : this.cartList[i].quantity,
+                                                book_img : this.cartList[i].book_img,
+                                                book_price : this.cartList[i].book_price,
+                                                total_price : this.cartList[i].total_price
+                                            });
+                            sessionStorage.setItem("selectItem", JSON.stringify(selectItem));
                         }
                     }
-                    
-                }
-                this.$router.push({ path : '/order', query : { "id" : userId } });
+                    this.$router.push({ path : '/order', query : { "id" : userId } });
+                } 
             }
         }
     }

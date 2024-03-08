@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-.visual{width:100%; height:400px; background:#ddd;}
+.visual{width:100%; height:400px; background:#ffe9dc url(../assets/bg_visual.jpg) 50% no-repeat;}
 .visual .container{margin-top:0;}
 .main {
   width: 100%;
