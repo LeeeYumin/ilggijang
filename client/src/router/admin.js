@@ -7,6 +7,9 @@ import NoticeFormView from '../views/NoticeFormView.vue';
 import NoticeInfoView from '../views/NoticeInfoView.vue';
 import UserInfoview from '../views/UserInfoView.vue';
 import UserFormView from '../views/UserFormView.vue';
+import ProductListView from '../views/ProductListView.vue';
+import ProductDetailView from '../views/ProductDetailView.vue';
+import ProductInsertView from '../views/ProductInsertView.vue';
 
 
 export default {
@@ -26,7 +29,7 @@ export default {
         name: 'noticeForm',
         component: NoticeFormView
       },
-      
+
       {// admin 에 넣어야함
         path: 'notice',
         name: 'notice',
@@ -54,13 +57,30 @@ export default {
         name: 'userForm',
         component: UserFormView
       },
-      
+
       // 장효은
       {
         path: 'bookInsert',
         name: 'bookInsert',
         component: BookInsertView
       },
-   
+
+      // 이유민
+      {
+        path: 'productList',
+        name: 'productList',
+        component: ProductListView
+      },
+      {
+        path: 'productDetail',
+        name: 'productDetail',
+        component: ProductDetailView
+      },
+      {
+        path: 'productInsert',
+        name: 'productInsert',
+        component: ProductInsertView
+      },
+
     ]
   }

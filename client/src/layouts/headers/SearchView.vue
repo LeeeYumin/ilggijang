@@ -25,16 +25,17 @@
     methods : {
       searchWord() {
         if(this.text !== ''){ //검색어 입력함
+          console.log('""', this.text, '""' + '검색')
           this.$router.push({
-            path : "/bookSearch?i="+ (++this.cnt),
+            name : "bookSearch",
+            query : {book_name : this.text}
             //name : "bookSearch",
-            state : { //client.json - vue라우터 버전에 맞춰 수정. params 사용불가.
-              text : this.text,
-              //isResultShow :true,
-            },
+            // state : { //client.json - vue라우터 버전에 맞춰 수정. params 사용불가.
+            //   book_name : this.text,
+            //   //isResultShow :true,
+            // },
           });
          //this.text = ''
-          console.log('""', this.text, '""' + '검색')
 
         } else {
           alert('도서명을 입력해주세요!') //검색어 미입력

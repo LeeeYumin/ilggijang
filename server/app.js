@@ -28,6 +28,8 @@ const saveRouter = require('./router/saveRouter.js') // 찜
 
 // 이유민
 const bookRouter = require('./router/bookRouter.js'); // 상품
+const productRouter = require('./router/productRouter.js'); // 관리자페이지 상품
+
 
 app.use( // json-parser
   express.json({
@@ -60,6 +62,8 @@ app.use('/save', saveRouter); // 찜
 
 // 이유민
 app.use('/books', bookRouter); //책 검색결과 목록, 상세 (get방식)
+app.use('/product', productRouter); //관리자 페이지
+
 
 app.listen(3000, () => {
   console.log("Server started. port 3000.");
@@ -89,7 +93,7 @@ app.post("/complete", async (req, res) => {
     const getToken = await axios({
       url: "https://api.iamport.kr/users/getToken",
       method: "post", // POST method
-      headers: { "Content-Type": "application/json" }, 
+      headers: { "Content-Type": "application/json" },
       data: {
         imp_key: "3584236023273102", // REST API 키
         imp_secret: "8du8ISTcXenIgm3sySvTzfhMMHFCVMf8McZ34XLagnYYzaLnGvVKxY1K1kLrtDlVerJ2kOel4lOUzPEQ" // REST API Secret
@@ -104,23 +108,23 @@ app.post("/complete", async (req, res) => {
     // imp_uid로 포트원 서버에서 결제 정보 조회
     const getPaymentData = await axios({
       // imp_uid 전달
-      url: `https://api.iamport.kr/payments/${imp_uid}`, 
+      url: `https://api.iamport.kr/payments/${imp_uid}`,
       // GET method
-      method: "get", 
+      method: "get",
       // 인증 토큰 Authorization header에 추가
-      headers: { "Authorization": accessToken } 
+      headers: { "Authorization": accessToken }
     });
-    
+
     const paymentData = getPaymentData.data; // 조회한 결제 정보
     console.log(paymentData);
     console.log(paymentData.response);
 
     res.send(paymentData.response); // 클라이언트쪽에 결제 상태값을 응답해줌
-  } 
+  }
   catch (e) {
     res.status(400).send(e);
   }
-}); 
+});
 
 app.post("/afterpay", async (req, res) => {
   let result = {};
@@ -136,7 +140,7 @@ app.post("/afterpay", async (req, res) => {
       console.log('잘들어오니?', orderDetailData)
       let orderDetailResult = await db.connection('ordersdetail', 'orderDetailInsert', orderDetailData).catch(err => console.log(err));
       console.log('주문상세결과==============',orderDetailResult);
-    
+
       // 바로 구매의 경우 카트번호가 없음!
       // 카트번호 유무로 구분해야할듯 카트삭제를 진행 할지 말지 결정해야함
       // 카트 삭제
