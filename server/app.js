@@ -124,38 +124,66 @@ app.post("/complete", async (req, res) => {
 
 app.post("/afterpay", async (req, res) => {
   let result = {};
+  let conn = await db.getConnect(); // DB연결 시작
   try {
-    let orderData = req.body.orderInfo;
-    await db.trsConnection('START TRANSACTION'); // 트랜잭션 시작
+
+    // console.log("----------------들어오는 요청--------", req)
+    let orderData = req.body.data.orderInfo;
+    console.log("주문 들어오는 값", orderData)
+
+    await db.trsConnection(conn, 'START TRANSACTION'); // 트랜잭션 시작
       // 주문 입력
-      let orderResult = await db.connection('orders', 'orderInsert', orderData);
+      let orderResult = await db.sqlConnection(conn, 'orders', 'orderInsert', orderData);
       console.log('주문결과==============', orderResult);
 
       // 주문 상세 입력
-      let orderDetailData = req.body.orderDetailInfo;
+      let orderDetailData = req.body.data.orderDetailInfo.selectList; // sessionStoeage {[],[]}
+      console.log('*********주문상세젭알', orderDetailData);
+      let orderNo = orderResult.insertId; // 주문번호
+      console.log('*********주문번호', orderNo)
+
+      let resultData = []; // DB에 보낼 데이터
+      
+      // 수량, 상품번호, 단가, 주문번호
+      let qua = 0;
+      let pno = '';
+      let perPrice = 0;
+
+      for(let i = 0; i < orderDetailData.length; i++){
+        qua = orderDetailData[i].quantity;
+        pno = orderDetailData[i].book_no;
+        perPrice = orderDetailData[i].book_price;
+        resultData.push([qua, pno, perPrice, orderNo]);
+        // 3개씩 될때 다시 배열에 담아줘야함
+      }
+
+
+      // 합치기 
       console.log('잘들어오니?', orderDetailData)
-      let orderDetailResult = await db.connection('ordersdetail', 'orderDetailInsert', orderDetailData).catch(err => console.log(err));
+      let orderDetailResult = await db.sqlConnection(conn, 'ordersdetail', 'orderDetailInsert', [resultData]).catch(err => console.log(err));
       console.log('주문상세결과==============',orderDetailResult);
     
       // 바로 구매의 경우 카트번호가 없음!
       // 카트번호 유무로 구분해야할듯 카트삭제를 진행 할지 말지 결정해야함
+
       // 카트 삭제
-      let cartInfo = [req.body.cartInfo.user_no, req.body.cartInfo.prdt_no]
+      let cartInfo = req.body.data.cartInfo.user_no;
       console.log(cartInfo);
-      let cartInfoResult = await db.connection('cart', 'cartPickDelete', cartInfo);
+      let cartInfoResult = await db.sqlConnection(conn, 'cart', 'cartPickDelete', cartInfo);
       console.log('장바구니 삭제==============', cartInfoResult);
 
-    await db.trsConnection('COMMIT'); // 커밋
+    await db.trsConnection(conn, 'COMMIT'); // 커밋
 
     result = {
       orderResult,
       orderDetailResult,
       cartInfoResult
     }
-  }
-  catch {
+    res.send(result); // 클라이언트에게 결과전송
+  }catch(err) {
     console.log('에러발생')
-    await db.trsConnection('ROLLBACK'); // 롤백
+    await db.trsConnection(conn, 'ROLLBACK'); // 롤백
+  }finally{
+    conn.release();
   }
-  res.send(result); // 클라이언트에게 결과전송
 });

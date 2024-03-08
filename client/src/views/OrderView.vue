@@ -51,7 +51,7 @@
                 </div>
               </td>
             </tr>
-            <tr class="last_tr">
+            <!-- <tr class="last_tr">
               <th>공동현관 출입방법</th>
               <td>
                 <b-form-group>
@@ -59,7 +59,7 @@
                   <b-form-radio v-model="selected" name="some-radios" value="B" class="radio">자율출입 가능</b-form-radio>
                 </b-form-group>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
         </div>
@@ -88,7 +88,7 @@
                 <td><img src="" alt="">{{ info.book_img }}</td>
                 <td>{{ info.book_name }}</td>
                 <td>{{ info.quantity }}개</td>
-                <td><i class="point">{{ formatPrice(info.book_price) }}</i>원</td>
+                <td><i class="point">{{ formatPrice(info.book_price * info.quantity) }}</i>원</td>
               </tr>
             </tbody>
           </table>
@@ -157,6 +157,7 @@
           <span><i v-bind="orderInfo.total_pay_amount">{{ formatPrice(totalPrice) }}</i>원</span>
         </div>
         <button class="btn btn-primary btn_order" @click="getImPort()">결제하기</button>
+        <!-- test -->
       </div>
     </div>
   </div>
@@ -210,6 +211,7 @@ i.point{font-style:normal; font-size:16px;}
 .popup .title{display:flex; justify-content:space-between; align-items:center;}
 .popup .btn_save{margin:30px auto 0; text-align:center;}
 .popup .btn_save button{padding:10px 30px;}
+.hidden{display:none; font-size:0;}
 </style>
 
 <script>
@@ -259,8 +261,7 @@ i.point{font-style:normal; font-size:16px;}
           pay_type : null,
           pay_result : null
         },
-        selectList: JSON.parse(localStorage.getItem("selectItem"))
-
+        selectList: JSON.parse(sessionStorage.getItem("selectItem")), // localStorage -> sessionStorage
       }
     },
     computed : {
@@ -270,8 +271,7 @@ i.point{font-style:normal; font-size:16px;}
       totalBookPrice() {
           let result = 0;
           for(let i = 0; i < this.selectList.length; i++){
-            result += this.selectList[i].book_price;
-            console.log('값', result);
+            result += (this.selectList[i].book_price * this.selectList[i].quantity);
           }
           return result;
       },
@@ -350,23 +350,6 @@ i.point{font-style:normal; font-size:16px;}
           } else {
               return book_price
           }
-      },
-      async cartPickDelete(){
-        let pno = '';
-        for(let i = 0; i < this.selectList.length; i++){
-          pno = this.selectList[i].prdt_no;
-        }
-        axios
-        .delete(`/api/cart/` + pno) 
-        .then(result => {
-            if(result.data.affectedRows != 0 && result.data.changedRows == 0) {
-                alert(`정상적으로 삭제되었습니다.`);
-                this.$router.push({ path : '/cart'});
-            }else {
-                alert(`삭제되지 않았습니다.`);
-            }
-        })
-        console.log('pno', pno);
       }, 
       // getImPort() {
       //   let IMP = window.IMP; // 생략가능
@@ -526,12 +509,14 @@ i.point{font-style:normal; font-size:16px;}
                     //DB로 저장될 정보 전송
                     // axios로 HTTP 요청
                     // 주문 insert, 주문상세 insert, 카트삭제 delete, transaction
+                    // let orderDetaildata = this.changData();
+                    
                     axios.post('/api/afterpay', {
                       data : {
                         orderInfo: {
                           recipient : result.data.buyer_name,
                           dlv_addr : result.data.buyer_addr,
-                          orders_date : this.orderInfo.orders_date,
+                          orders_date : this.orderInfo.orders_date, // 결제승인시간 확인필요
                           orders_state : 's1',
                           total_orders_amount : this.totalBookPrice,
                           dc_amount : this.totalDcPrice,
@@ -543,21 +528,15 @@ i.point{font-style:normal; font-size:16px;}
                           pay_result : result.data.status
                         },
                         orderDetailInfo : {
-                          quantity : this.cartList.quantity,
-                          orders_no : '',
-                          prdt_no : '', 
-                          unit_price : 0,
-                          orders_amount : 0
+                          orders_amount : this.totalBookPrice,
+                          selectList : this.selectList // 주문상세정보 중 수량, 단가, 상품번호
                         },
                         cartInfo : {
-
-
+                          user_no : this.$store.state.userNo
                         }
 
                       }
-                    }),
-                    // 장바구니 삭제
-                    this.cartPickDelete();
+                    })
 
                     let msg = '결제가 완료되었습니다.';
                     alert(msg);
@@ -592,6 +571,23 @@ i.point{font-style:normal; font-size:16px;}
       closePop() {
         this.$emit('close');
       }
+      // changData() { // 객체 [{},{},{}] => [[수량, 상품번호, 단가],[수량, 상품번호, 단가],[수량, 상품번호, 단가]]
+      //   let ary = [];
+
+      //   let qua = 0;
+      //   let pno = '';
+      //   let perPrice = 0;
+
+      //   for(let i = 0; i < this.selectList.length; i++){
+      //     qua = this.selectList[i].quantity;
+      //     pno = this.selectList[i].book_no;
+      //     perPrice = this.selectList[i].book_price;
+      //     ary.push([qua, pno, perPrice]);
+      //     // 3개씩 될때 다시 배열에 담아줘야함
+      //   }
+      //   return ary;
+        
+      // }
     }
   }
 </script>
