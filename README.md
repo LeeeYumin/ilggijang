@@ -27,8 +27,8 @@
         </a>
     </td>
     <td>
-        <a href="">
-            <>
+        <a href="https://github.com/zu9595">
+            <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/ff5125fa-152c-49c6-b3ea-80a11a6431b1.png" width="100" height="100">
         </a>
     </td>
     <td>
