@@ -39,12 +39,7 @@ export default {
       let result = await axios.get('/api/books')
         .catch(err => console.log(err));
 
-      this.makeBookList(result.data);
-    },
-    makeBookList(json) {
-      for (let i = 0; i < 8; i++) {
-        this.bookList[i] = json[i];
-      }
+      this.bookList = result.data;
     },
     goDetailBook(bno) {
       this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
