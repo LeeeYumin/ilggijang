@@ -1,7 +1,7 @@
 import AdminMainView from '../views/AdminMainView.vue';
 import DashBoardView from '../views/DashBoardView.vue';
 import UserListview from '../views/UserListview.vue';
-import BookInsertView from '../views/BookInsertView.vue';
+import FileView from '../views/FileView.vue';
 import NoticeView from '../views/NoticeView.vue';
 import NoticeFormView from '../views/NoticeFormView.vue';
 import NoticeInfoView from '../views/NoticeInfoView.vue';
@@ -57,9 +57,9 @@ export default {
       
       // 장효은
       {
-        path: 'bookInsert',
-        name: 'bookInsert',
-        component: BookInsertView
+        path: 'fileInfo',
+        name: 'fileInfo',
+        component: FileView
       },
    
     ]
