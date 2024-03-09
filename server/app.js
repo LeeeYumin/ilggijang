@@ -56,7 +56,7 @@ app.use('/bookLists', bookListRouter); // 도서 목록 파라미터 워딩
 
 // 신수지
 app.use('/orders', ordersRouter); // 주문
-app.use('/ordersdetail', ordersdetailRouter); // 주문
+app.use('/orderdetail', ordersdetailRouter); // 주문상세
 app.use('/cart', cartRouter); // 장바구니
 app.use('/save', saveRouter); // 찜
 

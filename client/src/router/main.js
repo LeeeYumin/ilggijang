@@ -18,6 +18,7 @@ import UserInfoView from '../views/UserInfoView.vue';
 import UserUpdateView from '../views/UserUpdateView.vue';
 import OrderListView from '../views/OrderListView.vue';
 import MypageView from '../views/MypageView.vue';
+import MyOrderlistView from '../views/MyOrderListView.vue';
 
 
 
@@ -74,7 +75,14 @@ export default {
     {
         path: 'mypage',
         name: 'mypage',
-        component: MypageView
+        component: MypageView,
+        children : [
+            {
+                path: 'myOrderlist',
+                name: 'myOrderlist',
+                component: MyOrderlistView
+            }
+        ]
     },
     // 박지웅
     {

@@ -3,32 +3,32 @@
     <h3 class="mb-4 title">주문/배송 조회</h3>
     <div class="content">
         <table class="table">
-        <colgroup>
-            <col span="1">
-            <col span="2" style="width:10%;">
-            <col span="1" style="width:15%;">
-        </colgroup>
-        <tbody>
-            <tr>
-                <td colspan="3"><i class="point p-2">배송</i></td>
-            </tr>
-            <tr v-bind:key="idx" v-for="(list, idx) in cartList">
-                <td>
-                    <div class="book_info">
-                        <span class="img">{{ list.book_img }}</span>
-                        <div class="txt">
-                            <p>{{ list.book_name }}</p>
-                            <span>수량 : {{ list.quantity }}</span>
+            <colgroup>
+                <col span="1">
+                <col span="2" style="width:10%;">
+                <col span="1" style="width:15%;">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td colspan="3"><i class="point p-2">배송</i></td>
+                </tr>
+                <tr v-bind:key="idx" v-for="(list, idx) in orderDetailList">
+                    <td>
+                        <div class="book_info">
+                            <span class="img">{{ list.book_img }}</span>
+                            <div class="txt">
+                                <p>{{ list.book_name }}</p>
+                                <span>수량 : {{ list.quantity }}</span>
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td class="tc"><i class="point">{{ formatPrice(totalPrice) }}</i>원</td>
-                <td class="tc">{{ list.orders_state }}</td>
-                <td class="tc">
-                    <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
-                </td>
-            </tr>
-        </tbody>
+                    </td>
+                    <td class="tc"><i class="point">{{ formatPrice(totalPrice) }}</i>원</td>
+                    <td class="tc">{{ list.orders_state }}</td>
+                    <td class="tc">
+                        <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <h5>배송정보</h5>
@@ -40,7 +40,7 @@
             <tbody>
                 <tr>
                     <td><p class="fs">기본정보</p></td>
-                    <td class="tc">{{ cartList.orders_state }}</td>
+                    <td class="tc">{{ this.orderDetailList.orders_state }}</td>
                 </tr>
             </tbody>
         </table>
@@ -145,105 +145,25 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            cartList : [],
-            selected: []
+            orderDetailList : []
         }
     },
     computed : {
-        count() {
-            return this.cartList.length;
-        },
-        // selectCount() {
-        //     let result = 0;
-        //     if(this.selected.length > 0){
-        //         for(let i = 0; i < this.cartList.length; i++){
-        //             if(this.selected.includes(this.cartList[i].prdt_no)){
-        //                 result += this.selected[i].length;
-        //                 console.log('갯수', result);
-        //             }
-        //         }
-        //     }
-        //     return result;
-        // },
-        totalBookPrice() {
-            let result = 0;
-            if(this.selected.length > 0){
-                for(let i = 0; i < this.cartList.length; i++){
-                    if(this.selected.includes(this.cartList[i].prdt_no)){
-                        result += this.cartList[i].total_price;
-                        console.log('1', this.selectAll);
-                        console.log('2', this.selected);
-                        console.log('값', result);
-                    }
-                }
-            }
-            return result;
-        },
-        dlvAmount() {
-            let result = 0;
-            for(let i = 0; i < this.cartList.length; i++){
-                if(this.totalBookPrice < 15000) {
-                    result = 3000;
-                }
-            }
-            return result;
-        },
-        totalPrice() {
-            let result = 0;
-            result = this.totalBookPrice + this.dlvAmount;
-            return result;
-        },
-        selectAll : { 
-            //getter
-            get: function(){
-                if((this.selected.length != this.cartList.length) || this.cartList.length == 0)
-                    return false;
-                else
-                    return true;							
-            },
-            //setter
-            set: function(e){
-                console.log('e', e)
-                if(e){                    
-                    for(let i = 0; i < this.cartList.length; i++){
-                        this.selected.push(this.cartList[i].prdt_no);
-                    }
-                }
-                else{
-                    this.selected = [];
-                }        
-            }
-        }
+        
     },
     created(){
-        // let bno = this.$route.query.bno;
-        this.getCartList();
+        this.getOrderDetailList();
     },
     methods : {
-        async getCartList(){
+        async getOrderDetailList(){
             let userNo = this.$store.state.userNo;  
             console.log('회원번호', userNo);
-            let result = await axios.get('/api/cart/user/' + userNo) 
+            let result = await axios.get('/api/orderlist/' + userNo) 
                                     .catch(err => console.log(err)); // catch -> 오류가 나지 않으면 실행이 안되고 
             let list = result.data;
             console.log(list);
-            this.cartList = list;
-            console.log('데이터', this.cartList);
-        },
-        quantityPlus(i) {
-            this.cartList[i].quantity += 1;
-            this.cartList[i].total_price = this.cartList[i].quantity * this.cartList[i].book_price;
-            this.cartUpdate(i);
-        },
-        quantityMin(i) {
-            if(this.cartList[i].quantity <= 1){
-                this.cartList[i].quantity = 1;
-                alert('1개 이하의 수량은 선택하실 수 없습니다.');
-            } else {
-                this.cartList[i].quantity -= 1;
-                this.cartList[i].total_price = this.cartList[i].quantity * this.cartList[i].book_price;
-                this.cartUpdate(i)
-            }
+            this.orderDetailList = list;
+            console.log('데이터', this.orderDetailList);
         },
         formatPrice(book_price) {
             if (book_price > 999) {
