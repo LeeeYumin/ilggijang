@@ -3,22 +3,22 @@
         <div class="popup">
             <div class="con">
                 <div class="title">
-                    <h2>리뷰 수정</h2>
+                    <h2 v-if="rno != '/0'">리뷰 수정</h2>
+                    <h2 v-if="rno == '/0'">리뷰 등록</h2>
                     <button @click="$emit('close')" class="btn_close"><font-awesome-icon icon="fa-solid fa-x"
                             size="xl" /></button>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 my-3">
                         <div class="grade" @click.capture="jsons.grade = parseInt($event.target.value)">
-                            <button value="1" class="star">★</button>
+                            <span><font-awesome-icon :icon="['fas', 'star']" style="color: #66dd70;" /></span>
+                            <span><font-awesome-icon :icon="['far', 'star']" style="color: #66dd70;" /></span>
+                            <font-awesome-icon value="1" :icon="['fas', 'star']" style="color: #66dd70;" />
                             <button value="2" class="star">★</button>
                             <button value="3" class="star">★</button>
                             <button value="4" class="star">★</button>
                             <button value="5" class="star">★</button>
                             <input type="text" v-model="jsons.grade" readonly />
-                            <div>
-                                <button>첨부파일?</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -27,12 +27,13 @@
                         v-model="jsons.content"></textarea>
                 </div>
                 <div class="btn_save">
-                    <button class="btn btn-primary" @click="updateReview()">확인</button>
+                    <button class="btn btn-primary" :disabled="rgrade === jsons.grade && rcontent === jsons.content"
+                        @click="updateReview()">확인</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- 데이터 확인용 -->
+    <!-- 데이터 확인용
     <tr>
         <input type="text" v-model="jsons.orders_detail_no" readonly />
     </tr>
@@ -41,31 +42,34 @@
     </tr>
     <tr>
         <input type="text" :value="rno" readonly />
-    </tr>
+    </tr> -->
 </template>
 
 <script>
 import axios from 'axios';
-import dayjs from 'dayjs';
 
 export default {
-    emits: ['close'],
+    emits: ['close', 'save'],
     props: {
-        rno: { type: String, default: '' }
+        rno: { type: String, default: '' },
+        rgrade: { type: Number, default: null },
+        rcontent: { type: String, default: '' },
+        rodtno: { type: Number, default: null }
     },
     data() {
         return {
             boardid: 'reviews',
             jsons: {
-                user_no: 2, // this.$store.state.userNo,
-                // write_date: null, // sysdate
-                orders_detail_no: 100, //
-                grade: 0,
-                prdt_no: 'BK240228002', //
-                content: ''
-            },
-            write_date: null
+                user_no: this.$store.state.userNo,
+                orders_detail_no: this.rodtno,
+                grade: this.rgrade,
+                prdt_no: '',
+                content: this.rcontent
+            }
         }
+    },
+    created() {
+        this.prdt_no = this.$route.query.bookNo;
     },
     methods: {
         async updateReview() {
@@ -74,12 +78,10 @@ export default {
             } else if (this.jsons.content == '') {
                 return alert('내용을 입력해주세요');
             }
-            this.write_date = await dayjs().format('YYYY-MM-DD');
-            let result = await axios.put(`/api/${this.boardid}${this.rno}`, [this.jsons, this.write_date])
+            await axios.put(`/api/${this.boardid}${this.rno}`, this.jsons)
                 .catch(err => console.log(err));
-            console.log(result.data, this.write_date);
-
-            this.$emit('close');
+            this.$emit('save');
+            alert('수정되었습니다.');
         }
     }
 }
