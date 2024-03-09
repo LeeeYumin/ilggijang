@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>상품관리</h1>
+    <h1>상품관리</h1> <!--메모 API 토스트-->
       <table class="table">
         <thead>
           <tr>
