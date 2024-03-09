@@ -127,7 +127,7 @@
                       <span v-bind:class="{'active' : isActive}">토스페이</span>
                     </label>
                   </div>
-                  <span>선택한 결제수단 : {{ selectedPay }}</span>
+                  <!-- <span>선택한 결제수단 : {{ selectedPay }}</span> -->
                   <div v-if="show" class="option_box">
                     <b-form-select v-model="selected" :options="options"></b-form-select>
                   </div>
@@ -196,7 +196,6 @@ i.point{font-style:normal; font-size:16px;}
 .pay_list label{display:inline-block; position:relative; margin-right:10px;}
 .pay_list input[type="radio"]{display:block; position:absolute; z-index:-1;}
 .pay_list span:hover{background:#eee;}
-.active{background:#eee !important;}
 .pay_list label span{display:block; width:120px; height:50px; line-height:50px; font-weight:700; text-align:center; border:1px solid #ddd; background:#fff; border-radius:5px; cursor:pointer;}
 .option_box{padding:20px; background:#eee; border-radius:10px; box-sizing:border-box;}
 .addr_info p{margin-bottom:10px;}
