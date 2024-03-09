@@ -1,15 +1,10 @@
 <template>
     <div class="header">
-        <div class="gnb">
-            <h3>gnb</h3>
-            <Gnb />
-        </div>
-        <div class="search">
-            <h3>검색영역</h3>
+        <div class="container">
+            <div class="gnb">
+                <Gnb />
+            </div>
             <Search />
-        </div>
-        <div class="nav">
-            <h3>메뉴</h3>
             <Nav />
         </div>
     </div>
@@ -32,12 +27,12 @@ export default {
 
 <style scoped>
 .header {
-    width: 960px;
+    width: 100%;
     margin: 0 auto;
-    background: #eee;
+    background: #fff; border-bottom:1px solid rgba(0, 0, 0, 0.1);
 }
-.gnb, nav {
-    border: 1px solid #888;
-}
+.header > .container{position:relative;}
+.gnb{position:absolute; top:20px; right:0; z-index:1;}
+
 
 </style>
