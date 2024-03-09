@@ -41,6 +41,7 @@ export default {
     pcode: { type: String, default: '' },
     listId: { type: String, default: '' },
     soltno: { type: String, default: '' },
+    popupon: { type: Boolean, default: false}
   },
   components: {
     Likes
@@ -57,7 +58,6 @@ export default {
     }
   },
   created() {
-    
     if (this.listId != '/mrvlist') {
       this.getReviewList(this.currentPage);
     } else if (this.userno != '') {
@@ -66,6 +66,13 @@ export default {
   },
   watch: {
     soltno() {
+      if (this.listId != '/mrvlist') {
+        this.getReviewList(this.currentPage);
+      } else if (this.userno != '') {
+        this.getMyReviewList();
+      }
+    },
+    popupon(){
       if (this.listId != '/mrvlist') {
         this.getReviewList(this.currentPage);
       } else if (this.userno != '') {

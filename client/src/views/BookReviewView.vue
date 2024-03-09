@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <RegisterModalView v-if="popupView == true" @close="popupView = false" :review_no="`/`+rno"/> <!-- 마이페이지 쪽으로 옮길 예정 -->
+        <RegisterModalView v-if="popupView == true" @close="popupView = false" :rno="`/`+uprno"/> <!-- 마이페이지 쪽으로 옮길 예정 -->
         <div class="myreviews">
-            <ReviewListView listId="/mrvlist" pcode="/BK240228002" @update="(e) => {rno = e, popupView = true}" />
+            <ReviewListView listId="/mrvlist" pcode="/BK240228002" @update="(e) => {uprno = e, popupView = true}" :popupon="popupView"/>
         </div>
         <div class="rtop">
             <div class="title">
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="previews">
-            <ReviewListView listId="/rvlist" pcode="/BK240228002" :soltno="`/` + solt" @allcntevt="(e) => reviewcnt = e" />
+            <ReviewListView listId="/rvlist" pcode="/BK240228002" :soltno="`/` + solt" @allcntevt="(e) => reviewcnt = e" :popupon="popupView"/>
             <!-- Reviews로 정보를 넘겨주는 곳. 상품 코드, 정렬 컬럼번호(3~5)를 받아야함-->
             <!-- @현재 리뷰 갯수 갱신 -->
         </div>
@@ -43,7 +43,7 @@ export default {
             popupView: false,
             solt: 3,
             reviewcnt: 0,
-            rno: 0
+            uprno: 5
         }
     },
     methods: {
