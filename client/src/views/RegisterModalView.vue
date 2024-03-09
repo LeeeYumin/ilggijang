@@ -10,16 +10,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 my-3">
-                        <div class="grade" @click.capture="jsons.grade = parseInt($event.target.value)">
-                            <span><font-awesome-icon :icon="['fas', 'star']" style="color: #66dd70;" /></span>
-                            <span><font-awesome-icon :icon="['far', 'star']" style="color: #66dd70;" /></span>
-                            <font-awesome-icon value="1" :icon="['fas', 'star']" style="color: #66dd70;" />
-                            <button value="2" class="star">★</button>
-                            <button value="3" class="star">★</button>
-                            <button value="4" class="star">★</button>
-                            <button value="5" class="star">★</button>
-                            <input type="text" v-model="jsons.grade" readonly />
+                        <div class="grade" >
+                            <font-awesome-icon class="star" :key="g" v-for="g in jsons.grade" :value="g" type="button" :icon="['fas', 'star']" style="color: #66dd70;" @click.capture="jsons.grade = parseInt(g)"/>
+                            <font-awesome-icon class="star" :key="g" v-for="g in 5 - jsons.grade" :value="g + jsons.grade" type="button" :icon="['far', 'star']" style="color: #66dd70;" @click.capture="jsons.grade = parseInt(g + jsons.grade)"/>
                         </div>
+                        <input type="text" v-model="jsons.grade" readonly />
                     </div>
                 </div>
                 <div class="form-item">
@@ -141,5 +136,19 @@ export default {
 
 .popup .btn_save button {
     padding: 10px 30px;
+}
+
+.star {
+    stroke-opacity: 0%;   
+}
+.grade {
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    visibility: hidden;
+}
+.star {
+    z-index: 100;
+    visibility: visible;
 }
 </style>

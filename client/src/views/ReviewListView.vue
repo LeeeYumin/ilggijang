@@ -73,10 +73,8 @@ export default {
       if (a == true) {
         if (this.listId != '/mrvlist') {
           this.getReviewList(this.currentPage);
-          console.log('목록 불러옴1')
         } else if (this.userno != '') {
           this.getMyReviewList();
-          console.log('목록 불러옴2')
         }
         this.$emit('refresh', false);
       }
