@@ -20,11 +20,9 @@
           </b-button>
         </router-link>
 
-        <router-link to="/cart">
-          <b-button class="btn_top">
+          <b-button class="btn_top" @click="goCart()">
             <p>장바구니</p>
           </b-button>
-        </router-link>
 
         <router-link to="">
           <b-button class="btn_top">
@@ -47,7 +45,6 @@ export default {
   data() {
     return {
       isLogin: this.$store.state.isLogin
-
     }
   },
   methods: {
@@ -79,7 +76,15 @@ export default {
       
      
     }
-  }
+    },
+    goCart() {
+      if(!this.isLogin) {
+        alert('로그인이 필요합니다.');
+        this.$router.push({path : '/login'});
+      } else {
+        this.$router.push({path : '/cart'});
+      }
+    }
 
 
 
