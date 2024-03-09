@@ -14,7 +14,7 @@
         </thead>
 
     <tbody>
-      <tr v-for="(product, i) in product" v-bind:key="i" @click="goToDetail(product.book_img)">
+      <tr v-for="(product, i) in product" v-bind:key="i" @click="goToDetail(product.prdt_no)">
     <td>{{ product.book_img }}</td>
     <td>{{ product.book_name }}</td>
     <td>{{ product.isbn }}</td>
@@ -39,20 +39,22 @@ export default {
   },
 
   created() {
-    this.getproduct();
+    this.getproductList();
 
     },
 
     methods : {
-      async getproduct(){
+      async getproductList(){
         let result = await axios.get('/api/product')
                                .catch(err => console.log(err));
-
-        this.productList = result.data;
+        console.log(result);
+        this.product = result.data;
+      },
+      goToDetail(pno){
+        this.$router.push({ path : '/admin/productDetail', query : {'prdtNo' : pno}});
+      }
     }
-  }
 }
-
 
 </script>
 

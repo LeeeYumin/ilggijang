@@ -1,30 +1,100 @@
 <template>
   <div class="container">
-    <h1>상품상세관리</h1> <!--수정,삭제 버튼 밑에 같이.-->
+    <h1>상품상세관리</h1> <!--  하단에 수정,삭제 버튼 밑에 같이.-->
       <table class="table">
-        <thead>
+        <tbody>
           <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th scope="col" class="text-center table-primary">도서명</th>
+            <td scope="col" class="text-center">{{ productDetailInfo.book_name }}</td>
+            <th scope="col" class="text-center table-primary">가격</th>
+            <td scope="col" class="text-center">{{ formatPrice(productDetailInfo.book_price) }}</td>
+            <th scope="col" class="text-center table-primary">저자</th>
+            <td scope="col" class="text-center">{{ productDetailInfo.title }}</td>
           </tr>
-      </thead>
 
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>    
-          <td></td>    
-          <td></td>    
-      </tr>
+          <tr>
+            <th colspan="2" class="text-center table-primary">ISBN</th>
+            <td colspan="4">{{ productDetailInfo.isbn }}</td>
+            <th colspan="2" class="text-center table-primary">출판사</th>
+            <td colspan="4">{{ productDetailInfo.publ_co }}</td>
+          </tr>
+
+          <tr>
+            <th colspan="2" class="text-center table-primary">책소개</th>
+            <td colspan="4">{{ productDetailInfo.book_intro }}</td>
+          </tr>
+
+          <tr>
+            <th colspan="2" class="text-center table-primary">도서 이미지</th>
+            <td colspan="4">{{ productDetailInfo.book_img }}</td>
+          </tr>
+
+          <tr>
+            <th colspan="2" class="text-center table-primary">도서 상세 설명</th>
+            <td colspan="4">{{ productDetailInfo.detail_exp }}</td>
+          </tr>
+
+          <tr>
+            <td colspan="6" class="text-center">
+              <button class="btn btn-xs btn-info" @click="goToUpdateForm(productUpdate.pno)">수정</button>
+              <button class="btn btn-xs btn-info" @click="(productDelete.pno)">삭제</button>
+              </td>   
+          </tr>
       </tbody>
+
     </table>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
+ import axios from 'axios'
+
+  export default {
+    data(){
+      return {
+        productDetailInfo : {
+          book_name : '',
+          book_price : '',
+          title : '',
+          isbn : '',
+          publ_co : '',
+          book_intro : '',
+          book_img : '',
+          detail_exp : ''
+        }
+      }
+    },
+    created(){
+      let pno = this.$route.query.prdtNo;
+      this.getproductDetailInfo(pno);
+    },
+    methods : {
+      async getproductDetailInfo(pno){
+        let result = await axios.get('/api/product/' + pno) // 기존 BK000001 에서 받는값(bno)으로 변경
+                              .catch(err => console.log(err));
+      console.log(result);
+      this.productDetailInfo = result.data;
+      },
+      formatPrice(book_price) {
+      if (book_price > 999) {
+        let priceAry = String(book_price).split("").reverse(); //split 사용해서 앞에 String 으로 감싸주고 씀
+        let idx = 0;
+        while (priceAry.length > idx + 3) {
+          priceAry.splice(idx + 3, 0, ',');
+          idx += 4;
+        }
+        return priceAry.reverse().join('') + '원'
+      } else {
+        return book_price + '원'
+      }
+      },
+    goToUpdateForm (pno) {
+      this.$router.push({ path : '/admin/productDetail',query : {'prdtNo' : pno } });
+
+        }
+    }
+  }
+
+  
 
 </script>
