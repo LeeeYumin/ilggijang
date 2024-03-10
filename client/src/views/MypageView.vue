@@ -11,7 +11,11 @@
         <ul>
           <li><div><p>내정보</p><p class="ico"><font-awesome-icon icon="fa-regular fa-user" size="2xl" style="color:#303d8f;" /></p></div></li>
           <li><div><p>내리뷰</p><p class="ico"><font-awesome-icon icon="fa-solid fa-pencil" size="2xl" style="color:#303d8f;" /></p></div></li>
-          <li><div><p>찜</p><p class="ico"><font-awesome-icon :icon="['far', 'thumbs-up']" size="2xl" style="color:#303d8f;" /></p></div></li>
+          <li>
+            <router-link to="/mypage/save">
+              <div><p>찜</p><p class="ico"><font-awesome-icon :icon="['far', 'thumbs-up']" size="2xl" style="color:#303d8f;" /></p></div>
+            </router-link>
+            </li>
           <li><div><p>1:1문의</p><p class="ico"><font-awesome-icon :icon="['far', 'comments']" size="2xl" style="color:#303d8f;" /></p></div></li>
           
             <li>
@@ -45,6 +49,7 @@
 .tR p{display:inline-block; margin-bottom:0; padding:10px 20px; font-size:15px; background:rgba(0, 0, 0, 0.1); border-radius:10px; box-sizing:border-box;}
 .point{display:inline-block; font-size:18px; font-weight:700;}
 .color{color:#0d6efd; font-weight:700;}
+.list{border:0;}
 .list ul{list-style:none; display:flex; justify-content:space-between; gap:1%; flex-flow:wrap; margin-left:0; padding-left:0;}
 .list ul li{flex:1 1 20%; margin-bottom:1%;}
 .list ul li a{text-decoration:none;}

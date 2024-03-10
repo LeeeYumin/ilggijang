@@ -22,8 +22,8 @@
                             </div>
                         </div>
                     </td>
-                    <td class="tc"><i class="point">{{ formatPrice(totalPrice) }}</i>원</td>
-                    <td class="tc">{{ list.orders_state }}</td>
+                    <td class="tc"><i class="point">{{ formatPrice(list.unit_price) }}</i>원</td>
+                    <td class="tc"><i class="point color">{{ list.orders_state }}</i></td>
                     <td class="tc">
                         <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
                     </td>
@@ -32,7 +32,7 @@
         </table>
 
         <h5>배송정보</h5>
-        <table class="table">
+        <table class="table dlv_tbl">
             <colgroup>
                 <col span="1" style="width:20%;">
                 <col span="1" style="width:80%;">
@@ -40,7 +40,12 @@
             <tbody>
                 <tr>
                     <td><p class="fs">기본정보</p></td>
-                    <td class="tc">{{ this.orderDetailList.orders_state }}</td>
+                    <td>
+                        <div class="addr_info">
+                            <p>{{ this.orderInfo.recipient }} / {{ this.orderInfo.phone }}</p>
+                            <p>{{ this.orderInfo.dlv_addr }}</p>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -51,15 +56,23 @@
                 <ul>
                     <li class="tit">
                         <p>주문금액</p>
-                        <span><i class="point">3000</i>원</span>
+                        <span><i class="point">{{ formatPrice(this.orderInfo.total_orders_amount + this.orderInfo.dlv_amount) }}</i>원</span>
                     </li>
                     <li>
                         <p>상품 금액</p>
-                        <span><i class="point">3000</i>원</span>
+                        <span><i class="point">{{ formatPrice(this.orderInfo.total_orders_amount) }}</i>원</span>
                     </li>
                     <li>
                         <p>배송비</p>
-                        <span><i class="point">3000</i>원</span>
+                        <span><i class="point">{{ formatPrice(this.orderInfo.dlv_amount) }}</i>원</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="center">
+                <ul>
+                    <li class="tit">
+                        <p>할인금액</p>
+                        <span><i class="point">{{ formatPrice(this.orderInfo.dc_amount) }}</i>원</span>
                     </li>
                 </ul>
             </div>
@@ -67,17 +80,13 @@
                 <ul>
                     <li class="tit">
                         <p>결제금액</p>
-                        <span><i class="point">3000</i>원</span>
-                    </li>
-                    <li>
-                        <p>네이버페이</p>
-                        <span><i class="point">3000</i>원</span>
+                        <span><i class="point">{{ formatPrice(this.orderInfo.total_pay_amount) }}</i>원</span>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="btn_box">
-            <button class="btn btn-primary">주문/배송 목록</button>
+            <router-link to="/mypage/myorderlist"><button class="btn btn-primary">주문/배송 목록</button></router-link>
         </div>
     </div>
 </div>
@@ -128,15 +137,21 @@ h5 + table{margin-top:15px;}
 .pay_info li p{float:left; font-size:14px; color:#555; margin-bottom:5px;}
 .pay_info li.tit p{margin-bottom:15px; color:#333; font-size:15px; font-weight:700;}
 .pay_info li span{display:block; float:right; color:#555; font-size:14px;}
+.pay_info li:not(.tit) span i{font-size:15px !important;}
 .pay_info li.tit span{color:#333; font-size:15px;}
-.pay_info .left{padding-right:30px; border-right:1px dashed #ddd;}
-.pay_info .right{padding-left:30px;}
-.pay_info > div{float:left; width:50%;}
+.pay_info .left{padding-left:0;}
+.pay_info > div{position:relative; float:left; padding-left:50px; width:33.33333333333333%;}
+.pay_info > div:before{content:''; display:block; position:absolute; left:25px; top:-5px; width:1px; height:100px; border-left:1px dashed #ddd;}
+.pay_info > div.left:before{display:none;}
 .pay_info:after,
 .pay_info li:after{content:''; display:block; clear:both;}
 .fs{font-size:15px;}
 .btn_box{margin-top:30px; text-align:center;}
 .btn_box button{padding:10px 30px;}
+.dlv_tbl p{margin-bottom:0 !important;}
+.addr_info{padding:15px 0; font-size:15px;}
+.addr_info p:first-child{margin-bottom:5px !important; font-weight:700;}
+.addr_info p{margin-bottom:10px;}
 </style>
 
 <script>
@@ -145,25 +160,45 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            orderDetailList : []
+            orderDetailList : [],
+            orderInfo : {
+                name : '',
+                dlv_addr : '',
+                phone : '',
+                recipient : '',
+                user_rank_no : '',
+                total_orders_amount : '',
+                total_pay_amount : '',
+                dlv_amount : '',
+                dc_amount : ''
+            },
+            selectedPay : ''
+            // orderDetailList : JSON.parse(sessionStorage.getItem("orderItem"))
         }
     },
     computed : {
         
     },
     created(){
-        this.getOrderDetailList();
+        let orderNo = this.$route.query.orderNo; // 받는건 route, router 아님 주의
+        this.getOrderList(orderNo);
+        this.getOrderInfo(orderNo);
     },
     methods : {
-        async getOrderDetailList(){
-            let userNo = this.$store.state.userNo;  
-            console.log('회원번호', userNo);
-            let result = await axios.get('/api/orderlist/' + userNo) 
-                                    .catch(err => console.log(err)); // catch -> 오류가 나지 않으면 실행이 안되고 
+        async getOrderList(orderNo){
+            console.log('주문번호', orderNo);
+            // http://localhost:3000/orderdetail/orderlist/104
+            let result = await axios.get('/api/orderdetail/orderlist/' + orderNo) 
+                                    .catch(err => console.log(err)); 
             let list = result.data;
-            console.log(list);
             this.orderDetailList = list;
             console.log('데이터', this.orderDetailList);
+        },
+        async getOrderInfo(orderNo){
+            let result = await axios.get('/api/orders/' + orderNo) // + no
+                        .catch(err => console.log(err));
+            console.log(result);
+            this.orderInfo = result.data;
         },
         formatPrice(book_price) {
             if (book_price > 999) {
@@ -239,26 +274,6 @@ export default {
             })
             console.log('cno', cno);
         },
-        orderLink(userId){
-            if(this.totalBookPrice <= 0){
-                alert('상품을 선택해주세요.');
-            } else {
-                let result = confirm(`상품을 주문하시겠습니까?`); // ${this.selectCount}개의 
-                if( result )
-                {
-                    // yes 
-                    let selectItem = [];
-                    for(let i = 0; i < this.cartList.length; i++){
-                        if(this.selected.includes(this.cartList[i].prdt_no)){
-                            selectItem.push({ book_name : this.cartList[i].book_name, quantity : this.cartList[i].quantity, book_img : this.cartList[i].book_img, book_price : this.cartList[i].book_price});
-                            localStorage.setItem("selectItem", JSON.stringify(selectItem));
-                        }
-                    }
-                    
-                }
-                this.$router.push({ path : '/order', query : { "id" : userId } });
-            }
-        }
     }
 }
 </script>

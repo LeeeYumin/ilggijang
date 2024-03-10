@@ -1,37 +1,34 @@
 <template>
   <div class="container">
-
-    <div class="row">
-
-      <div class="col-6">
-        <img src="{{ bookInfo.book_img }}">
-        <p>카테고리 : {{ bookInfo.category_code }}</p>
+    <div class="top">
+      <p class="category">{{ bookInfo.category_code }}</p>
+      <h3>{{ bookInfo.book_name }}</h3>
+    </div>
+    <div class="book_info_box">
+      <div class="left">
+        <span class="img"><img src="{{ bookInfo.book_img }}"></span>
+        
       </div>
-      <div class="col-6">
+      <div class="right">
         <div class="book_info">
-          <p>제목 : {{ bookInfo.book_name }} </p>
-          <p>저자 : {{ bookInfo.title }} </p>
-          <p>ISBN : {{ bookInfo.isbn }} </p>
+          <p><i>저자</i> {{ bookInfo.title }} </p>
+          <p><i>ISBN</i> {{ bookInfo.isbn }} </p>
         </div>
         <div class="book_info">
-          <p>출판사 : {{ bookInfo.publ_co }}</p>
-          <p>가격 : {{ formatPrice(bookInfo.book_price) }}</p>
-          <p>출간일 : {{ publDate }}</p>
-        </div>
-        <div>
-          <p>부가 설명 ex. 3시 이전 주문시 당일 출고</p>
+          <p><i>출판사</i> {{ bookInfo.publ_co }}</p>
+          <p><i>가격</i> {{ formatPrice(bookInfo.book_price) }}</p>
+          <p><i>출간일</i> {{ publDate }}</p>
         </div>
         <div class="btn">
-          <button type="button" class="btn btn-dark" @click="goCart(this.bno)">장바구니</button>
-          <button type="button" class="btn btn-dark">찜</button>
-          <button type="button" class="btn btn-dark">바로구매</button>
+          <button type="button" @click="goCart(this.bno)"><span><font-awesome-icon icon="fa-solid fa-cart-shopping" size="sm" /> 장바구니</span></button>
+          <button type="button"><span><font-awesome-icon icon="fa-solid fa-heart" size="sm" /> 찜</span></button>
           <!--@click="methods이름(this.받는값)" 추가-->
         </div>
       </div>
     </div>
 
-    <div class="detailDown">
-      <div class="remains">
+    <div class="botton">
+        <div class="detailDown">
         <p>책 목차, 상세내용 영역 {{ bookInfo.detail_exp }}</p>
         <p>저자/관리자작성 책 소개 영역 {{ bookInfo.book_intro }}</p>
       </div>
@@ -145,24 +142,23 @@ export default {
   }
 }
 
-</script>
+</script> 
 
-<style>
-.book_info {
-  padding: 20px;
-  line-height: 19px;
-  font-weight: 400;
-  text-align: left;
-}
-
-.btn {
-  text-align: center;
-  margin-right: 10px;
-  padding: 10px;
-}
-
-.remains {
-  background-color: antiquewhite;
-  border-radius: 5px;
-}
+<style scoped>
+.container{padding-top:50px;}
+.top{text-align:center;}
+h3{font-weight:700;}
+p.category{display:inline-block; padding:2px 20px; border:1px solid #ccc; border-radius:50px; margin-bottom:10px; color:#555; font-size:15px; font-weight:500;}
+.book_info_box{display:flex; justify-content:center; padding:30px; box-sizing:border-box;}
+.left .img{display:block; width:300px; height:400px; background:#ccc;}
+.right{position:relative; width:500px; margin-left:40px; border-top:1px solid #ddd;}
+.right p{margin:0; padding:15px 20px; font-size:16px; letter-spacing:-0.5px; border-bottom:1px dashed #ddd;}
+.right p i{display:inline-block; width:70px; font-style:normal; color:#555; font-size:15px; font-weight:700;}
+.btn{position:absolute; right:0; bottom:0; padding:0; margin:0;}
+.btn button{border:0; background:none;}
+.btn button:first-child span{background:#3a4ca8; color:#fff;}
+.btn button span{display:inline-block; width:140px; color:#3a4ca8; font-size:15px; letter-spacing:-0.5px; border:1px solid #3a4ca8; padding:12px 10px; border-radius:5px;}
+.botton{margin-top:30px; padding-bottom:55px; border-bottom:1px solid #ddd;}
+.detailDown{padding:50px; background:#f5f5f5; border-radius:15px; box-sizing:border-box;}
+.detailDown p{margin-bottom:5px; font-size:15px; letter-spacing:-0.5px;}
 </style>

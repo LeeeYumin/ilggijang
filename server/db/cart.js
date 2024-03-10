@@ -31,6 +31,11 @@ const cartDelete =
 `DELETE FROM cart
 WHERE cart_no = ?`;
 
+// 장바구니 전체삭제
+const cartAllDelete =
+`DELETE FROM cart
+WHERE user_no = ?`;
+
 // 주문목록 장바구니 삭제(장바구니에서 구매시)
 const cartPickDelete =
 `DELETE FROM cart
@@ -57,5 +62,6 @@ module.exports = {
     cartUpdate,
     cartDelete,
     cartPickDelete,
-    cartCheck
+    cartCheck,
+    cartAllDelete
   }

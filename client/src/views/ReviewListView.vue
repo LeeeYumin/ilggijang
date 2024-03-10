@@ -107,6 +107,7 @@ export default {
 </script>
 
 <style scoped>
+h3{font-weight:700; letter-spacing:-0.5px;}
 .reviewlist {
   padding: 20px;
 }
