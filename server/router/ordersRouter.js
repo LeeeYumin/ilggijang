@@ -15,6 +15,13 @@ ordersRouter.get("/:ono", async (request, response) => {
     response.send(result);
 });
 
+// 나의 주문목록
+ordersRouter.get("/mypage/myorderlist/:uno", async (request, response) => {
+    let data = request.params.uno;
+    let result = await db.connection('orders', 'myOrderList', data);
+    response.send(result);
+});
+
 // 주문등록 
 ordersRouter.post("/", async (request, response) => {
     let data = request.body.param;

@@ -6,7 +6,7 @@
       </span>
       <h3>주문이 완료되었습니다.</h3>
       <router-link to="/main"><button class="btn btn-outline-primary">쇼핑 계속</button></router-link>
-      <router-link to="/main"><button class="btn btn-primary">주문내역상세</button></router-link>
+      <router-link to="/orderlist"><button class="btn btn-primary">주문내역상세</button></router-link>
     </div>
     
   </div>
