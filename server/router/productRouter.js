@@ -8,6 +8,13 @@ productRouter.get("/", async (request, response) => {
   response.send(result);
 });
 
+// 단건 조회 (관리자)
+productRouter.get("/:pno", async (request, response) => { //:prdt_no 에서 수정
+  let data = request.params.pno;
+  let result = (await db.connection('product', 'productDetailInfo', data))[0];
+  response.send(result);
+});
+
 // 상품관리 입력 (관리자)
 productRouter.post("/", async (request, response) => {
   let data = request.body.param;
