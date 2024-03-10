@@ -1,32 +1,26 @@
 <template>
-  <div class="container">
-    <h4> '{{ book_name }}' 에 대한 검색 결과</h4>
-    <div class="row">
-      <div class="result">
+  <div class="container serach_con">
+    <h4><span>'{{ book_name }}'</span>에 대한 검색 결과</h4>
+    <div class="list">
         <div class="selected" :key="i" v-for= "(book, i) in bookSearchList">
-          <div class="left" @click="goDetailBook(book.prdt_no)">책표지
-            <img src="{{ book.book_img }}" alt="cover">
-          </div>
-
-          <div>
+          <div class="left" >
+            <span class="img" @click="goDetailBook(book.prdt_no)">
+              <img src="{{ book.book_img }}" alt="cover">
+            </span>
             <ul class="prdt_list">
-              <li class="prdt_item">
-                <p> 도서명 : {{ book.book_name }}</p>
-                <p> 저자 : {{ book.title }}</p>
-                <p> 출간일 : {{ publDate(book.publ_date) }}</p>
-                <p> 가격 : {{ formatPrice(book.book_price) }}</p>
-              </li>
+              <li class="tit">{{ book.book_name }}</li>
+              <li>{{ book.title }}</li>
+              <li>{{ publDate(book.publ_date) }}</li>
+              <li><i class="point">{{ formatPrice(book.book_price) }}원</i></li>
             </ul>
           </div>
-
           <div class="right">
-            <button type="button" class="btn btn-dark" @click="goCart(book.prdt_no)">장바구니</button>
-            <button type="button" class="btn btn-dark">찜</button>
+            <button type="button" class="btn btn-primary" @click="goCart(book.prdt_no)">장바구니</button>
+            <button type="button" class="btn btn-secondary">찜</button>
           </div>
       </div>
       <div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -90,7 +84,7 @@ export default {
           priceAry.splice(idx + 3, 0, ',');
           idx += 4;
         }
-        return priceAry.reverse().join('') + '원'  //reverse 함수임
+        return priceAry.reverse().join('') //reverse 함수임
       } else {
         return book_price + '원'
       }
@@ -144,31 +138,20 @@ export default {
 </script>
 
 <style scope>
-h4{
-  margin-top: 0;
-  margin-bottom: 0;
-  text-align: center;
-  padding : 20px 5px 5px 20px;
-}
-.col-sm-8{
-  padding : 20px;
-  text-align: center;
-}
-.col-sm-4{
-  float : left;
-  padding : 20px;
-  text-align: center;
-}
-.prdt_item {
-  display: block;
-  margin-left : 0;
-  float : left;
-}
-
-.selected{padding:10px; border-bottom:1px solid #ddd; box-sizing:border-box;}
+.serach_con{min-height:700px;}
+h4{padding-top:3rem; text-align:center; font-size:1.75rem !important; font-weight:700 !important; letter-spacing:-1px;}
+h4 span{color:#3a4ca8;}
+.list{margin-top:30px; margin-bottom:50px;  border-top:1px solid #111;}
+.list .selected{position:relative; padding:30px 20px; border-bottom:1px solid #ddd; box-sizing:border-box;}
+.prdt_list{list-style:none; padding-left:0;}
 .selected .left{float:left;}
-.selected .right{float:right;}
-.selected .right button{display:block; width:100px;}
+.selected .img{display:inline-block;}
+.selected .prdt_list{display:inline-block; margin-left:20px; margin-bottom:0; color:#555; font-size:15px; letter-spacing:-0.5px;}
+.selected .prdt_list li{margin-bottom:5px;}
+.selected .prdt_list .tit{color:#111; font-size:16px; font-weight:700;}
+.selected .right{position:absolute; right:20px; top:50%; margin-top:-40.5px;}
+.selected .right button{display:block; width:100px; margin-right:0;}
 .selected .right button:last-child{margin-top:5px;}
 .selected:after{content:''; display:block; clear:both;}
+.point{font-style:normal; font-weight:700;}
 </style>

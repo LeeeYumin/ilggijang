@@ -7,7 +7,7 @@
                     <li v-bind:key="idx" v-for="(list, idx) in myOrderList">
                         <div>
                             <!-- <p class="tit point p-2">{{ list.orders_date }}</p> -->
-                            <p class="tit point p-2">{{ orderDate(list.orders_date) }}</p>
+                            <p class="tit point p-2">{{ orderDate(list.orders_date) }} <span class="detail_go" @click="goToDetail(list.orders_no)">상세보기 ></span></p>
                             <table class="table">
                                 <colgroup>
                                     <col span="1">
@@ -26,9 +26,9 @@
                                             </div>
                                         </td>
                                         <td class="tc"><i class="point">{{ formatPrice(list.order_price) }}</i>원</td>
-                                        <td class="tc">{{ list.orders_state }}</td>
+                                        <td class="tc"><i class="point color">{{ list.orders_state }}</i></td>
                                         <td class="tc">
-                                            <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
+                                            <button class="btn btn-outline-primary mr-0" @click="cartDelete(myOrderList.cart_no)">취소신청</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -95,6 +95,7 @@
     .fs{font-size:15px;}
     .btn_box{margin-top:30px; text-align:center;}
     .btn_box button{padding:10px 30px;}
+    .detail_go{margin-left:10px; color:#777; font-size:13px; letter-spacing:-0.5px; cursor:pointer;}
     </style>
     
     <script>
@@ -156,6 +157,24 @@
                     result = ` 외 ${(cnt - 1)}권`;
                 }
                 return result;
+            },
+            goToDetail(orderNo){
+                // let orderItem = [];
+                // for(let i = 0; i < this.myOrderList.length; i++){
+                //     if(this.selected.includes(this.myOrderList[i].orders_no)){
+                //         orderItem.push({ 
+                //             book_no : this.myOrderList[i].prdt_no,
+                //             book_name : this.myOrderList[i].book_name,
+                //             quantity : this.myOrderList[i].quantity,
+                //             book_img : this.myOrderList[i].book_img,
+                //             book_price : this.myOrderList[i].book_price,
+                //             total_price : this.myOrderList[i].total_price,
+                //             orders_state : this.myOrderList[i].orders_state
+                //         });
+                //         sessionStorage.setItem("orderItem", JSON.stringify(orderItem));
+                //     }
+                // }
+                this.$router.push({ path : '/orderlist', query : { "orderNo" : orderNo } }); // query는 무조건 객체타입
             }
         }
     }

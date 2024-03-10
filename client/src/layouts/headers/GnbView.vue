@@ -101,6 +101,6 @@ export default {
 .btn_top:focus,
 .btn_top:visited{background:none;}
 .top_box p{position:relative; color:#555; font-size:13px; letter-spacing:-0.5px;}
-.top_box p:after{content:''; display:block; position:absolute; right:-12px; top:4px; width:1px; height:13px; border-left:1px solid #ccc;}
+.top_box p:after{content:''; display:block; position:absolute; right:-12px; top:4px; width:1px; height:13px; border-left:1px solid #ccc; z-index:2;}
 .top_box p.last:after{display:none;}
 </style>
