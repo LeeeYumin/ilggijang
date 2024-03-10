@@ -7,6 +7,16 @@
 #### 프로젝트 소개
 중간 프로젝트 주제였던 북적북적(도서 쇼핑몰)을 1차 최종 프로젝트로 보완합니다.
 
+>구현
+
+- 회원가입
+- 로그인(소셜API사용 포함)
+- 검색
+- 장바구니
+- 주문
+- 결제
+- 관리자페이지
+
 
 #### 팀원 소개
 <table>
@@ -68,3 +78,23 @@
 ##### Tools
 <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white" />
 
+
+##### Ect.
+[figma](https://www.figma.com/design-systems/?utm_source=google&utm_medium=cpc&utm_campaign=21049479539&utm_term=&utm_content=692298080372&utm_adgroup=159094038643&gad_source=1&gclid=EAIaIQobChMIz-64oOzohAMVJD97Bx36zQgQEAAYASAAEgJzQfD_BwE)
+: 화면설계
+[erwin](https://www.erwin.com/products/erwin-data-modeler/)
+: DB설계
+[github](https://github.com/)
+[jandi](https://www.jandi.com/landing/kr)
+: 협업 및 소통 커뮤니티
+
+
+#### 프로젝트 규칙
+
+### Branch
+- `main` , `develop` , `name`
+```
+• main    : 배포
+• develop : 개발
+• name    : 개인작업
+```
