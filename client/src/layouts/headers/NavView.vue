@@ -36,7 +36,7 @@
                     </ul> -->
                 </li>
                 <li>
-                    <router-link to="/notice">
+                    <router-link to="/userNotice">
                         <span>공지사항</span>
                     </router-link>
                 </li>

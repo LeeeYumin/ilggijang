@@ -13,7 +13,7 @@
         <tr>
           <th class="text-right table-primary">ID</th>
           <td class="text-center">
-            <input class="form-control" type="text" v-model="userInfo.id">
+            <input class="form-control" type="text" v-model="userInfo.id" readonly>
           </td>
         </tr>
         <tr>
@@ -73,8 +73,8 @@ export default {
   },
   created() {
 
-     let user_no = this.$route.query.user_no;
-     this.getUserInfo(user_no);
+     let id = this.$route.query.id;
+     this.getUserInfo(id);
    },
  
   methods : {
@@ -91,13 +91,13 @@ export default {
       .post('/api/user', data)
       .then(result => {
         // 3) 결과 처리
-        let user_no = result.data.user_no;
-        if(user_no == 0){
+        let count = result.data.id;
+        if(count == 0){
           alert(`등록되지 않았습니다.\n메세지를 확인해주세요\n${result.data.message}`);
         }
         else {
           alert(`정상적으로 등록되었습니다.`);
-          this.userInfo.user_no = user_no;
+          this.$router.push({path: "/userInfo", query: { 'id': this.userInfo.id }});
         }
       })
       .catch(err => console.log(err));
@@ -105,10 +105,7 @@ export default {
 
     },
     validation() {
-      if(this.userInfo.id == '') {
-        alert('아이디가 입력되지 않았습니다.');
-        return false;
-      }
+  
       if(this.userInfo.pw_no== '') {
         alert('비밀번호가 입력되지 않았습니다.');
         return false;
