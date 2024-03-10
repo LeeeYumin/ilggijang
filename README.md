@@ -93,7 +93,7 @@
 
 #### 프로젝트 규칙
 
-### Branch
+##### Branch
 - `main` , `develop` , `name`
 ```
 • main    : 배포
