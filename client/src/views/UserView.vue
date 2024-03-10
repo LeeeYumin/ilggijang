@@ -72,7 +72,7 @@ export default {
 
     async Login() {
       this.validation();
-
+     
       // 회원 단건조회
       let result = await axios.get('/api/user/' + this.id)
                               .catch(err => console.log(err));
@@ -94,23 +94,25 @@ export default {
         this.$store.commit('setLoginTypeCode', loginTypeCode);
         
         
-        alert('로그인 되었습니다.');
+     
 
         console.log(this.$store.state.isLogin);
         console.log(this.$store.state.id);
         console.log(this.$store.state.userNo);
        
-       
+        
 
         if(this.id=='admin'){
           this.$router.push({path : '/admin'});
         }else{
           this.$router.push({path : '/main'});
         }
+       
       }else{
         alert('아이디 또는 비밀번호를 다시 입력해주세요.');
-       
       }
+       alert('로그인 되었습니다.');
+      
     },
     validation() {
       if (this.id === '') {
@@ -122,6 +124,8 @@ export default {
         alert('비밀번호를 입력하세요.')
         return
       }
+        
+
     },
      join(){
       this.$router.push({path : '/userjoin'});
@@ -134,7 +138,6 @@ export default {
     logout() {
       axios.get().then((res) => {   
         localStorage.removeItem('vuex');
-        
         this.$router.push({path : '/main'});
         console.log(res.data);
       });

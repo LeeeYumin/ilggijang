@@ -9,7 +9,8 @@
     <div class="content">
       <div class="list">
         <ul>
-          <li><div><p>내정보</p><p class="ico"><font-awesome-icon icon="fa-regular fa-user" size="2xl" style="color:#303d8f;" /></p></div></li>
+          <li>
+            <div><p>내정보</p><p class="ico"><font-awesome-icon icon="fa-regular fa-user" size="2xl" style="color:#303d8f;" /></p></div></li>
           <li><div><p>내리뷰</p><p class="ico"><font-awesome-icon icon="fa-solid fa-pencil" size="2xl" style="color:#303d8f;" /></p></div></li>
           <li>
             <router-link to="/mypage/save">

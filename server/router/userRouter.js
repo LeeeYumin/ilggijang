@@ -33,15 +33,15 @@ userRouter.post("/", async (request, response)=>{
     response.send(result);
 });
 
-//회원단건 조회
-userRouter.get("/admin/:user_no", async (request, response)=>{
-    let data = request.params.user_no;
-    let result = (await db.connection('user','useradInfo', data))[0];
-    response.send(result);
-});
+// //회원단건 조회 관리자용
+// userRouter.get("/admin/:user_no", async (request, response)=>{
+//     let data = request.params.user_no;
+//     let result = (await db.connection('user','useradInfo', data))[0];
+//     response.send(result);
+// });
 
 
-//회원단건 조회 : id 기준
+//회원단건 조회 : id 기준 회원용
 userRouter.get("/:uid", async (request, response)=>{
     let data = request.params.uid;
     let result = (await db.connection('user','userInfo', data))[0];
@@ -49,8 +49,8 @@ userRouter.get("/:uid", async (request, response)=>{
 });
 
 //회원정보 수정
-userRouter.put("/:uno", async(request, response)=>{
-    let data = [request.body.param, request.params.uno];
+userRouter.put("/:id", async(request, response)=>{
+    let data = [request.body.param, request.params.id];
     let result = await db.connection('user', 'userUpdate', data);
     response.send(result);
 });

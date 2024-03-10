@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>회원 정보 조회</h1>
+    <h1>공지사항 조회</h1>
     <div class="row">
       <table class="table">
         <tr>
@@ -12,13 +12,13 @@
           <td class="text-center">{{ noticeInfo.title }}</td>
         </tr>
         <tr>
-          <th class="text-right table-primary">내용</th>
+          <th class="text-right table-primary" type="text">내용</th>
           <td class="text-center">{{ noticeInfo.content }}</td>
         </tr>
         <tr>
           <th class="text-right table-primary">등록날짜</th>
           <td class="text-center">{{ noticeInfo.reg_date }}</td>
-        </tr>
+        </tr>{{ noticeInfo.content }}
         <tr>
           <th class="text-right table-primary">조회수</th>
           <td class="text-center">{{ noticeInfo.hit_cnt }}</td>

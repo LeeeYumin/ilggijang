@@ -18,8 +18,11 @@ import UserInfoView from '../views/UserInfoView.vue';
 import UserUpdateView from '../views/UserUpdateView.vue';
 import OrderListView from '../views/OrderListView.vue';
 import MypageView from '../views/MypageView.vue';
+import UserNoticeView from '../views/UserNoticeView.vue';
+import UserNoticeInfoView from '../views/UserNoticeInfoView.vue';
 import MyOrderlistView from '../views/MyOrderListView.vue';
 import SaveView from '../views/SaveView.vue';
+
 
 
 
@@ -143,6 +146,14 @@ export default {
       {
         path: '/userUpdate',
         component: UserUpdateView
+      },
+      {
+        path: '/userNotice',
+        component: UserNoticeView
+      },
+      {
+        path: '/userNoticeInfo',
+        component: UserNoticeInfoView
       }
    
 
