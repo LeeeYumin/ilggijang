@@ -4,8 +4,8 @@
     <div class="row">
       <div class="result">
         <div class="selected" :key="i" v-for= "(book, i) in bookSearchList">
-          <div class="left" @click="goDetailBook(book.prdt_no)">책표지
-            <img src="{{ book.book_img }}" alt="cover">
+          <div class="left" @click="goDetailBook(book.prdt_no)">
+            <img :src="require('@/assets/product/' + book.book_img)" alt="cover">
           </div>
 
           <div>

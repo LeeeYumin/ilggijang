@@ -4,7 +4,6 @@
     <div>
       <h2>로그인</h2>
       <div id="loginForm">
-        <form @submit.prevent="Login">
           <div class="mb-3">
     <input class="w3-input" name="uid" placeholder="ID를 입력해주세요" v-model="id"><br>
   </div>
@@ -16,9 +15,6 @@
     <button v-on:click="findid"  class="w3-button w3-green w3-round" >아이디찾기</button>
     <button v-on:click="findpw"  class="w3-button w3-green w3-round" >비밀번호찾기</button>
     <NaverLogin />
-    
-
-        </form>
       </div>
     </div>
   </div>

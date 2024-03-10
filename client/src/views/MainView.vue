@@ -6,6 +6,7 @@
   </div>
   <div class="container">
     <MainBookListView />
+    <MainBookListNewView />
 
     <!-- 자식 컴포넌트 -->
     <router-view />
@@ -14,10 +15,12 @@
 
 <script>
 import MainBookListView from './MainBookListView.vue';
+import MainBookListNewView from './MainBookListNewView.vue';
 
 export default {
     components: {
       MainBookListView
+      , MainBookListNewView
     }
 }
 </script>
