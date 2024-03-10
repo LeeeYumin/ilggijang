@@ -27,22 +27,19 @@ reviewRouter.get("/admin", async (request, response) => {
 
 
 // 리뷰 등록
-reviewRouter.post("/", async (request, response) => {
-    let data = request.body.rjson;
-    let result = await db.connection('reviews', 'reviewInsert', data);
-    response.send(result);
-});
+// reviewRouter.post("/", async (request, response) => {
+//     let data = request.body.rjson;
+//     let result = await db.connection('reviews', 'reviewInsert', data);
+//     response.send(result);
+// });
 
-// 리뷰 수정
+// 리뷰 수정 (수정된 행이 없으면 등록 실행)
 reviewRouter.put("/:rno", async (request, response) => {
-    let udata = [request.body[0], parseInt(request.params.rno), request.body[1]]; 
-    let update = await db.connection('reviews', 'reviewUpdate', udata);
+    let data = [request.body, parseInt(request.params.rno)]; 
+    let update = await db.connection('reviews', 'reviewUpdate', data);
     if(update.changedRows == 0){
-        let idata = [request.body[0], request.body[1]]
-        let insert = await db.connection('reviews', 'reviewInsert', idata);
-        console.log(insert);
+        await db.connection('reviews', 'reviewInsert', data[0]);
     }
-    console.log(update);
     response.send(update);
 });
 

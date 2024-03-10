@@ -1,5 +1,5 @@
 <template>
-  <div class="container text-center">
+  <div class="container">
 
     <div class="row">
 
@@ -36,14 +36,18 @@
         <p>저자/관리자작성 책 소개 영역 {{ bookInfo.book_intro }}</p>
       </div>
     </div>
-
+    <BookReviewView />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import BookReviewView from '../views/BookReviewView.vue';
 
 export default {
+  components: {
+    BookReviewView
+  },
   data() {
     return {
       bookInfo: {
@@ -58,31 +62,31 @@ export default {
         publ_date: null,
         category_code: ''
       },
-      cartAlert : false,
+      cartAlert: false,
       //existCart : false
     }
   },
-  computed : {
+  computed: {
     publDate() {
-            let result = null;
-            if(this.bookInfo.publ_date != null){
-                let date = new Date(this.bookInfo.publ_date);
-                let year = date.getFullYear();
-                let month = ('0' + (date.getMonth() + 1)).slice(-2);
-                let day = ('0' + date.getDate()).slice(-2);
-                result = `${year}년 ${month}월 ${day}일`;
-            }
-            return result;
-        }
+      let result = null;
+      if (this.bookInfo.publ_date != null) {
+        let date = new Date(this.bookInfo.publ_date);
+        let year = date.getFullYear();
+        let month = ('0' + (date.getMonth() + 1)).slice(-2);
+        let day = ('0' + date.getDate()).slice(-2);
+        result = `${year}년 ${month}월 ${day}일`;
+      }
+      return result;
+    }
   },
-  created(){
+  created() {
     let bno = this.$route.query.bookNo; // 넘겨받은 책 번호
     this.getBookInfo(bno) // 클릭이벤트 관련 created() 임
   },
-  methods : {
-    async getBookInfo(bno){
+  methods: {
+    async getBookInfo(bno) {
       let result = await axios.get('/api/books/' + bno) // 기존 BK000001 에서 받는값(bno)으로 변경
-                              .catch(err => console.log(err));
+        .catch(err => console.log(err));
       console.log(result);
       this.bookInfo = result.data;
     },
@@ -101,41 +105,41 @@ export default {
     },
     goCart() { //(bno)
       console.log('책정보', this.bookInfo);
-      if(this.$store.state.isLogin){
-          this.addCart()
-      }else{
+      if (this.$store.state.isLogin) {
+        this.addCart()
+      } else {
         alert("로그인 후 이용해주세요")
       }
     },
-    async addCart(){ // *중복체크 + 담기
+    async addCart() { // *중복체크 + 담기
       let uno = this.$store.state.userNo;
       let pno = this.bookInfo.prdt_no;
       // 장바구니 중복체크
-      await axios.get("/api/cart/cartCheck?uno="+ uno + "&pno=" + pno)
-                  .then(result=>{
-                    console.log("=======", result.data);
-                    if(result.data){
-                      this.cartInsert();// 장바구니에 추가
-                    }else{
-                      alert("이미 담긴 도서입니다")
-                    }
-                  })
-                  .catch(err => console.log(err));
+      await axios.get("/api/cart/cartCheck?uno=" + uno + "&pno=" + pno)
+        .then(result => {
+          console.log("=======", result.data);
+          if (result.data) {
+            this.cartInsert();// 장바구니에 추가
+          } else {
+            alert("이미 담긴 도서입니다")
+          }
+        })
+        .catch(err => console.log(err));
     },
-    async cartInsert(){
+    async cartInsert() {
       let data = {
-        param : {
-          quantity : 1,
-          user_no : this.$store.state.userNo,
-          prdt_no : this.bookInfo.prdt_no
+        param: {
+          quantity: 1,
+          user_no: this.$store.state.userNo,
+          prdt_no: this.bookInfo.prdt_no
         }
       }
       let result = await axios.post("/api/cart", data)
-                              .catch(err => console.log(err));
+        .catch(err => console.log(err));
       let info = result.data.insertId;
-      if(info > 0) {
+      if (info > 0) {
         alert("장바구니에 추가되었습니다")
-        this.$router.push({path : '/cart'}); // 클릭이벤트 추가. query 지움
+        this.$router.push({ path: '/cart' }); // 클릭이벤트 추가. query 지움
       }
     }
   }
