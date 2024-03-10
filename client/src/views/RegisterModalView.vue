@@ -10,19 +10,20 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-6 my-3">
+                        <p>평점 : </p>
                         <div class="grade" >
                             <font-awesome-icon class="star" :key="g" v-for="g in jsons.grade" :value="g" type="button" :icon="['fas', 'star']" style="color: #66dd70;" @click.capture="jsons.grade = parseInt(g)"/>
                             <font-awesome-icon class="star" :key="g" v-for="g in 5 - jsons.grade" :value="g + jsons.grade" type="button" :icon="['far', 'star']" style="color: #66dd70;" @click.capture="jsons.grade = parseInt(g + jsons.grade)"/>
                         </div>
-                        <input type="text" v-model="jsons.grade" readonly />
                     </div>
                 </div>
                 <div class="form-item">
+                    <p>내용 : </p>
                     <textarea cols="30" rows="10" class="form-control" placeholder="내용을 입력하세요" id="addr"
                         v-model="jsons.content"></textarea>
                 </div>
                 <div class="btn_save">
-                    <button class="btn btn-primary" :disabled="rgrade === jsons.grade && rcontent === jsons.content"
+                    <button class="btn btn-primary" :disabled="rgrade == jsons.grade && rcontent == jsons.content"
                         @click="updateReview()">확인</button>
                 </div>
             </div>
@@ -56,7 +57,7 @@ export default {
             boardid: 'reviews',
             jsons: {
                 user_no: this.$store.state.userNo,
-                orders_detail_no: this.rodtno,
+                // orders_detail_no: this.rodtno,
                 grade: this.rgrade,
                 prdt_no: '',
                 content: this.rcontent
@@ -64,7 +65,7 @@ export default {
         }
     },
     created() {
-        this.prdt_no = this.$route.query.bookNo;
+        this.jsons.prdt_no = this.$route.query.bookNo;
     },
     methods: {
         async updateReview() {

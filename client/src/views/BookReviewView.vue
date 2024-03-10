@@ -19,7 +19,7 @@
         </div>
         <div class="rtop">
             <div class="title">
-                <h3>상품 리뷰 ({{ reviewcnt }})</h3>
+                <h5>상품 리뷰 ({{ reviewcnt }})</h5>
             </div>
             <div class="a">
                 <div class="selectmenu">
@@ -61,7 +61,8 @@ export default {
             reviewcnt: 0,
             uprno: 0,
             upgrade: 0,
-            upcontent: ''
+            upcontent: '',
+            upodtno: 0
         }
     },
     created() {
