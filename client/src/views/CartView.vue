@@ -12,7 +12,7 @@
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="3" class="top_box">
                         <div class="all_box">
                             <b-form-checkbox
                                 id="checkbox-1"
@@ -22,6 +22,7 @@
                                 ><i class="point">전체선택</i>
                             </b-form-checkbox>
                         </div>
+                        <button class="btn btn-outline-secondary btn-sm" @click="cartAllDelete(this.cartList.userNo)">전체삭제</button>
                     </td>
                 </tr>
                 <tr v-bind:key="idx" v-for="(list, idx) in cartList">
@@ -133,7 +134,9 @@ table ul li button:hover{background:#eee;}
 .tc{text-align:center;}
 .price{margin-bottom:5px;}
 .mr-0{margin-right:0;}
-.all_box{padding:5px 0;}
+.top_box:after{content:''; display:block; clear:both;}
+.top_box button{float:right; margin-top:3px; margin-right:0;}
+.all_box{float:left; padding:5px 0;}
 .s_point{display:inline-block; margin-top:10px; font-style:normal; font-size:15px; font-weight:700;}
 </style>
 
@@ -316,6 +319,22 @@ export default {
                 }
             })
             console.log('cno', cno);
+        },
+        async cartAllDelete(){
+            let userNo = this.$store.state.userNo;  
+            // 서버에 해당 데이터를 삭제
+            axios
+            .delete(`/api/cart/user/` + userNo) 
+            .then(result => {
+                if(result.data.affectedRows != 0 && result.data.changedRows == 0) {
+                    alert(`정상적으로 삭제되었습니다.`);
+                    this.$router.push({ path : '/cart'});
+                    this.getCartList();
+                }else {
+                    alert(`삭제되지 않았습니다.`);
+                }
+            })
+            console.log('uno', userNo);
         },
         orderLink(userId){
             if(this.totalBookPrice <= 0){

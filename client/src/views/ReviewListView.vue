@@ -7,11 +7,12 @@
         <div class="writerdate">
           <span v-if="listId == '/rvlist'">구매자명 : {{ i.writer }} / </span>
           <span>{{ i.write_date }}</span>
-          <button v-if="listId == '/mrvlist' && userno != ''" @click="$emit('update', i.review_no)">수정</button>
-          <button v-if="listId == '/mrvlist' && userno != ''">삭제</button>
+          <button v-if="listId == '/mrvlist' && userno != ''" @click="$emit('update', i.review_no, i.grade, i.content, i.orders_detail_no)">수정</button>
+          <button v-if="listId == '/mrvlist' && userno != ''" @click="DeleteMyReview(i.review_no)">삭제</button>
         </div>
         <div class="grade">
-          <span :key="g" v-for="g in i.grade">★</span>
+          <span :key="g" v-for="g in i.grade"><font-awesome-icon :icon="['fas', 'star']" style="color: #66dd70;" /></span>
+          <span :key="g" v-for="g in 5-i.grade"><font-awesome-icon :icon="['far', 'star']" style="color: #66dd70;" /></span>
           <span>{{ i.grade }}.0</span> / <span>5.0</span>
         </div>
       </div>
@@ -41,12 +42,12 @@ export default {
     pcode: { type: String, default: '' },
     listId: { type: String, default: '' },
     soltno: { type: String, default: '' },
-    popupon: { type: Boolean, default: false}
+    refreon: { type: Boolean, default: false }
   },
   components: {
     Likes
   },
-  emits : ['allcntevt', 'update'],
+  emits: ['allcntevt', 'update', 'refresh'],
   data() { // listId: 목록 식별, startCnt: 페이지마다 표시할 상품 인덱스 시작 단위 
     return {
       currentList: [],
@@ -66,19 +67,18 @@ export default {
   },
   watch: {
     soltno() {
-      if (this.listId != '/mrvlist') {
-        this.getReviewList(this.currentPage);
-      } else if (this.userno != '') {
-        this.getMyReviewList();
+      this.$emit('refresh', true);
+    },
+    refreon(a) {
+      if (a == true) {
+        if (this.listId != '/mrvlist') {
+          this.getReviewList(this.currentPage);
+        } else if (this.userno != '') {
+          this.getMyReviewList();
+        }
+        this.$emit('refresh', false);
       }
     },
-    popupon(){
-      if (this.listId != '/mrvlist') {
-        this.getReviewList(this.currentPage);
-      } else if (this.userno != '') {
-        this.getMyReviewList();
-      }
-    }
   },
   methods: {
     async getReviewList(pgno) {
@@ -93,11 +93,21 @@ export default {
         .catch(err => console.log(err));
       this.currentList = result.data;
     },
+    async DeleteMyReview(rno) {
+      let delchk = confirm('정말로 삭제하시겠습니까?');
+      if (delchk) {
+        await axios.delete(`/api/reviews/${rno}`)
+          .catch(err => console.log(err));
+        alert('삭제되었습니다.');
+        this.$emit('refresh', true);
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+h3{font-weight:700; letter-spacing:-0.5px;}
 .reviewlist {
   padding: 20px;
 }

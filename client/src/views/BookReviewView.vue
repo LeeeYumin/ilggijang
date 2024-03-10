@@ -1,8 +1,21 @@
 <template>
     <div class="container">
-        <RegisterModalView v-if="popupView == true" @close="popupView = false" :rno="`/`+uprno"/> <!-- 마이페이지 쪽으로 옮길 예정 -->
+        <RegisterModalView v-if="popupView == true" @save="popupView = false, refre = true" @close="popupView = false"
+            :rno="`/` + uprno" 
+            :rgrade="upgrade"
+            :rcontent ="upcontent"
+            :rodtno ="upodtno"/> <!-- 등록은 마이페이지 쪽으로 옮길 예정 -->
         <div class="myreviews">
-            <ReviewListView listId="/mrvlist" pcode="/BK240228002" @update="(e) => {uprno = e, popupView = true}" :popupon="popupView"/>
+            <ReviewListView listId="/mrvlist" :pcode="`/`+bno"
+                @update="(eno, egrade, econtent, eodtno) => {
+                 uprno = eno,
+                 upgrade = egrade,
+                 upcontent = econtent,
+                 upodtno = eodtno,
+                 popupView = true,
+                 refre = false
+                 }" @refresh="(e) => refre = e"
+                :refreon="refre" />
         </div>
         <div class="rtop">
             <div class="title">
@@ -22,9 +35,10 @@
             </div>
         </div>
         <div class="previews">
-            <ReviewListView listId="/rvlist" pcode="/BK240228002" :soltno="`/` + solt" @allcntevt="(e) => reviewcnt = e" :popupon="popupView"/>
+            <ReviewListView listId="/rvlist" :pcode="`/`+bno" :soltno="`/` + solt"
+                @allcntevt="(e) => reviewcnt = e" @refresh="(e) => refre = e" :refreon="refre" />
             <!-- Reviews로 정보를 넘겨주는 곳. 상품 코드, 정렬 컬럼번호(3~5)를 받아야함-->
-            <!-- @현재 리뷰 갯수 갱신 -->
+            <!-- @allcntevt 현재 리뷰 갯수 갱신 -->
         </div>
     </div>
 </template>
@@ -40,22 +54,29 @@ export default {
     },
     data() {
         return {
+            bno: '',
             popupView: false,
+            refre: false,
             solt: 3,
             reviewcnt: 0,
-            uprno: 5
+            uprno: 0,
+            upgrade: 0,
+            upcontent: ''
         }
+    },
+    created() {
+        this.bno = this.$route.query.bookNo;
     },
     methods: {
         loginchk() {
-            // if (this.$store.state.userNo != '') { // 로그인 체크
-            let chk = confirm('리뷰 작성을 위해 마이페이지로 이동하시겠습니까?');
-            if (chk) {
-                this.popupView = true
+            if (this.$store.state.userNo != '') { // 로그인 체크
+                let chk = confirm('마이페이지로 이동하시겠습니까?');
+                if (chk) {
+                    this.$router.push({ path: '/mypage' })
+                }
             }
-            // }
             else {
-                alert('로그인이 필요합니다.');
+                alert('로그인후 이용해주세요');
             }
         }
     }

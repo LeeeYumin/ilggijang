@@ -9,8 +9,8 @@ import BookListView from '../views/BookListView.vue';
 import RecommendBookMenuView from '../views/navs/RecommendBookMenuView.vue';
 import BestsellerBookMenuView from '../views/navs/BestsellerBookMenuView.vue';
 import CategoryBookMenuView from '../views/navs/CategoryBookMenuView.vue';
-import BookReviewView from '../views/BookReviewView.vue';
-import RegisterModalView from '../views/RegisterModalView.vue';
+// import BookReviewView from '../views/BookReviewView.vue';
+// import RegisterModalView from '../views/RegisterModalView.vue';
 import BookSearchListView from '../views/BookSearchListView.vue';
 import OrderCompleteView from '../views/OrderCompleteView.vue';
 import UserJoinView from '../views/UserJoinView.vue';
@@ -20,6 +20,9 @@ import OrderListView from '../views/OrderListView.vue';
 import MypageView from '../views/MypageView.vue';
 import UserNoticeView from '../views/UserNoticeView.vue';
 import UserNoticeInfoView from '../views/UserNoticeInfoView.vue';
+import MyOrderlistView from '../views/MyOrderListView.vue';
+import SaveView from '../views/SaveView.vue';
+
 
 
 
@@ -76,7 +79,24 @@ export default {
     {
         path: 'mypage',
         name: 'mypage',
-        component: MypageView
+        component: MypageView,
+        children : [
+            {
+                path: 'myOrderlist',
+                name: 'myOrderlist',
+                component: MyOrderlistView
+            },
+            {
+                path: 'save',
+                name: 'save',
+                component: SaveView
+            },
+            {
+                path: 'userInfo',
+                name: 'userInfo',
+                component: UserInfoView
+            }
+        ]
     },
     // 박지웅
     {
@@ -104,16 +124,16 @@ export default {
         name: 'bookList',
         component: BookListView
     },
-    {
-        path: 'bookReview',
-        name: 'bookReview',
-        component: BookReviewView
-    },
-    {
-        path: 'registerModal',
-        name: 'registerModal',
-        component: RegisterModalView
-    },
+    // {
+    //     path: 'bookReview',
+    //     name: 'bookReview',
+    //     component: BookReviewView
+    // },
+    // {
+    //     path: 'registerModal',
+    //     name: 'registerModal',
+    //     component: RegisterModalView
+    // },
     // 도승민
     {
         path: 'userjoin',

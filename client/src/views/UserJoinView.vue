@@ -1,20 +1,7 @@
 <template>
-    
-    <!-- Single Page Header start -->
-    <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">회원가입</h1>
-    <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item text-white">Sign Up</li>
-    </ol>
-  </div>
-  <!-- Single Page Header End -->
-  
-  
-  <!-- Checkout Page Start -->
-  
-  <div class="container-fluid py-5">
-      <div class="container py-5">
+    <div class="container">
+      <h3>회원가입</h3>
+      <div class="join_box">
           <form action="#">
               <div class="row g-5 center">
                 <div class="col-md-12 col-lg-6 col-xl-7">
@@ -28,7 +15,7 @@
                         </div>
                         <div class="col-md-12 col-lg-6 my-3">
                             <div class="form-item w-100 my-3">
-                                <button type="button" class="btn border-secondary px-4 text-primary" @click="checkID()">중복확인</button>
+                                <button type="button" class="btn btn-outline-primary" @click="checkID()">중복확인</button>
                             </div>
                         </div>
                     </div>
@@ -92,7 +79,7 @@
                         <input type="text" class="form-control my-3" placeholder="상세주소" id="detail_addr" v-model="userInfo.detail_addr">
                     </div>
                     <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                        <button type="button" class="btn btn-primary2 border-secondary py-3 px-4 text-uppercase w-100" @click="userInsert()">가입신청</button>
+                        <button type="button" class="btn border-secondary py-3 px-4 w-100" @click="userInsert()">가입신청</button>
                     </div>
                 </div>
   
@@ -276,6 +263,9 @@ import axios from 'axios';
   </script>
   
   <style scoped>
+  .container{padding-top:50px; margin-bottom:50px;}
+  h3{font-weight:700;}
+  .join_box{margin-top:30px;}
   .center {
       justify-content: center
   }

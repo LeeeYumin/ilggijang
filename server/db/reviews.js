@@ -59,7 +59,7 @@ ORDER BY r.write_date DESC`; // 최신 순 정렬
 // 리뷰 등록
 const reviewInsert = 
 `INSERT INTO review
-SET ? `;
+SET ?, write_date = DATE_FORMAT(CURDATE(), '%Y-%m-%d')`;
 
 // 리뷰 수정
 const reviewUpdate = 
