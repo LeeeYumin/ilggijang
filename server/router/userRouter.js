@@ -26,10 +26,7 @@ userRouter.get("/", async (request, response) =>{
 userRouter.post("/", async (request, response)=>{
     let data = request.body.param;
     console.log(data);
-    let result = await db.connection('user', 'userJoin', data).then(res=>{
-        console.log(res)
-    })
-    .catch(err => console.log(err));
+    let result = await db.connection('user', 'userJoin', data);
     response.send(result);
 });
 
@@ -79,13 +76,13 @@ app.post("/searchId", async(request, response) => {
     let userList = (await db.connection('user', 'searchLogin', data));
     for(let user of userList) {
         if(user.id == id && user.phone == phone) {
-            result.userInfo = 2;  // 비밀번호 찾기
+            result.userInfo;  // 비밀번호 찾기
             result.user = user;
         } else if(user.phone == phone) {
-            result.userInfo = 1;  // 아이디 찾기
+            result.userInfo.id;  // 아이디 찾기
             result.user = user;
         } else {
-            result.userInfo = 3;  // 일치하는 회원 없음
+            result.userInfo;  // 일치하는 회원 없음
         }
     }
     response.send(result);
