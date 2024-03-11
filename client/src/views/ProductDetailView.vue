@@ -20,11 +20,6 @@
           </tr>
 
           <tr>
-            <th colspan="2" class="text-center table-primary">책소개</th>
-            <td colspan="4">{{ productDetailInfo.book_intro }}</td>
-          </tr>
-
-          <tr>
             <th colspan="2" class="text-center table-primary">도서 이미지</th>
             <td colspan="4">{{ productDetailInfo.book_img }}</td>
           </tr>
@@ -58,7 +53,6 @@
           title : '',
           isbn : '',
           publ_co : '',
-          book_intro : '',
           book_img : '',
           detail_exp : ''
         }

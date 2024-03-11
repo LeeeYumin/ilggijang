@@ -22,6 +22,7 @@ import UserNoticeView from '../views/UserNoticeView.vue';
 import UserNoticeInfoView from '../views/UserNoticeInfoView.vue';
 import MyOrderlistView from '../views/MyOrderListView.vue';
 import SaveView from '../views/SaveView.vue';
+import MyReviewList from '../views/MyReviewList.vue';
 
 
 
@@ -95,6 +96,11 @@ export default {
                 path: 'userInfo',
                 name: 'userInfo',
                 component: UserInfoView
+            },
+            {
+                path: 'myreview',
+                name: 'myreview',
+                component: MyReviewList
             }
         ]
     },

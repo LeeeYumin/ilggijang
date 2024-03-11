@@ -30,7 +30,6 @@
     <div class="botton">
         <div class="detailDown">
         <p>책 목차, 상세내용 영역 {{ bookInfo.detail_exp }}</p>
-        <p>저자/관리자작성 책 소개 영역 {{ bookInfo.book_intro }}</p>
       </div>
     </div>
     <BookReviewView />
@@ -57,7 +56,6 @@ export default {
         title: '',
         publ_co: '',
         book_price: '',
-        book_intro: '',
         detail_exp: '',
         publ_date: null,
         category_code: ''
