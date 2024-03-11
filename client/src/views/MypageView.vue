@@ -10,8 +10,11 @@
       <div class="list">
         <ul>
           <li>
-            <div><p>내정보</p><p class="ico"><font-awesome-icon icon="fa-regular fa-user" size="2xl" style="color:#303d8f;" /></p></div></li>
-          <li><div><p>내리뷰</p><p class="ico"><font-awesome-icon icon="fa-solid fa-pencil" size="2xl" style="color:#303d8f;" /></p></div></li>
+            <router-link to="/mypage/userInfo2">
+            <div><p>내정보</p><p class="ico"><font-awesome-icon icon="fa-regular fa-user" size="2xl" style="color:#303d8f;" /></p></div>
+          </router-link>
+          </li>
+            <li><div><p>내리뷰</p><p class="ico"><font-awesome-icon icon="fa-solid fa-pencil" size="2xl" style="color:#303d8f;" /></p></div></li>
           <li>
             <router-link to="/mypage/save">
               <div><p>찜</p><p class="ico"><font-awesome-icon :icon="['far', 'thumbs-up']" size="2xl" style="color:#303d8f;" /></p></div>
@@ -77,8 +80,9 @@
       }
     },
     created(){
-        let userId = this.$route.query.userId;
+        let userId = this.$route.query.id;
         this.getUserInfo(userId);
+        
     },
     methods : {
       async getUserInfo(){

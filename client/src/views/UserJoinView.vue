@@ -225,14 +225,14 @@ import axios from 'axios';
   
               return true;
           },
-          openPostcode() {
-              new window.daum.Postcode({
-                  oncomplete : (data) => {
-                      this.userInfo.postcode = data.zonecode;
-                      this.userInfo.addr = data.roadAddress;
-                  }
-              }).open();
-          },
+        //   openPostcode() {
+        //       new window.daum.Postcode({
+        //           oncomplete : (data) => {
+        //               this.userInfo.postcode = data.zonecode;
+        //               this.userInfo.addr = data.roadAddress;
+        //           }
+        //       }).open();
+        //   },
           getCode(zonecode, roadAddress) {
               this.userInfo.postcode = zonecode;
               this.userInfo.addr = roadAddress;
