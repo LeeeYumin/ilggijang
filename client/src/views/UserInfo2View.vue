@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div class="container">
     <h1>회원 정보 조회</h1>
     <div class="row">
@@ -52,9 +52,8 @@
 
     </div>
     <div class="row">
-      <button class="btn btn-info col-4" @click="goToUpdate(userInfo.id)">수정</button>
-      <router-link to="/admin/userList" class="btn btn-success col-4">목록</router-link>
-      
+      <button class="btn btn-info col-4" @click="goToUpdate(userInfo.user_no)">수정</button>
+    
     </div>
   </div>
 
@@ -85,39 +84,27 @@ export default {
 
   },
   created() {
-    let id = this.$route.query.id;
-    console.log(id);
-    this.getUserInfo(id);
+    let no = this.$route.query.userNo;
+    console.log(no);
+    this.getUserInfo(no);
   },
   methods: {
-    async getUserInfo(id) {
-      let result = await axios.get('/api/user/' + id)
+    async getUserInfo(user_no) {
+      let result = await axios.get('/api/user/admin/' + user_no)
         .catch(err => console.log(err));
       let info = result.data;
       this.userInfo = info;
     },
-    dataFormat(value) {
-      let result = null;
-      if (value != null) {
-        let date = new Date(value);
-        let year = date.getFullYear();
-        let month = ("0" + (date.getMonth() + 1)).slice(-2);
-        let day = ("0" + date.getDate()).slice(-2);
-
-        result = `${year}-${month}-${day}`;
-      }
-      return result;
-    },
-    goToUpdate(id) {
+    goToUpdate(user_no) {
       // 수정폼 컴포넌트 호출
       //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
-      this.$router.push({ path: '/admin/userUpdate', query: { 'id': id } });
+      this.$router.push({ path: '/userUpdate', query: { 'userno': user_no } });
     },
     deleteInfo(id) {
       // 서버의 해당 데이터 삭제
       console.log(id);
       axios
-        .delete('/api/admin/user/' + id)
+        .delete(`/api/admin/user/${id}`)
         .then(result => {
           if (result.data.affectedRows != 0 && result.data.changedRows == 0) {
             alert(`정상적으로 삭제되었습니다.`);
@@ -136,4 +123,4 @@ export default {
 
 
 
-</script>
+</script>-->

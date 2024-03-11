@@ -17,7 +17,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="(user, idx) in userList" v-bind:key="idx" v-on:click="goToUserInfo(user.user_no)">
+        <tr v-for="(user, idx) in userList" v-bind:key="idx" v-on:click="goToUserInfo(user.id)">
           <td>{{ user.user_no }}</td>
           <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
@@ -81,7 +81,7 @@ export default {
       // 동기식으로 처리(await) : then X
       // 비동기 식으로 처리 : then O
     },
-    goToUserInfo(no) {
+    goToUserInfo(id) {
       // 등록된 라우터에 대해 요청 메소드
       // 라우터는 무조건 get 방식(post X) => body 없음
 
@@ -89,7 +89,7 @@ export default {
       // query: 넘기는 부분 (key-value)
       //        여기서 정한 key를 받는 쪽에서도 알아야 함(받는 쪽: 새롭게 불려지는 컴포넌트)
       // $router.push: 통신을 요청 / $route : 통신을 받음
-      this.$router.push({ path: '/admin/userInfo', query: { 'userNo': no } });
+      this.$router.push({ path: '/admin/userInfo', query: { 'id': id } });
       // this.$router.push({ name: 'userInfo', query: {'userId' : userId}});  // name으로도 가능
     },
     gender(gender) {

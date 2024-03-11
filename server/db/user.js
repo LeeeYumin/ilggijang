@@ -42,7 +42,7 @@ const userInfo =
 FROM user
 WHERE id = ? `;
 
-//관리자용 회원정보 조회
+//관리자용 회원정보 조회(사용안함)
 const useradInfo =
 `select 
     id
@@ -64,7 +64,7 @@ WHERE user_no = ? `;
 const userUpdate =
 `UPDATE user
 SET ?
-WHERE user_no = ?`;
+WHERE id = ?`;
 
 module.exports = {
     userList,

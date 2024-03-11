@@ -18,7 +18,7 @@ noticeRouter.post("/", async (request,response) =>{
 
 //공지사항 수정
 noticeRouter.put("/:notice_no", async (request, response)=>{
-    let data = [request.body.param, request.params.nno];
+    let data = [request.body.param, request.params.notice_no];
     let result = await db.connection('notice', 'noticeUpdate',data);
     response.send(result);
 });

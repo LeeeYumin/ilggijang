@@ -1,9 +1,13 @@
 <template>
-
-  <div class="container text-center">
-    <div>
-      <h2>로그인</h2>
+  <div class="login_con">
+    <div class="login">
+      <div class="logo">
+        <router-link to="main">
+            <img src="@/assets/ilggijang_logo.png" style="width: 100px;">
+        </router-link>
+      </div>
       <div id="loginForm">
+ //hyoeun_home_0310
           <div class="mb-3">
     <input class="w3-input" name="uid" placeholder="ID를 입력해주세요" v-model="id"><br>
   </div>
@@ -15,13 +19,48 @@
     <button v-on:click="findid"  class="w3-button w3-green w3-round" >아이디찾기</button>
     <button v-on:click="findpw"  class="w3-button w3-green w3-round" >비밀번호찾기</button>
     <NaverLogin />
+    //충돌확인
+        <form @submit.prevent="Login">
+          <ul>
+            <li>
+              <input class="w3-input" name="uid" placeholder="ID를 입력해주세요" v-model="id"><br>
+            </li>
+            <li>
+              <input name="pw" class="w3-input" placeholder="PW를 입력해주세요" v-model="pw_no" type="password">
+            </li>
+          </ul>
+          <button v-on:click="Login" type="submit" class="btn_login">로그인</button>
+          <div class="btn_box">
+            <ul>
+              <li><button v-on:click="join">회원가입</button></li>
+              <li><button v-on:click="findid">아이디찾기</button></li>
+              <li><button v-on:click="findpw">비밀번호찾기</button></li>
+            </ul>
+          </div>
+          <NaverLogin />
+        </form>
+//dev_daily
       </div>
     </div>
   </div>
-  <Footer />
+  <Footer class="footer" />
 </template>
 
-
+<style scoped>
+  .login_con{display:flex; justify-content:center; align-items:center; text-align:center;}
+  .login_con .login{width:500px; height:520px; margin-top:7%; padding:20px 50px; background:#f5f5f5; border-radius:20px; box-sizing:border-box; box-shadow:0 0 5px 1px rgba(0, 0, 0, 0.1);}
+  .login_con .login form ul{list-style:none; padding-left:0;}
+  .login_con .login form ul li{margin-bottom:10px;}
+  .login_con .login form ul li input{width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; box-sizing:border-box;}
+  .logo{margin:25px 0 20px;}
+  .btn_login{width:100%; margin-top:10px; padding:15px; color:#fff; font-size:18px; font-weight:700; border:0; background:#767676; border-radius:8px;}
+  .footer{position:absolute; bottom:0; width:100%;}
+  .btn_box{margin-top:20px;}
+  .btn_box li{display:inline-block; position:relative; margin:0 5px;}
+  .btn_box li:before{content:''; display:block; position:absolute; left:-5px; top:5px; width:1px; height:15px; border-left:1px solid #aaa;}
+  .btn_box li:first-child:before{display:none;}
+  .btn_box button{margin:0; border:0; background:none; color:#555; font-size:15px; letter-spacing:-0.5px;}
+</style>
 
 
 <script>
@@ -47,7 +86,7 @@ export default {
 
     async Login() {
       this.validation();
-
+     
       // 회원 단건조회
       let result = await axios.get('/api/user/' + this.id)
                               .catch(err => console.log(err));
@@ -69,23 +108,25 @@ export default {
         this.$store.commit('setLoginTypeCode', loginTypeCode);
         
         
-        alert('로그인 되었습니다.');
+     
 
         console.log(this.$store.state.isLogin);
         console.log(this.$store.state.id);
         console.log(this.$store.state.userNo);
        
-       
+        
 
         if(this.id=='admin'){
           this.$router.push({path : '/admin'});
         }else{
           this.$router.push({path : '/main'});
         }
+       
       }else{
         alert('아이디 또는 비밀번호를 다시 입력해주세요.');
-       
       }
+       alert('로그인 되었습니다.');
+      
     },
     validation() {
       if (this.id === '') {
@@ -97,6 +138,8 @@ export default {
         alert('비밀번호를 입력하세요.')
         return
       }
+        
+
     },
      join(){
       this.$router.push({path : '/userjoin'});
@@ -109,7 +152,6 @@ export default {
     logout() {
       axios.get().then((res) => {   
         localStorage.removeItem('vuex');
-        
         this.$router.push({path : '/main'});
         console.log(res.data);
       });

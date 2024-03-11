@@ -34,6 +34,14 @@ cartRouter.delete("/:cno", async (request, response) => {
     response.send(result);
 });
 
+// 장바구니 전체삭제
+cartRouter.delete("/user/:uno", async (request, response) => {
+    let data = request.params.uno;
+    console.log(data);
+    let result = await db.connection('cart', 'cartAllDelete', data);
+    response.send(result);
+});
+
 // 장바구니 중복체크
 cartRouter.get("/cartCheck", async (request, response) => {
     console.log(request.url,"===================")

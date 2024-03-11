@@ -18,5 +18,6 @@ export default {
 </script>
 
 <style scoped>
-
+  .container{padding-top:50px;}
+  h3{font-weight:700;} 
 </style>
