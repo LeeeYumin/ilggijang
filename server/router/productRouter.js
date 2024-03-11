@@ -22,7 +22,7 @@ productRouter.get("/:pno", async (request, response) => { //:prdt_no 에서 수�
 //   response.send(result);
 // });
 
-// 상품관리 입력 (관리자) -> 사용중
+// 상품관리 입력 (관리자) -> 사용
 productRouter.post("/", async (request, response) => {
   let dataAry = request.body.param;
 
