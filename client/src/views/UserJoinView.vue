@@ -157,7 +157,7 @@ import axios from 'axios';
                       mail : this.userInfo.mail,
                       birth_date: this.userInfo.birth_date,
                       gender_code : this.userInfo.gender_code,
-                      postcode : this.userInfo.postcode,
+                    //   postcode : this.userInfo.postcode,
                     //   member_type : this.userInfo.type,
                       addr : this.userInfo.addr,
                       detail_addr : this.userInfo.detail_addr,
@@ -167,11 +167,13 @@ import axios from 'axios';
               };
               let result = await axios.post("/api/user", data)
                           .catch(err => console.log(err));
+                          
               let info = result.data.affectedRows;
+           
               if(info > 0) {
                   alert('회원가입이 완료되었습니다.');
+                  this.$router.push({path : '/main'})
               }
-              this.$router.push({path : '/main'})
           },
           validation() {
               if(this.userInfo.id == '') {
@@ -225,14 +227,14 @@ import axios from 'axios';
   
               return true;
           },
-        //   openPostcode() {
-        //       new window.daum.Postcode({
-        //           oncomplete : (data) => {
-        //               this.userInfo.postcode = data.zonecode;
-        //               this.userInfo.addr = data.roadAddress;
-        //           }
-        //       }).open();
-        //   },
+          openPostcode() {
+              new window.daum.Postcode({
+                  oncomplete : (data) => {
+                      this.userInfo.postcode = data.zonecode;
+                      this.userInfo.addr = data.roadAddress;
+                  }
+              }).open();
+          },
           getCode(zonecode, roadAddress) {
               this.userInfo.postcode = zonecode;
               this.userInfo.addr = roadAddress;

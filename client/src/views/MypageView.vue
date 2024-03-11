@@ -10,7 +10,10 @@
       <div class="list">
         <ul>
           <li>
-            <div><p>내정보</p><p class="ico"><font-awesome-icon icon="fa-regular fa-user" size="2xl" style="color:#303d8f;" /></p></div></li>
+            <router-link to="/mypage/userInfo2">
+            <div><p>내정보</p><p class="ico"><font-awesome-icon icon="fa-regular fa-user" size="2xl" style="color:#303d8f;" /></p></div>
+              </router-link>                                                                                                                                                  
+          </li>
           <li>
             <router-link to="/mypage/myreview">
               <div><p>내리뷰</p><p class="ico"><font-awesome-icon icon="fa-solid fa-pencil" size="2xl" style="color:#303d8f;" /></p></div>
