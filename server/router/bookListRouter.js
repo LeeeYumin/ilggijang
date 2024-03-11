@@ -34,8 +34,8 @@ bookListRouter.get("/bestlist/:pgno", async (request, response) => {
 // 분야별 인기도서 목록 (각 분야별 판매량 순)
 bookListRouter.get("/catlist/:catcode", async (request, response) => {
   let data = request.params.catcode;
-  let result = await db.connection('bookLists', 'categoryBookList', data);
-  response.send(result);
+  let list = await db.connection('bookLists', 'categoryBookList', data);
+  response.send({list});
 });
 
 // 함수

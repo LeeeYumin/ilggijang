@@ -1,5 +1,12 @@
 <template>
 <div class="container mt-5">
+    <RegisterModalView v-if="popupView == true" @save="popupView = false, refresh = true" @close="popupView = false"
+        :rno="`/` + rno"
+        :rgrade="rgrade"
+        :rcontent ="rcontent"
+        :rodtno ="rodtno"
+        :rpno ="rpno"
+        :rbnm = "rbnm"/>
     <h3 class="mb-4 title">주문/배송 조회</h3>
     <div class="content">
         <table class="table">
@@ -12,6 +19,7 @@
                 <tr>
                     <td colspan="3"><i class="point p-2">배송</i></td>
                 </tr>
+                <!--  -->
                 <tr v-bind:key="idx" v-for="(list, idx) in orderDetailList">
                     <td>
                         <div class="book_info">
@@ -27,9 +35,11 @@
                     <td class="tc"><i class="point">{{ formatPrice(list.unit_price) }}</i>원</td>
                     <td class="tc"><i class="point color state">{{ orderState(list.orders_state) }}</i></td>
                     <td class="tc">
+                        <button class="btn btn-outline-primary mr-0" @click="popupView = true, rodtno = list.orders_detail_no, rpno = list.prdt_no, rbnm = list.book_name" :disabled="list.rodtno != null">리뷰작성</button>
                         <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
                     </td>
                 </tr>
+                <!--  -->
             </tbody>
         </table>
 
@@ -160,6 +170,7 @@ i.state{font-size:15px;}
 
 <script>
 import axios from 'axios';
+import RegisterModalView from './RegisterModalView.vue';
 
 export default {
     data() {
@@ -176,12 +187,33 @@ export default {
                 dlv_amount : '',
                 dc_amount : ''
             },
-            selectedPay : ''
+            selectedPay : '',
             // orderDetailList : JSON.parse(sessionStorage.getItem("orderItem"))
+            
+            refresh: false,
+            popupView : false,
+            rno : 0,
+            rgrade : 0,
+            rcontent : '',
+            rodtno : 0,
+            rpno : '',
+            rbnm : ''
         }
     },
     computed : {
         
+    },
+    components:{
+        RegisterModalView
+    },
+    watch: {
+        refresh(a){
+            if(a == true){
+                this.getOrderList(this.$route.query.orderNo);
+                this.getOrderInfo(this.$route.query.orderNo);
+                this.refresh = false;
+            }
+        }
     },
     created(){
         let orderNo = this.$route.query.orderNo; // 받는건 route, router 아님 주의

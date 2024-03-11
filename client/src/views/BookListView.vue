@@ -39,17 +39,18 @@ export default {
       // listId: '/recdlist',
       startCnt: 10,
       pages: 0,
-      currentCode: null
+      // currentCode: null
     }
   },
   created() {
     // this.currentCode = this.code.slice(-1,-2);
-    console.log(this.listId, this.code, this.currentCode);
+    console.log(this.listId, this.code);
     this.getBookList(this.currentPage);
   },
   methods: {
     async getBookList(pgno) {
-      let result = await axios.get(`/api/bookLists${this.listId}${this.code}/${((pgno - 1) * this.startCnt)}`)
+      let makepno = this.listId == '/catlist' ? `` : `/`+((pgno - 1) * this.startCnt);
+      let result = await axios.get(`/api/bookLists${this.listId}${this.code}${makepno}`)
         .catch(err => console.log(err));
         console.log(result);
       this.currentList = result.data.list;

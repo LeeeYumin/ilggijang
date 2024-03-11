@@ -8,7 +8,7 @@
           <span v-if="listId == '/rvlist'">구매자명 : {{ i.writer }} / </span>
           <span>{{ i.write_date }}</span>
           <div v-if="listId == '/mrvlist' && userno != ''" class="btns">
-            <button @click="$emit('update', i.review_no, i.grade, i.content, i.orders_detail_no)">수정</button>
+            <button @click="$emit('update', i.review_no, i.grade, i.content, i.orders_detail_no, i.book_name)">수정</button>
             <button @click="DeleteMyReview(i.review_no)">삭제</button>
           </div>
         </div>

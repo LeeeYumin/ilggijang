@@ -13,9 +13,11 @@ const orderDetailList =
                , o.recipient
                , o.dlv_addr
                , o.phone
+               , r.orders_detail_no AS rodtno
 FROM ordersdetail d
                     JOIN orders o ON o.orders_no = d.orders_no
                     JOIN prdt p ON d.prdt_no = p.prdt_no
+                    LEFT OUTER JOIN review r ON d.orders_detail_no = r.orders_detail_no
 WHERE d.orders_no = ?`;
 
 // 주문상세등록

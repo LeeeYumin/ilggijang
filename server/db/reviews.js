@@ -29,6 +29,21 @@ FROM review r
 WHERE user_no = ? AND prdt_no = ?
 ORDER BY r.write_date DESC`; // 회원 번호, 상품 번호 필요. 최신 순 정렬
 
+// 마이페이지 내 리뷰 목록
+const MyPageMyReviewList =
+`SELECT r.content
+        , DATE_FORMAT(r.write_date, '%Y-%m-%d') AS write_date
+        , r.grade
+        , r.review_no
+        , r.orders_detail_no
+        , p.book_name
+        , p.prdt_no
+FROM review r
+JOIN prdt p
+ON (p.prdt_no = r.prdt_no)
+WHERE user_no = ?
+ORDER BY r.write_date DESC`;
+
 // 관리자 리뷰 목록
 // const adminReviewList =
 // `SELECT r.review_no
@@ -83,6 +98,7 @@ WHERE review_no = ? `;
 module.exports = {
     detailReviewList, detailReviewCnt
     , detailMyReviewList
+    , MyPageMyReviewList
 //     , adminReviewList
     , reviewInsert
     , reviewUpdate

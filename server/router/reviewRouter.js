@@ -18,6 +18,12 @@ reviewRouter.get("/mrvlist/:uno/:pno", async (request, response) => {
     response.send(result);
 });
 
+// 마이페이지 내 리뷰 목록
+reviewRouter.get("/mmrvlist/:uno", async (request, response) => {
+    let data = parseInt(request.params.uno);
+    let result = await db.connection('reviews', 'MyPageMyReviewList', data);
+    response.send(result);
+});
 
 // // 관리자 리뷰 목록
 // reviewRouter.get("/admin", async (request, response) => {
