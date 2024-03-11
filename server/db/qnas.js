@@ -4,12 +4,13 @@ const detailQnaList =
 		, RPAD(SUBSTR(q.qry_content, 1, 30), CHAR_LENGTH(SUBSTR(q.qry_content, 1, 32)), '.') AS litecont
         , DATE_FORMAT(q.write_date, '%Y-%m-%d') AS write_date
         , RPAD(SUBSTR(u.id, 1, 2), CHAR_LENGTH(u.id), '*') AS writer
+        , u.user_no
 FROM qna q
 JOIN user u
 ON (u.user_no = q.user_no)
 WHERE prdt_no = ?
-ORDER BY q.write_date DESC
-LIMIT ?, 5`; // 상품 번호, 페이지 값 필요
+ORDER BY u.user_no = ? DESC, q.write_date DESC
+LIMIT ?, 5`; // 회원번호, 상품 번호, 페이지 값 필요
 const detailQnaCnt =
 `SELECT count(*) AS qacnt
 FROM qna
