@@ -7,10 +7,6 @@
         <col span="1" width="85%;">
       </colgroup>
       <tr>
-        <th class="text-right table-primary">No.</th>
-        <td>{{ userInfo2.user_no }}</td>
-      </tr>
-      <tr>
         <th class="text-right table-primary">아이디</th>
         <td>{{ userInfo2.id }}</td>
       </tr>
@@ -20,7 +16,7 @@
       </tr>
       <tr>
         <th class="text-right table-primary">생년월일</th>
-        <td>{{ userInfo2.birth_date }}</td>
+        <td>{{ dataFormat(userInfo2.birth_date) }}</td>
       </tr>
       <tr>
         <th class="text-right table-primary">성별</th>
@@ -43,16 +39,16 @@
         <td>{{ userInfo2.phone }}</td>
       </tr>
       <tr>
-        <th class="text-right table-primary">로그인타입</th>
-        <td>{{ userInfo2.login_type_code }}</td>
-      </tr>
-      <tr>
         <th class="text-right table-primary">나이</th>
-        <td>{{ userInfo2.age_code }}</td>
+        <td>{{ ageType(userInfo2.age_code) }}</td>
+      </tr>
+       <tr>
+        <th class="text-right table-primary">회원등급</th>
+        <td>{{ rank(userInfo2.user_rank_no) }}</td>
       </tr>
     </table>
     <div class="btn_box">
-      <button class="btn btn-outline-primary" @click="goToUpdate(userInfo2.id)">수정</button>
+      <button class="btn btn-info" @click="goToUpdate(userInfo2.id)">수정</button>
     </div>
   </div>
 
@@ -122,6 +118,34 @@ export default {
       //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
       this.$router.push({ path: '/userUpdate', query: { 'id': id } });
     },
+    loginType(loginType){
+      let result = null;
+      if(loginType == 'j1') result = '사이트로그인';
+      else if(loginType == 'j2') result = '네이버로그인';
+        else result = '';
+        return result;
+      
+    },
+    ageType(ageType){
+      let result = null;
+      if(ageType =='z1') result = '10대';
+      else if(ageType == 'z2') result = '20대';
+      else if(ageType == 'z3') result = '30대';
+      else if(ageType == 'z4') result = '40대';
+      else if(ageType == 'z5') result = '50대';
+      else if(ageType == 'z6') result = '60대';
+      else result = '';
+      return result;
+    },
+    rank(rank){
+      let result = null;
+      if(rank == '1') result = '일반회원';
+      else if(rank == '2') result = '실버회원';
+      else if(rank == '3') result = '골드회원';
+      else if(rank == '4') result = '다이아회원';
+      else result = '';
+      return result;
+    }
     // deleteInfo(id) {
     //   // 서버의 해당 데이터 삭제
     //   console.log(id);

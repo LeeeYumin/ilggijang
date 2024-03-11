@@ -4,15 +4,15 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>No.</th>
-          <th>아이디</th>
-          <th>이름</th>
-          <th>주소</th>
-          <th>메일</th>
-          <th>연락처</th>
-          <th>성별</th>
-          <th>가입일</th>
-          <th>회원등급</th>
+          <th class="text-center table-primary">No.</th>
+          <th class="text-center table-primary">아이디</th>
+          <th class="text-center table-primary">이름</th>
+          <th class="text-center table-primary">주소</th>
+          <th class="text-center table-primary">메일</th>
+          <th class="text-center table-primary">연락처</th>
+          <th class="text-center table-primary">성별</th>
+          <th class="text-center table-primary">가입일</th>
+          <th class="text-center table-primary">회원등급</th>
         </tr>
       </thead>
 
@@ -25,8 +25,9 @@
           <td>{{ user.mail }}</td>
           <td>{{ user.phone }}</td>
           <td>{{ gender(user.gender_code) }}</td>
-          <td>{{ user.join_date }}</td>
-          <td>{{ user.user_rank_no }}</td>
+          <td>{{ notiDate(user.join_date) }}</td>
+          <td>{{ rank(user.user_rank_no) }}</td>
+       
 
 
 
@@ -102,6 +103,54 @@ export default {
       else result = '';
       return result;
 
+    },
+    loginType(loginType){
+      let result = null;
+      if(loginType == 'j1') result = '사이트로그인';
+      else if(loginType == 'j2') result = '네이버로그인';
+        else result = '';
+        return result;
+      
+    },
+    //  ageType(ageType){
+    //   let result = null;
+    //   if(ageType =='z1') result = '10대';
+    //   else if(ageType == 'z2') result = '20대';
+    //   else if(ageType == 'z3') result = '30대';
+    //   else if(ageType == 'z4') result = '40대';
+    //   else if(ageType == 'z5') result = '50대';
+    //   else if(ageType == 'z6') result = '60대';
+    //   else result = '';
+    //   return result;
+    // },
+    getToday() {
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+            let day = ('0' + date.getDate()).slice(-2);
+            return `${year}-${month}-${day}`;
+        },
+         notiDate(orderDate) {
+          let result = null;
+          if(orderDate != null){
+              let date = new Date(orderDate);
+              let year = date.getFullYear();
+              let month = ('0' + (date.getMonth() + 1)).slice(-2);
+              let day = ('0' + date.getDate()).slice(-2);             
+              
+              result = `${year}-${month}-${day}`;
+              return result;
+          }
+          return ''
+      },
+    rank(rank){
+      let result = null;
+      if(rank == '1') result = '일반회원';
+      else if(rank == '2') result = '실버회원';
+      else if(rank == '3') result = '골드회원';
+      else if(rank == '4') result = '다이아회원';
+      else result = '';
+      return result;
     }
   }
 }
