@@ -29,9 +29,15 @@ const saveAllDelete =
 `DELETE FROM save
 WHERE user_no = ?`;
 
+// 찜 -> 장바구니 찜 삭제(장바구니에 추가시)
+const savePickDelete =
+`DELETE FROM save
+WHERE user_no = ?`;
+
 module.exports = {
     saveList,
     saveInsert,
     saveDelete,
-    saveAllDelete
+    saveAllDelete,
+    savePickDelete
   }

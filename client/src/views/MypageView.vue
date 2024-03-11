@@ -31,8 +31,6 @@
   </div>
 
   <div class="container">
-    <!-- <MyOrderListView /> -->
-
     <router-view />
   </div>
 

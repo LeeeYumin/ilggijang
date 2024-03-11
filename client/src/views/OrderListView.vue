@@ -15,7 +15,9 @@
                 <tr v-bind:key="idx" v-for="(list, idx) in orderDetailList">
                     <td>
                         <div class="book_info">
-                            <span class="img">{{ list.book_img }}</span>
+                            <span class="img" @click="goDetailBook(list.prdt_no)">
+                                <img :src="require('@/assets/product/' + list.book_img)" alt="cover">
+                            </span>
                             <div class="txt">
                                 <p>{{ list.book_name }}</p>
                                 <span>수량 : {{ list.quantity }}</span>
@@ -112,8 +114,9 @@ table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #
 table ul li button:hover{background:#eee;}
 .book_info{padding:20px 0;}
 .book_info > *{display:inline-block; vertical-align:top;}
-.book_info .img{background:#ddd;}
-.book_info .txt{margin-left:10px;}
+.book_info .img{width:100px; background:#ddd; cursor:pointer; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}
+.book_info .img img{display:block; width:100%; height:100%;}
+.book_info .txt{margin-left:20px;}
 .book_info .txt p{margin-bottom:5px; font-size:15px; font-weight:700;}
 .book_info .txt span{display:block; font-size:14px;}
 .btn_num{display:inline-block; position:relative; padding:2px 0; border:1px solid #ddd; border-radius:5px; box-sizing:border-box;}
@@ -274,6 +277,9 @@ export default {
             })
             console.log('cno', cno);
         },
+        goDetailBook(bno) { // 이미지 클릭하면 상세화면으로.
+            this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
+        }
     }
 }
 </script>
