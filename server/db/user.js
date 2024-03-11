@@ -1,5 +1,3 @@
-const { search } = require("../router/userRouter");
-
 //회원리스트
 const userList =
 `SELECT
