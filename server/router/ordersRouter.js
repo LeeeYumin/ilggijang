@@ -8,10 +8,23 @@ ordersRouter.get("/", async (request, response) => {
     response.send(result);
 });
 
+// 관리자 - 주문관리
+ordersRouter.get("/sales", async (request, response) => {
+    let result = await db.connection('orders', 'salesList');
+    response.send(result);
+});
+
 // 단건조회
 ordersRouter.get("/:ono", async (request, response) => {
     let data = request.params.ono;
     let result = (await db.connection('orders', 'orderInfo', data))[0];
+    response.send(result);
+});
+
+// 나의 주문목록
+ordersRouter.get("/mypage/myorderlist/:uno", async (request, response) => {
+    let data = request.params.uno;
+    let result = await db.connection('orders', 'myOrderList', data);
     response.send(result);
 });
 

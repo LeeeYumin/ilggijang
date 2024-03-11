@@ -7,11 +7,11 @@ const bookList =
       , title
       , publ_co
       , book_price
-      , book_intro
       , detail_exp
       , publ_date
       , category_code
-FROM  prdt`;
+FROM  prdt
+LIMIT 0, 5`;
 
 // 상품 상세보기 컴포넌트 (관리자)
 const bookDetailInfo =
@@ -22,7 +22,6 @@ const bookDetailInfo =
       , title
       , publ_co
       , book_price
-      , book_intro
       , detail_exp
       , publ_date
       , category_code
@@ -43,19 +42,41 @@ WHERE prdt_no = ?`;
 // 상품관리 삭제 컴포넌트 (관리자)
 const bookDelete =
 `DELETE FROM prdt
-WHERE prdt_no = ?`
+WHERE prdt_no = ?`;
+
+// 도서 리스트 컴포넌트 (검색결과. SQL에서 확인 먼저 해주고 작성해주면 좋음.)
+const bookSearchList =
+`SELECT book_img
+      , book_name
+      , title
+      , publ_date
+      , book_price
+      , prdt_no
+FROM prdt
+WHERE book_name like ? `;
+
+// 도서 상세정보 컴포넌트 (상+하단)
+const bookDetailSearch =
+`SELECT book_name
+      , book_img
+      , isbn
+      , title
+      , book_price
+      , publ_co
+      , category_code
+      , publ_date
+      , detail_exp
+FROM  prdt`;
 
 
-// 도서 상세상단 컴포넌트 (검색결과)
 
-// 도서 상세하단 컴포넌트 (검색결과)
-
-// 도서 리스트 컴포넌트 (검색결과)
 
 module.exports = {
     bookList,
     bookInsert,
     bookUpdate,
     bookDelete,
-    bookDetailInfo
+    bookDetailInfo,
+    bookSearchList,
+    bookDetailSearch
   }
