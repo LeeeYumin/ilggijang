@@ -86,9 +86,7 @@
 [erwin](https://www.erwin.com/products/erwin-data-modeler/)
 : DB설계
 <br>
-[github](https://github.com/)
-<br>
-[jandi](https://www.jandi.com/landing/kr)
+[github](https://github.com/) & [jandi](https://www.jandi.com/landing/kr)
 : 협업 및 소통 커뮤니티
 
 
