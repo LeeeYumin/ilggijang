@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h1>공지사항</h1>
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>No.</th>

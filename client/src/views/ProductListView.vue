@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>상품관리</h1>
-      <table class="table">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th>도서이미지</th>
