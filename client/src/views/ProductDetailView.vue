@@ -30,8 +30,8 @@
 
           <tr>
             <td colspan="6" class="text-center">
-              <button class="btn btn-xs btn-info" @click="goToUpdateForm(productUpdate.pno)">수정</button>
-              <button class="btn btn-xs btn-info" @click="(productDelete.pno)">삭제</button>
+              <button class="btn btn-xs btn-info" @click="goToUpdate(productUpdate.pno)">수정</button>
+              <button class="btn btn-xs btn-info" @click="delProduct(productDelete.pno)">삭제</button>
               </td>
           </tr>
       </tbody>
@@ -81,12 +81,24 @@
         return book_price + '원'
       }
       },
-    goToUpdateForm (pno) {
+    goToUpdate (pno) { // 작성 및 수정폼 같은 컴포넌트 사용
       this.$router.push({ path : '/admin/productDetail',query : {'prdtNo' : pno } });
-
+    },
+    delProduct (pno) { //서버에 해당 데이터 삭제
+      axios.delete(`/product/${pno}`)
+            .then(result => {
+        if(result.data.affectedRows != 0 && result.data.changedRows == 0){
+          alert(`정상 삭제되었습니다`);
+          this.$router.push({path : '/'}); // 이건 꼭 보여야 하는 부분.
+        }else {
+          alert(`삭제되지 않았습니다. \n메세지확인\n${result.data.message}`);
         }
+        }
+    )}
     }
   }
+
+
 
 
 

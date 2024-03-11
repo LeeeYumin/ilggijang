@@ -75,7 +75,7 @@ export default {
       async prdtInsert(){
         let data = {
           param :[
-            this.productInsert.isbn, //바인딩 된 정보를 위에서 넣어줌.
+            this.productInsert.isbn, //v-바인딩 된 정보를 위에서 넣어줌.
             this.productInsert.book_name,
             this.productInsert.book_img,
             this.productInsert.title,
@@ -85,7 +85,7 @@ export default {
             this.productInsert.publ_date,
             this.productInsert.category_code,
           ]
-        
+
         };
         console.log()
         let result = await axios.post("/api/product", data)
