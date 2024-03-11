@@ -5,6 +5,7 @@ const detailQnaList =
         , DATE_FORMAT(q.write_date, '%Y-%m-%d') AS write_date
         , RPAD(SUBSTR(u.id, 1, 2), CHAR_LENGTH(u.id), '*') AS writer
         , u.user_no
+        , q.qna_no
 FROM qna q
 JOIN user u
 ON (u.user_no = q.user_no)

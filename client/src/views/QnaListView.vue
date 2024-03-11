@@ -1,12 +1,11 @@
 <template>
   <!-- <h5 v-if="listId == '/mqnalist' && userno != ''">My Q & A</h5>
     <span v-if="currentList == '' && userno != ''">아직 리뷰가 없습니다.</span> -->
-  <tbody class="qnalist" :key="i" v-for="i in currentList" @click="qno = $event.target.value">
-    <tr type="button" :value="i.qna_no">
+    <tr class="link" :key="i" v-for="i in currentList" @click.capture="infoOn = true, state = i.reply_state, qno = i.qna_no, uno = i.user_no">
       <td class="state">
         <span>{{ i.reply_state }}</span>
       </td>
-      <td class="content">
+      <td class="content" >
         <span>{{ i.litecont }}</span>
       </td>
       <td class="writerdate">
@@ -16,10 +15,11 @@
         <span>{{ i.writer }}</span>
       </td>
     </tr>
-  </tbody>
+    <UpdateQnaView v-if="infoOn" :repstate="state" :qno="qno" :uno="uno" @refreon="(e) => this.refreon = e"/>
+
   <template>
-    <UpdateQnaView v-if="infoOn" :repstate="i.reply_state" :qno="qno" :uno="i.user_no" @refreon="(e) => this.refreon = e"/>
   </template>
+
   <div class="pages">
     <b-pagination v-model="currentPage" :total-rows="pagecnts" :per-Page="startCnt"
     @click="getQnaList(currentPage)"></b-pagination>
@@ -48,10 +48,12 @@ export default {
       currentPage: 1,
       startCnt: 5,
       pagecnts: 0,
-      currentCode: null,
       userno: this.$store.state.userNo,
       infoOn: false,
-      qno: ''
+      uno: '',
+      qno: '',
+      state: '',
+
     }
   },
   created() {
@@ -73,7 +75,9 @@ export default {
       this.pagecnts = result.data.pages[0].qacnt;
       this.$emit('allcntevt', this.pagecnts);
     },
-    
+    chk(data){
+      console.log(data);
+    }
   }
 }
 </script>
@@ -82,4 +86,5 @@ export default {
 .qnalist {
   padding: 20px;
 }
+.link .content span:hover{text-decoration:underline; cursor:pointer;}
 </style>
