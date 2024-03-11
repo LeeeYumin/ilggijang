@@ -14,12 +14,6 @@
             </div>
             <div class="myqnas">
                 <table>
-                    <tr>
-                        <th>상태</th>
-                        <th>문의 내용</th>
-                        <th>작성일</th>
-                        <th>작성자</th>
-                    </tr>
                     <QnaListView listId="/qnalist" :pcode="`/` + bno" @allcntevt="(e) => spcnt = e" />
                     <!-- @allcntevt 전체 목록 갯수 갱신 -->
                 </table>
@@ -69,12 +63,5 @@ export default {
     margin: 0 auto;
 }
 
-tr {
-    border-bottom: 1px solid #888;
-    font-size: 15px;
-}
 
-th {
-    text-align: center;
-}
 </style>

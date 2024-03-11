@@ -34,10 +34,19 @@ const savePickDelete =
 `DELETE FROM save
 WHERE user_no = ?`;
 
+// 찜 (중복체크) 만들고 saveRouter 에 넣기
+const saveCheck =
+`SELECT user_no
+        , prdt_no
+FROM save
+WHERE user_no = ?
+AND   prdt_no = ?`;
+
 module.exports = {
     saveList,
     saveInsert,
     saveDelete,
     saveAllDelete,
-    savePickDelete
+    savePickDelete,
+    saveCheck
   }

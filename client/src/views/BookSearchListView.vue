@@ -1,4 +1,5 @@
 <template>
+  <!--도서검색하면 처음 뜨는 목록-->
   <div class="container serach_con">
     <h4><span>'{{ book_name }}'</span>에 대한 검색 결과</h4>
     <div class="list">
@@ -6,7 +7,7 @@
           <div class="left" @click="goDetailBook(book.prdt_no)">
             <span class="img">
               <img :src="require('@/assets/product/' + book.book_img)" alt="cover">
-            </span>       
+            </span>
           </div>
            <ul class="prdt_list">
               <li class="tit">{{ book.book_name }}</li>
@@ -16,7 +17,7 @@
             </ul>
           <div class="right">
             <button type="button" class="btn btn-primary" @click="goCart(book.prdt_no)">장바구니</button>
-            <button type="button" class="btn btn-secondary">찜</button>
+            <button type="button" class="btn btn-secondary" @click="goLike(book.prdt_no)">찜</button>
           </div>
       </div>
     </div>
@@ -129,6 +130,46 @@ export default {
     },
     goDetailBook(bno) { // 이미지 클릭하면 상세화면으로.
       this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
+    },
+    goLike(prdt_no) { //(bno)
+      //console.log('책정보', bno);
+      if(this.$store.state.isLogin){
+          this.addLike(prdt_no)
+      }else{
+        alert("로그인 후 이용해주세요")
+      }
+    },
+
+    async addLike(prdt_no){ // *중복체크 + 담기
+      let uno = this.$store.state.userNo;
+      // let pno = this.book.prdt_no;
+      // 장바구니 중복체크
+      await axios.get("/api/save/like/check?uno="+ uno + "&pno=" + prdt_no)
+      .then(result=>{
+        console.log("=======", result.data);
+        if(result.data){
+          this.saveInsert(prdt_no);// 찜에 추가
+          alert('찜에 추가되었습니다.')
+        }else{
+          alert("이미 담긴 도서입니다")
+        }
+      })
+      .catch(err => console.log(err));
+    },
+    async saveInsert(prdt_no){
+      let data = {
+        param : {
+          user_no : this.$store.state.userNo,
+          prdt_no : prdt_no
+        }
+      }
+      let result = await axios.post("/api/save", data)
+                              .catch(err => console.log(err));
+      let info = result.data.insertId;
+      if(info > 0) {
+        alert("찜에 추가되었습니다")
+        this.$router.push({path : '/save'}); // 클릭이벤트 추가
+      }
     }
   }
       }
@@ -143,8 +184,9 @@ h4 span{color:#3a4ca8;}
 .list .selected{position:relative; padding:30px 20px; border-bottom:1px solid #ddd; box-sizing:border-box;}
 .prdt_list{list-style:none; padding-left:0;}
 .selected .left{float:left;}
-.selected .img{display:inline-block;}
-.selected .prdt_list{display:inline-block; margin-left:20px; margin-bottom:0; color:#555; font-size:15px; letter-spacing:-0.5px;}
+.selected .img{display:inline-block; width:130px; height:178px; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1); cursor:pointer;}
+.selected .img img{display:block; width:100%; height:100%;}
+.selected .prdt_list{display:inline-block; margin-top:10px; margin-left:20px; margin-bottom:0; color:#555; font-size:15px; letter-spacing:-0.5px;}
 .selected .prdt_list li{margin-bottom:5px;}
 .selected .prdt_list .tit{color:#111; font-size:16px; font-weight:700;}
 .selected .right{position:absolute; right:20px; top:50%; margin-top:-40.5px;}

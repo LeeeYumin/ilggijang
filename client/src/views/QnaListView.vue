@@ -1,13 +1,19 @@
 <template>
-  <!-- <h5 v-if="listId == '/mqnalist' && userno != ''">My Q & A</h5>
-    <span v-if="currentList == '' && userno != ''">아직 리뷰가 없습니다.</span> -->
-  <tbody class="qnalist" :key="i" v-for="i in currentList" @click="qno = $event.target.value">
-    <tr type="button" :value="i.qna_no">
+  <tr class="qnastitle">
+    <th>상태</th>
+    <th>문의 내용</th>
+    <th>작성일</th>
+    <th>작성자</th>
+  </tr>
+  <span v-if="currentList == ''">내용 없음</span>
+  <tbody class="qnas" :key="i" v-for="i in currentList">
+    <tr class="link"
+      @click.capture="i.qna_no != qno ? qno = i.qna_no : qno = '', state = i.reply_state, uno = i.user_no, cont = i.qry_content, rcont = i.reply_content">
       <td class="state">
-        <span>{{ i.reply_state }}</span>
+        <span>{{ code(i.reply_state) }}</span>
       </td>
       <td class="content">
-        <span>{{ i.litecont }}</span>
+        <span>{{ liteCont(i.qry_content) }}</span>
       </td>
       <td class="writerdate">
         <span>{{ i.write_date }}</span>
@@ -16,13 +22,16 @@
         <span>{{ i.writer }}</span>
       </td>
     </tr>
+    <UpdateQnaView v-if="qno == i.qna_no" :repstate="state" :qano="`/` + qno" :usno="uno" :qcont="cont" :acont="rcont"
+      @refreon="(e) => {this.refreon = e, qno = ''}" />
   </tbody>
+
   <template>
-    <UpdateQnaView v-if="infoOn" :repstate="i.reply_state" :qno="qno" :uno="i.user_no" @refreon="(e) => this.refreon = e"/>
   </template>
+
   <div class="pages">
     <b-pagination v-model="currentPage" :total-rows="pagecnts" :per-Page="startCnt"
-    @click="getQnaList(currentPage)"></b-pagination>
+      @click="getQnaList(currentPage)"></b-pagination>
   </div>
 </template>
 
@@ -48,10 +57,13 @@ export default {
       currentPage: 1,
       startCnt: 5,
       pagecnts: 0,
-      currentCode: null,
+      refreon: false,
       userno: this.$store.state.userNo,
-      infoOn: false,
-      qno: ''
+      uno: null,
+      qno: '',
+      state: '',
+      cont: '',
+      rcont: ''
     }
   },
   created() {
@@ -73,7 +85,20 @@ export default {
       this.pagecnts = result.data.pages[0].qacnt;
       this.$emit('allcntevt', this.pagecnts);
     },
-    
+    liteCont(cont) {
+      let litecont = cont.substr(0, 30);
+      return litecont + `${cont.length > 30 ? ".." : ""}`; //
+    },
+    chk(data) {
+      console.log(data);
+    },
+    code(wd) {
+      if (wd == 'a2') {
+        return '<답변완료>';
+      } else {
+        return '<답변대기>';
+      }
+    }
   }
 }
 </script>
@@ -81,5 +106,17 @@ export default {
 <style scoped>
 .qnalist {
   padding: 20px;
+}
+
+.link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.qnas, .qnastitle{
+    border-bottom: 1px solid #888;
+    font-size: 15px;
+}
+th, td{
+    text-align: center;
 }
 </style>

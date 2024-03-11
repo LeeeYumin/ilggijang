@@ -30,8 +30,8 @@
 
           <tr>
             <td colspan="6" class="text-center">
-              <button class="btn btn-xs btn-info" @click="goToUpdateForm(productUpdate.pno)">수정</button>
-              <button class="btn btn-xs btn-info" @click="(productDelete.pno)">삭제</button>
+              <button class="btn btn-xs btn-info" @click="goToUpdate(productDetailInfo.pno)">수정</button>
+              <button class="btn btn-xs btn-info" @click="delProduct(productDetailInfo.prdt_no)">삭제</button>
               </td>
           </tr>
       </tbody>
@@ -62,11 +62,11 @@
       this.getproductDetailInfo(pno);
     },
     methods : {
-      async getproductDetailInfo(pno){
+      async getproductDetailInfo(pno){ // 1. 단건조회 선행
         let result = await axios.get('/api/product/' + pno) // 기존 BK000001 에서 받는값(bno)으로 변경
                               .catch(err => console.log(err));
       console.log(result);
-      this.productDetailInfo = result.data;
+      this.productDetailInfo = result.data; // 2. 여기에 담음
       },
       formatPrice(book_price) {
       if (book_price > 999) {
@@ -81,13 +81,22 @@
         return book_price + '원'
       }
       },
-    goToUpdateForm (pno) {
-      this.$router.push({ path : '/admin/productDetail',query : {'prdtNo' : pno } });
-
+    goToUpdate (pno) { // 작성 및 수정폼 같은 컴포넌트 사용
+      this.$router.push({ path : '/admin/productInsert', query : {'prdtNo' : pno } });
+    },
+    delProduct (pno) { //서버에 해당 데이터 삭제
+      // let pno = this.$route.query.prdtNo;
+      axios.delete(`/api/product/${pno}`)
+            .then(result => {
+        if(result.data.affectedRows != 0 && result.data.changedRows == 0){
+          alert('정상적으로 삭제되었습니다');
+          this.$router.push({path : '/admin/productList'}); // 이건 꼭 보여야 하는 부분.
+        }else {
+          alert(`삭제되지 않았습니다.`);
         }
+      }
+    )}
     }
   }
-
-
 
 </script>

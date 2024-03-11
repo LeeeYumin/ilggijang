@@ -39,7 +39,7 @@ qnaRouter.get("/:qano", async (request, response) => {
 
 // QnA 수정 - 관리자 답변이 이미 있으면 수정 불가. 회원, 관리자 공통. 관리자 답변등록 및 수정까지 같이 사용
 qnaRouter.put("/:qano", async (request, response) => {
-    let data = [request.body.rjson, request.params.qano];
+    let data = [request.body, parseInt(request.params.qano)];
     let result = await db.connection('qnas', 'qnaUpdate', data);
     response.send(result);
 });
