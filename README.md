@@ -32,8 +32,8 @@
         </a>
     </td>
     <td>
-        <a href="">
-            <>
+        <a href="https://github.com/qqaza">
+            <img src="https://github.com/LeeeYumin/ilggijang/assets/152114081/1bf57f08-ff7c-4996-83f5-5e9a004745fa.png" width="100" height="100">
         </a>
     </td>
     <td>
