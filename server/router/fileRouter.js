@@ -7,7 +7,7 @@ var url = require('url');
 
 
 // 폴더경로 만들기
-let dir = 'C:/Users/admin/ilggijang/images/';
+let dir = 'C:/Users/admin/ilggijang/images/'; // ★ 경로확실히 -> 화면쪽 메소드에 new URL()
 
 // 함수
 const storage = multer.diskStorage({ // 디스크 저장소 정의
@@ -28,8 +28,9 @@ const storage = multer.diskStorage({ // 디스크 저장소 정의
     file.originalname = Buffer.from(file.originalname, "latin1").toString(
       "utf8"
     );
-    let rename = (new Date()).getMilliseconds() + file.originalname;
-    cb(null, rename); // 밀리초+파일이름으로 파일이름 재설정(파일 이름 충돌방지)
+    // let rename = (new Date()).getMilliseconds() + file.originalname;
+    // let rename = (new Date()).getMilliseconds() + file.originalname;
+    cb(null, file.originalname); // 밀리초+파일이름으로 파일이름 재설정(파일 이름 충돌방지)
   }
 });
 

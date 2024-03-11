@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <h1>상품관리</h1>
-    <router-link to="/admin/productInsert" class="btn btn-info col-4">도서 추가</router-link>
-      <table class="table">
+     <router-link to="/admin/productInsert" class="btn btn-info col-4">도서 추가</router-link>
+      <table class="table table-hover">
         <thead>
           <tr>
             <th>도서이미지</th>

@@ -76,10 +76,11 @@ import axios from 'axios';
       showThumbnail () {
         // refs 속성을 이용해 input 태그에 접근함
         this.input.image = this.$refs.images.files
-        console.log(this.input.image);
+        // console.log(this.input.image);
+        console.log(this.input.image[0])
         // URL.createObjectURL로 사용자가 올린 이미지를 URL로 만들어서 화면에 표시할 수 있게 한다. img 태그의 src값에 바인딩해준다
         this.imgUrl = URL.createObjectURL(this.input.image[0])
-        console.log(this.imgUrl)
+        // console.log(this.imgUrl)
       },
       async getFile(pno) { // DB에서 파일 가져오기
         await axios.get('/api/files/download?pno=' + pno)
