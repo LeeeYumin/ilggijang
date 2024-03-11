@@ -18,12 +18,6 @@
             <th colspan="2" class="text-center table-primary">출판사</th>
             <td colspan="4">{{ productDetailInfo.publ_co }}</td>
           </tr>
-
-          <!-- <tr>
-            <th colspan="2" class="text-center table-primary">책소개</th>
-            <td colspan="4">{{ productDetailInfo.book_intro }}</td>
-          </tr> -->
-
           <tr>
             <th colspan="2" class="text-center table-primary">도서 이미지</th>
             <td colspan="4">{{ productDetailInfo.book_img }}</td>

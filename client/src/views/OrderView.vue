@@ -79,13 +79,17 @@
 
           <table class="table tbl_st">
             <colgroup>
-              <col span="1" style="width:20%;">
+              <col span="1" style="width:13%;">
               <col span="1" >
               <col span="2" style="width:15%;">
           </colgroup>
             <tbody>
               <tr v-bind:key="idx" v-for="(info, idx) in selectList">
-                <td><img src="" alt="">{{ info.book_img }}</td>
+                <td>
+                  <span class="img" @click="goDetailBook(list.prdt_no)">
+                      <img :src="require('@/assets/product/' + info.book_img)" alt="cover">
+                  </span>
+                </td>
                 <td>{{ info.book_name }}</td>
                 <td>{{ info.quantity }}개</td>
                 <td><i class="point">{{ formatPrice(info.book_price * info.quantity) }}</i>원</td>
@@ -200,7 +204,7 @@ i.point{font-style:normal; font-size:16px;}
 .option_box{padding:20px; background:#eee; border-radius:10px; box-sizing:border-box;}
 .addr_info p{margin-bottom:10px;}
 .pb-20 td{padding-bottom:20px;}
-.tbl_st tbody tr td{padding:20px 0;}
+.tbl_st tbody tr td{padding:20px 0; vertical-align:middle;}
 .va_m{vertical-align:middle;}
 .popup{position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.5); z-index:100;}
 .popup .con{position:absolute; left:50%; top:50%; width:500px; height:380px; padding:30px 20px; background:#fff; border-radius:15px; z-index:100; transform:translate(-50%, -50%); box-sizing:border-box; box-shadow:0 0 3px 2px rgba(0, 0, 0, 0.1);}
@@ -211,6 +215,8 @@ i.point{font-style:normal; font-size:16px;}
 .popup .btn_save{margin:30px auto 0; text-align:center;}
 .popup .btn_save button{padding:10px 30px;}
 .hidden{display:none; font-size:0;}
+.img{display:block; width:80px; text-align:center; margin:0 auto; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}
+.img img{display:block; width:100%; height:100%;}
 </style>
 
 <script>

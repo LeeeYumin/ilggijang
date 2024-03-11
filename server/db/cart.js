@@ -1,4 +1,9 @@
 // cart.js
+// 장바구니 전체조회
+const cartAllList =
+`SELECT *
+FROM cart
+WHERE user_no = ?`;
 
 // 장바구니 목록
 const cartList =
@@ -19,6 +24,12 @@ WHERE c.user_no = ?`;
 const cartInsert =
 `INSERT INTO cart
 SET ?`;
+
+// 찜 -> 장바구니 등록
+const likeCartInsert =
+`INSERT INTO cart (quantity, prdt_no, user_no)
+VALUES ?`;
+
 
 // 장바구니 수정
 const cartUpdate =
@@ -57,11 +68,13 @@ WHERE user_no = ?
 AND   prdt_no = ?`;
 
 module.exports = {
+    cartAllList,
     cartList,
     cartInsert,
     cartUpdate,
     cartDelete,
     cartPickDelete,
     cartCheck,
-    cartAllDelete
+    cartAllDelete,
+    likeCartInsert
   }

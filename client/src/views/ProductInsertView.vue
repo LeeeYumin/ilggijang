@@ -19,9 +19,6 @@
       <label for="publ_co">출판사</label>
       <input type="text" id="publ_co" v-model="productInsert.publ_co" >
 
-      <!-- <label for="book_intro">책소개</label>
-      <textarea type="text" id="book_intro" style="height:200px" v-model="productInsert.book_intro"></textarea> -->
-
       <label for="book_img">이미지</label>
       <input type="text" id="book_img" v-model="productInsert.book_img" >
 
@@ -87,7 +84,8 @@ export default {
             this.productInsert.detail_exp,
             this.productInsert.publ_date,
             this.productInsert.category_code,
-        ]
+          ]
+        
         };
         console.log()
         let result = await axios.post("/api/product", data)

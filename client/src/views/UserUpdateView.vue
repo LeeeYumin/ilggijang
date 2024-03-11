@@ -11,7 +11,7 @@
             class="form-control"
             
             id="user_no"
-            v-model="userInfo.user_no"
+            v-model="userInfo2.user_no"
             readonly
           />
         </div>
@@ -23,7 +23,7 @@
             class="form-control"
            
             id="id"
-            v-model="userInfo.id"
+            v-model="userInfo2.id"
             readonly
           />
         </div>
@@ -34,7 +34,7 @@
             class="form-control"
             placeholder="비밀번호 입력"
             id="pw_no"
-            v-model="userInfo.pw_no"
+            v-model="userInfo2.pw_no"
           />
         </div>
         <div class="form-item col-lg-6 my-3">
@@ -44,7 +44,7 @@
             class="form-control"
             placeholder="이름 입력"
             id="name"
-            v-model="userInfo.name"
+            v-model="userInfo2.name"
           />
         </div>
 
@@ -79,7 +79,7 @@
             class="form-control"
             placeholder="도로명주소"
             id="addr"
-            v-model="userInfo.addr"
+            v-model="userInfo2.addr"
             readonly
           />
           <input
@@ -87,7 +87,7 @@
             class="form-control my-3"
             placeholder="상세주소"
             id="detail_addr"
-            v-model="userInfo.detail_addr"
+            v-model="userInfo2.detail_addr"
           />
         </div>
         <div class="form-item col-lg-6 my-3">
@@ -97,7 +97,7 @@
             class="form-control"
             placeholder="'-'없이 숫자만 입력"
             id="phone"
-            v-model="userInfo.phone"
+            v-model="userInfo2.phone"
           />
         </div>
       </table>
@@ -117,7 +117,7 @@ export default {
     return {
       // chkVal : '아니오',
       // 사용자 입력 전까지 공백
-      userInfo: {
+      userInfo2: {
         user_no: "",
         id: "",
         pw_no: "",
@@ -129,7 +129,7 @@ export default {
     };
   },
   created() {
-    let id = this.$route.query.id;
+    let id = this.$store.state.id;
     this.getUserInfo(id);
   },
   components: {
@@ -142,16 +142,18 @@ export default {
         .catch((err) => console.log(err));
       let info = result.data;
 
-      this.userInfo = info;
+      this.userInfo2 = info;
     },
     
     updateInfo() {
       if (!this.validation()) return;
 
       let data = this.getSendData();
+      console.log('확인용',this.userInfo2.id)
+
 
       axios
-        .put("/api/user/" + this.userInfo.id, data)
+        .put("/api/user/" + this.userInfo2.id, data)
         .then((result) => {
           console.log(result);
 
@@ -161,36 +163,37 @@ export default {
               `수정되지 않았습니다.\n메세지를 확인해주세요\n${result.data.message}`
             );
             
-            this.$router.push({ path: "/admin/userList" });
+            this.$router.push({ path: "/mypage/userInfo2" });
           } else {
             this.$router.push({
-              path: "/userInfo",
-              query: { id: this.userInfo.id },
+              path: "/userInfo2",
+              query: { id: this.userInfo2.id },
             });
             alert(`정상적으로 수정되었습니다.`);
+            this.$router.push({ path: "/mypage/userInfo2" });
           }
         })
         .catch((err) => console.log(err));
-      this.$router.push({ path: "/admin/user" });
+      this.$router.push({ path: "/user" });
     },
     validation() {
-      if (this.userInfo.pw_no == "") {
+      if (this.userInfo2.pw_no == "") {
         alert("비밀번호가 입력되지 않았습니다.");
         return false;
       }
-      if (this.userInfo.addr == "") {
+      if (this.userInfo2.addr == "") {
         alert("주소가 입력되지 않았습니다.");
         return false;
       }
-      if (this.userInfo.detail_addr == "") {
+      if (this.userInfo2.detail_addr == "") {
         alert("상세주소가 입력되지 않았습니다.");
         return false;
       }
-      if (this.userInfo.user_name == "") {
+      if (this.userInfo2.user_name == "") {
         alert("이름이 입력되지 않았습니다.");
         return false;
       }
-      if (this.userInfo.phone == "") {
+      if (this.userInfo2.phone == "") {
         alert("연락처가 입력되지 않았습니다.");
         return false;
       }
@@ -199,16 +202,16 @@ export default {
     openPostcode() {
       new window.daum.Postcode({
         oncomplete: (data) => {
-          this.userInfo.addr = data.roadAddress;
+          this.userInfo2.addr = data.roadAddress;
         },
       }).open();
     },
     getCode(zonecode, roadAddress) {
-      this.userInfo.addr = roadAddress;
+      this.userInfo2.addr = roadAddress;
     },
     getSendData() {
-      let obj = this.userInfo;
-      let delData = ["user_no", "id"];
+      let obj = this.userInfo2;
+      let delData = ["user_no", "id", "birth_date","gender_code","login_type_code","age_code"];
       let newObj = {};
       let isTargeted = null;
       for (let field in obj) {
@@ -227,6 +230,18 @@ export default {
         param: newObj,
       };
       return newData;
+    },
+    dataFormat(value) {
+      let result = null;
+      if (value != null) {
+        let date = new Date(value);
+        let year = date.getFullYear();
+        let month = ("0" + (date.getMonth() + 1)).slice(-2);
+        let day = ("0" + date.getDate()).slice(-2);
+
+        result = `${year}-${month}-${day}`;
+      }
+      return result;
     }
   
   }

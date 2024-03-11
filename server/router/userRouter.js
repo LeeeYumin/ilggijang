@@ -69,6 +69,27 @@ userRouter.post('/login', (request, response, next)=>{
         //response.redirect('/main'); //로그인후 메인화면으로
         response.send('성공');
     });
+
+    // 아이디, 비밀번호 찾기
+app.post("/searchId", async(request, response) => {
+    let data = ['', request.body.name];
+    let phone = request.body.phone;
+    let id = request.body.id;
+    let result = {};
+    let userList = (await db.connection('user', 'searchLogin', data));
+    for(let user of userList) {
+        if(user.id == id && user.phone == phone) {
+            result.userInfo = 2;  // 비밀번호 찾기
+            result.user = user;
+        } else if(user.phone == phone) {
+            result.userInfo = 1;  // 아이디 찾기
+            result.user = user;
+        } else {
+            result.userInfo = 3;  // 일치하는 회원 없음
+        }
+    }
+    response.send(result);
+})
     
 });
 
