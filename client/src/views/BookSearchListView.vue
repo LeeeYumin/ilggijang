@@ -1,4 +1,5 @@
 <template>
+  <!--도서검색하면 처음 뜨는 목록-->
   <div class="container serach_con">
     <h4><span>'{{ book_name }}'</span>에 대한 검색 결과</h4>
     <div class="list">
@@ -6,7 +7,7 @@
           <div class="left" @click="goDetailBook(book.prdt_no)">
             <span class="img">
               <img :src="require('@/assets/product/' + book.book_img)" alt="cover">
-            </span>       
+            </span>
           </div>
            <ul class="prdt_list">
               <li class="tit">{{ book.book_name }}</li>
