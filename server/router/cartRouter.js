@@ -10,10 +10,20 @@ cartRouter.get("/user/:uno", async (request, response) => {
     response.send(result);
 });
 
+
 // 장바구니등록
 cartRouter.post("/", async (request, response) => {
     let data = request.body.param;
     let result = await db.connection('cart', 'cartInsert', data);
+    response.send(result);
+});
+
+// 찜 -> 장바구니등록
+cartRouter.post("/like", async (request, response) => {
+    let data = request.body.param;
+    console.log('데이터 확인', data);
+
+    let result = await db.connection('cart', 'likeCartInsert', [data]);
     response.send(result);
 });
 

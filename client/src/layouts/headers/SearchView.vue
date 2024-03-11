@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="logo">
-        <router-link to="main">
+        <router-link to="/main">
             <img src="@/assets/ilggijang_logo.png" style="width: 100px;">
         </router-link>
       </div>
