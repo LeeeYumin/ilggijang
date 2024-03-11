@@ -9,7 +9,6 @@
         <span class="img">
             <img :src="require('@/assets/product/' + bookInfo.book_img)" alt="cover">
         </span>
-        
       </div>
       <div class="right">
         <div class="book_info">
@@ -145,7 +144,7 @@ export default {
   }
 }
 
-</script> 
+</script>
 
 <style scoped>
 .container{padding-top:50px;}

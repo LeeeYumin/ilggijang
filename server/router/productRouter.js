@@ -16,9 +16,17 @@ productRouter.get("/:pno", async (request, response) => { //:prdt_no 에서 수�
 });
 
 // 상품관리 입력 (관리자)
+// productRouter.post("/", async (request, response) => {
+//   let data = request.body.param;
+//   let result = await db.connection('product', 'productInsert', data);
+//   response.send(result);
+// });
+
+// 상품관리 입력 (관리자) -> 사용중
 productRouter.post("/", async (request, response) => {
-  let data = request.body.param;
-  let result = await db.connection('product', 'productInsert', data);
+  let dataAry = request.body.param;
+
+  let result = await db.connection('product', 'prdtInsert', dataAry).catch(err=>console.log(err));
   response.send(result);
 });
 
