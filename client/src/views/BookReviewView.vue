@@ -4,14 +4,16 @@
             :rno="`/` + uprno" 
             :rgrade="upgrade"
             :rcontent ="upcontent"
-            :rodtno ="upodtno"/> <!-- 등록은 마이페이지 쪽으로 옮길 예정 -->
+            :rodtno ="upodtno"
+            :rbnm = "upbnm"/> <!-- 등록은 마이페이지 쪽으로 옮길 예정 -->
         <div class="myreviews">
             <ReviewListView listId="/mrvlist" :pcode="`/`+bno"
-                @update="(eno, egrade, econtent, eodtno) => {
+                @update="(eno, egrade, econtent, eodtno, ebnm) => {
                  uprno = eno,
                  upgrade = egrade,
                  upcontent = econtent,
                  upodtno = eodtno,
+                 upbnm = ebnm,
                  popupView = true,
                  refre = false
                  }" @refresh="(e) => refre = e"
@@ -59,6 +61,7 @@ export default {
             refre: false,
             solt: 3,
             reviewcnt: 0,
+            
             uprno: 0,
             upgrade: 0,
             upcontent: '',
@@ -71,9 +74,9 @@ export default {
     methods: {
         loginchk() {
             if (this.$store.state.userNo != '') { // 로그인 체크
-                let chk = confirm('마이페이지로 이동하시겠습니까?');
+                let chk = confirm('\'마이페이지\' > \'내주문내역\'으로 이동하시겠습니까?');
                 if (chk) {
-                    this.$router.push({ path: '/mypage' })
+                    this.$router.push({ path: '/mypage/myorderlist' });
                 }
             }
             else {
