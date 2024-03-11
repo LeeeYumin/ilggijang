@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container">
     <div class="ages">
 
@@ -64,4 +64,4 @@ export default { // listId: 목록 식별, startCnt: 페이지마다 표시할 �
 .booklist {
   padding: 20px;
 }
-</style>
+</style> -->

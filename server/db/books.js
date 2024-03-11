@@ -7,7 +7,6 @@ const bookList =
       , title
       , publ_co
       , book_price
-      , book_intro
       , detail_exp
       , publ_date
       , category_code
@@ -23,7 +22,6 @@ const bookDetailInfo =
       , title
       , publ_co
       , book_price
-      , book_intro
       , detail_exp
       , publ_date
       , category_code
@@ -68,7 +66,6 @@ const bookDetailSearch =
       , category_code
       , publ_date
       , detail_exp
-      , book_intro
 FROM  prdt`;
 
 

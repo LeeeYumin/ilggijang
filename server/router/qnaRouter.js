@@ -3,19 +3,19 @@ const qnaRouter = express.Router();
 const db = require("../db.js");
 
 // 도서 상세 QnA 목록
-qnaRouter.get("/qnalist/:pno/:pgno", async (request, response) => {
-    let data = [request.params.pno, parseInt(request.params.pgno)];
+qnaRouter.get("/qnalist/:pno/:uno/:pgno", async (request, response) => {
+    let data = [request.params.pno, parseInt(request.params.uno), parseInt(request.params.pgno)];
     let list = await db.connection('qnas', 'detailQnaList', data);
     let pages = await db.connection('qnas', 'detailQnaCnt', data[0]);
     response.send({list, pages});
 });
 
-// 도서 상세 내 QnA 목록
-qnaRouter.get("/mqnalist/:uno/:pno", async (request, response) => {
-    let data = [parseInt(request.params.uno), request.params.pno];
-    let result = await db.connection('qnas', 'detailMyQnaList', data);
-    response.send(result);
-});
+// // 도서 상세 내 QnA 목록
+// qnaRouter.get("/mqnalist/:uno/:pno", async (request, response) => {
+//     let data = [parseInt(request.params.uno), request.params.pno];
+//     let result = await db.connection('qnas', 'detailMyQnaList', data);
+//     response.send(result);
+// });
 
 // 관리자 QnA 목록
 qnaRouter.get("/admin", async (request, response) => {
