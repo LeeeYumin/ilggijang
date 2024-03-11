@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="form-qry">
-            <p>Q : </p>
+            <p class="q">Q</p>
             <p v-if="upform == false">{{ qcont }}</p>
             <div v-if="usno == userno && upform == false && repstate == 'a1'" class="btns">
                 <button @click="upform = true">수정</button>
@@ -12,7 +12,7 @@
                 rows="10"></textarea>
         </div>
         <div v-if="repstate == 'a2'" class="form-reply">
-            <p>A : </p>
+            <p class="a">A</p>
             <p>{{ acont }}</p>
             <!-- <textarea cols="30" rows="10" class="form-control" placeholder="답변내용을 입력하세요" id="addr"
                 v-model="jsons.content"></textarea> -->
@@ -71,4 +71,11 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.form-qry:after,
+.form-reply:after{content:''; display:block; clear:both;}
+.form-qry .q{float:left; width:25px; height:25px; color:#fff; font-weight:700; text-align:center; border-radius:50%; background:#3a4ca8;}
+.form-qry p{float:left; padding-top:2px; font-size:15px; letter-spacing:-1px; margin-left:8px;}
+.form-reply .a{float:left; width:25px; height:25px; color:#555; font-weight:700; text-align:center; border-radius:50%; background:#eee;}
+.form-reply p{float:left; padding-top:2px; font-size:15px; letter-spacing:-1px; margin-left:8px;}
+</style>

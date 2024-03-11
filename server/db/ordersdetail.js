@@ -7,11 +7,14 @@ const orderDetailList =
                , p.book_name           
                , d.quantity
                , d.orders_no
+               , o.orders_date
                , p.prdt_no
                , d.unit_price
+               , o.user_no
                , o.orders_state
                , o.recipient
                , o.dlv_addr
+               , o.total_pay_amount
                , o.phone
                , r.orders_detail_no AS rodtno
 FROM ordersdetail d
@@ -35,5 +38,5 @@ VALUES ?`; // [[''],[],[]]
 
 module.exports = {
     orderDetailList,    
-    orderDetailInsert
+    orderDetailInsert,
   }

@@ -8,6 +8,12 @@ ordersRouter.get("/", async (request, response) => {
     response.send(result);
 });
 
+// 관리자 - 주문관리
+ordersRouter.get("/sales", async (request, response) => {
+    let result = await db.connection('orders', 'salesList');
+    response.send(result);
+});
+
 // 단건조회
 ordersRouter.get("/:ono", async (request, response) => {
     let data = request.params.ono;
