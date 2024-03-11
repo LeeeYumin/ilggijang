@@ -4,11 +4,13 @@
       <div class="booklist">
         <ul>
           <li :key="i" v-for="i in currentList">
-            <span class="img"><img src="../assets/img_book_sample.jpg"></span>
+            <span class="img" @click="goDetailBook(i.prdt_no)">
+              <img :src="require('@/assets/product/' + i.book_img)" alt="cover">
+            </span>
             <div class="text">
+              <p class="category">{{ category(i.category_code) }}</p>
               <p class="tit">{{ i.book_name }}</p>
-              <p>{{ i.category_code }}</p>
-              <p>{{ i.title }}</p>
+              <p class="author">{{ i.title }}</p>
             </div>
           </li>
         </ul>
@@ -55,6 +57,60 @@ export default {
         this.pages = result.data.pages[0].pcnt;
       }
     },
+    goDetailBook(bno) {
+      this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
+    },
+    category(category) {
+      let result = '';
+      switch(category) {
+        case 'c01': 
+          result = '소설';
+          break;
+        case 'c02':
+          result = '시/에세이';
+          break;
+        case 'c03':
+          result = '인문';
+          break;
+        case 'c04':
+          result = '가정/육아';
+          break;
+        case 'c05':
+          result = '경제/경영';
+          break;
+        case 'c06':
+          result = '자기계발';
+          break;
+        case 'c07':
+          result = '역사/문화';
+          break;
+        case 'c08':
+          result = '예술/대중문화';
+          break;
+        case 'c09':
+          result = '외국어';
+          break;
+        case 'c10':
+          result = '과학';
+          break;
+        case 'c11':
+          result = '취업/수험서';
+          break;
+        case 'c12':
+          result = '여행';
+          break;
+        case 'c13':
+          result = '컴퓨터/IT';
+          break;
+        case 'c14':
+          result = '청소년';
+          break;
+         case 'c15':
+          result = '어린이(초등)';
+          break;
+        }
+        return result;
+      }
   }
 }
 </script>
@@ -67,16 +123,18 @@ export default {
 .booklist ul{list-style:none; padding-left:0;}
 .booklist ul li{float:left;}
 .booklist ul:after{content:''; display:block; clear:both;}
-.booklist li{float:left; width:18.4%; margin:0 1% 30px;}
+.booklist li{float:left; width:17.6%; margin:0 1.5% 30px;}
 .booklist li:nth-child(5n + 1){margin-left:0;}
 .booklist li:nth-child(5n + 5){float:right; margin-right:0;}
 .booklist ul:after{content:''; display:block; clear:both;}
 .booklist li > div{width:100%;}
-.booklist .img{display:block; position:relative; width:100%; height:350px; border:1px solid #ddd; cursor:pointer;}
+.booklist .img{display:block; position:relative; width:100%; height:330px; border:1px solid #ddd; cursor:pointer;}
 .booklist .img:hover:before{content:''; display:block; position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.2);}
 .booklist .img:hover:after{content:'+'; display:block; position:absolute; left:50%; top:50%; color:#fff; font-size:50px; transform:translate(-50%, -50%);}
 .booklist img{display:block; width:100%; height:100%;}
 .booklist .text{margin-top:10px; padding:5px; text-align:left; box-sizing:border-box;}
-.booklist .text > *{margin-bottom:3px; letter-spacing:-1px; color:#777; font-size:15px;}
-.booklist .text .tit{margin-bottom:3px; color:#333; font-size:16px; font-weight:700;}
+.booklist .text > *{margin-bottom:3px; letter-spacing:-1px; color:#555; font-size:15px;}
+.booklist .text .tit{margin-bottom:3px; color:#333; font-size:16px; font-weight:700; height:50px; overflow:hidden; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;}
+.booklist .text .author{height:23px; overflow:hidden; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:1;}
+.booklist .text .category{display:inline-block; padding:1px 10px; color:#777; font-size:14px; border:1px solid #ddd; border-radius:50px;}
 </style>

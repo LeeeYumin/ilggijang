@@ -14,7 +14,7 @@
           </b-button>
         </router-link>
 
-        <router-link to="/userjoin">
+        <router-link to="/userjoin" v-if="!isLogin">
           <b-button class="btn_top">
             <p>회원가입</p>
           </b-button>

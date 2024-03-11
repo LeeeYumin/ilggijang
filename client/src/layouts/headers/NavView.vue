@@ -41,9 +41,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/mypage">
-                        <span class="my">마이페이지</span>
-                    </router-link>
+                    <span class="my" @click="goMypage()">마이페이지</span>
                     <!-- <ul>
                         <li>
                             <router-link to="">
@@ -90,7 +88,27 @@
     a{text-decoration:none;}
     span{display:block; position:relative; color:#333; font-size:16px; letter-spacing:-0.5px;; font-weight:700;}
     span:hover:after{content:''; display:block; position:absolute; left:0; bottom:0; width:100%; height:1px; border-bottom:1px solid #333;}
-    .my{position:relative;}
+    .my{position:relative; cursor:pointer;}
     .my:before{content:'M'; display:block; position:absolute; right:-22px; top:-10px; width:20px; height:20px; border-radius:50%; background:#3a4ca8; color:#fff; font-size:10px; font-weight:700; line-height:1.2rem;}
 
 </style>
+
+<script>
+export default {
+  data() {
+    return {
+        isLogin: this.$store.state.isLogin
+    }
+  },
+  methods: {
+    goMypage() {
+        if(!this.isLogin) {
+            alert('로그인이 필요합니다.');
+            this.$router.push({path : '/login'});
+        } else {
+            this.$router.push({path : '/mypage'});
+        }
+    }
+  }
+}
+</script>

@@ -21,7 +21,6 @@
             <li><button v-on:click="join">회원가입</button></li>
 
             <li><router-link to="/searchId">아이디 찾기</router-link></li>
-            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
             <li><button v-on:click="findpw">비밀번호찾기</button></li>
           </ul>
         </div>
@@ -45,7 +44,9 @@
   .btn_box li{display:inline-block; position:relative; margin:0 5px;}
   .btn_box li:before{content:''; display:block; position:absolute; left:-5px; top:5px; width:1px; height:15px; border-left:1px solid #aaa;}
   .btn_box li:first-child:before{display:none;}
+  .btn_box a,
   .btn_box button{margin:0; border:0; background:none; color:#555; font-size:15px; letter-spacing:-0.5px;}
+  .btn_box a{margin:0 7px; text-decoration:none;}
 </style>
 
 

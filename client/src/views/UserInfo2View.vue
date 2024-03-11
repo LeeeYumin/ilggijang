@@ -1,62 +1,73 @@
 <template>
   <div class="container">
-    <h1>회원 정보 조회</h1>
-    <div class="row">
-      <table class="table">
-        <tr>
-          <th class="text-right table-primary">No.</th>
-          <td class="text-center">{{ userInfo2.user_no }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">아이디</th>
-          <td class="text-center">{{ userInfo2.id }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">이름</th>
-          <td class="text-center">{{ userInfo2.name }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">생년월일</th>
-          <td class="text-center">{{ userInfo2.birth_date }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">성별</th>
-          <td class="text-center">{{ Gender }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">주소</th>
-          <td class="text-center">{{ userInfo2.addr }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">상세주소</th>
-          <td class="text-center">{{ userInfo2.detail_addr }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">메일</th>
-          <td class="text-center">{{ userInfo2.mail }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">연락처</th>
-          <td class="text-center">{{ userInfo2.phone }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">로그인타입</th>
-          <td class="text-center">{{ userInfo2.login_type_code }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">나이</th>
-          <td class="text-center">{{ userInfo2.age_code }}</td>
-        </tr>
-
-      </table>
-
-    </div>
-    <div class="row">
-      <button class="btn btn-info col-4" @click="goToUpdate(userInfo2.id)">수정</button>
+    <h3>회원 정보 조회</h3>
+    <table class="table">
+      <colgroup>
+        <col span="1" width="15%;">
+        <col span="1" width="85%;">
+      </colgroup>
+      <tr>
+        <th class="text-right table-primary">No.</th>
+        <td>{{ userInfo2.user_no }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">아이디</th>
+        <td>{{ userInfo2.id }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">이름</th>
+        <td>{{ userInfo2.name }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">생년월일</th>
+        <td>{{ userInfo2.birth_date }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">성별</th>
+        <td>{{ Gender }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">주소</th>
+        <td>{{ userInfo2.addr }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">상세주소</th>
+        <td>{{ userInfo2.detail_addr }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">메일</th>
+        <td>{{ userInfo2.mail }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">연락처</th>
+        <td>{{ userInfo2.phone }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">로그인타입</th>
+        <td>{{ userInfo2.login_type_code }}</td>
+      </tr>
+      <tr>
+        <th class="text-right table-primary">나이</th>
+        <td>{{ userInfo2.age_code }}</td>
+      </tr>
+    </table>
+    <div class="btn_box">
+      <button class="btn btn-outline-primary" @click="goToUpdate(userInfo2.id)">수정</button>
     </div>
   </div>
 
 </template>
+
+<style scoped>
+  .container{padding:0; margin-bottom:50px;}
+  h3{font-weight:700;}
+  .table{margin-top:20px; border-top:1px solid #111; text-align:left;}
+  .table tr{border-bottom:1px solid #ddd;}
+  .table tr th{padding-left:20px; background:#fbfbfb;}
+  .table tr td{padding:10px; padding-left:20px;}
+  .btn_box{margin-top:20px; text-align:center;}
+  .btn_box button{padding:10px 30px;}
+</style>
 
 <script>
 import axios from 'axios'
