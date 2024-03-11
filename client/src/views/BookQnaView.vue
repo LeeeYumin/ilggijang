@@ -8,8 +8,8 @@
         <div class="qtop">
             <div class="title">
                 <h5>Q & A ({{ spcnt }})</h5>
-                <div class="btn">
-                    <button @click="loginchk()">상품 문의하기</button>
+                <div class="btn_box">
+                    <button class="btn btn-primary" @click="loginchk()">상품 문의하기</button>
                 </div>
             </div>
             <div class="myqnas">
@@ -59,9 +59,14 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    margin: 0 auto;
-}
-
+.container{padding-top:0;}
+.qtop{position:relative; padding:20px; padding-bottom:80px; margin-bottom:50px; box-sizing:border-box;}
+.title:after{content:''; display:block; clear:both;}
+h5{float:left; margin-bottom:0; padding-top:8px; font-weight:700;}
+.btn_box{float:right;}
+.myqnas{margin-top:20px;}
+table{width:100%; border-top:1px solid #111;}
+table tr th,
+table tr td{padding:10px;}
 
 </style>

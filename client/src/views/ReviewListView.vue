@@ -1,11 +1,11 @@
 <template>
   <div class="reviews">
     <h5 v-if="listId == '/mrvlist' && userno != ''">내가 쓴 리뷰</h5>
-    <span v-if="currentList == '' && userno != ''">아직 리뷰가 없습니다.</span>
+    <span class="no_data" v-if="currentList == '' && userno != ''">아직 리뷰가 없습니다.</span>
     <div class="reviewlist" :key="i" v-for="i in currentList">
       <div class="top">
         <div class="writerdate">
-          <span v-if="listId == '/rvlist'">구매자명 : {{ i.writer }} / </span>
+          <span v-if="listId == '/rvlist'"><i>구매자명</i> {{ i.writer }} | </span>
           <span>{{ i.write_date }}</span>
           <div v-if="listId == '/mrvlist' && userno != ''" class="btns">
             <button @click="$emit('update', i.review_no, i.grade, i.content, i.orders_detail_no)">수정</button>
@@ -13,16 +13,16 @@
           </div>
         </div>
         <div class="grade">
-          <span :key="g" v-for="g in i.grade"><font-awesome-icon :icon="['fas', 'star']" style="color: #66dd70;" /></span>
-          <span :key="g" v-for="g in 5-i.grade"><font-awesome-icon :icon="['far', 'star']" style="color: #66dd70;" /></span>
-          <span>{{ i.grade }}.0</span> / <span>5.0</span>
+          <span :key="g" v-for="g in i.grade"><font-awesome-icon :icon="['fas', 'star']" style="color: #3a4ca8;" /></span>
+          <span :key="g" v-for="g in 5-i.grade"><font-awesome-icon :icon="['far', 'star']" style="color: #3a4ca8;" /></span>
+          <span class="num">{{ i.grade }}.0</span> / <span>5.0</span>
         </div>
       </div>
       <div class="content">
         <span>{{ i.content }}</span>
       </div>
       <div class="likes" v-if="listId == '/rvlist'">
-        <span>Like
+        <span><font-awesome-icon icon="fa-regular fa-thumbs-up" size="lg" />
           <Likes :rno="i.review_no" :cnt="i.likes" />
         </span>
       </div>
@@ -110,7 +110,22 @@ export default {
 
 <style scoped>
 h3{font-weight:700; letter-spacing:-0.5px;}
-.reviewlist {
-  padding: 20px;
-}
+.reviewlist{margin-bottom:5px; padding-top:15px; padding-bottom:10px; border-top:1px dashed #ddd;}
+.reviewlist:first-child{border-top:0;}
+.reviews{margin-top:20px; border:1px solid #ddd; border-radius:15px; padding:30px; box-sizing:border-box;}
+.reviews .no_data{display:block; margin:20px 0; text-align:center;}
+.previews{margin-top:10px;}
+.top:after{content:''; display:block; clear:both;}
+.reviewlist .top .writerdate{float:left;}
+.writerdate{color:#555; font-size:15px; letter-spacing:-1px;}
+.writerdate span i{font-weight:700; font-style:normal;}
+.content{margin-top:10px;}
+.content span{display:inline-block; color:#555;}
+.grade{float:right; color:#555; font-size:14px;}
+.grade .num{margin-left:5px; font-weight:700;}
+h5{font-weight:700;}
+.likes{margin-top:5px;}
+.likes button{border:0; background:none; color:#3a4ca8; font-weight:700;}
+.pages{margin-top:20px;}
+.justify-content-start{justify-content:center !important;}
 </style>

@@ -13,6 +13,8 @@ import ProductListView from '../views/ProductListView.vue';
 import ProductDetailView from '../views/ProductDetailView.vue';
 import ProductInsertView from '../views/ProductInsertView.vue';
 import UserUpdateView from '../views/UserUpdateView.vue';
+import SalesListView from '../views/SalesListView.vue';
+import SalesDetailView from '../views/SalesDetailView.vue';
 
 export default {
     path: '/admin',
@@ -109,6 +111,18 @@ export default {
         name: 'productInsert',
         component: ProductInsertView
       },
+
+      // 신수지
+      {
+        path: 'salesList',
+        name: 'salesList',
+        component: SalesListView
+      }, 
+      {
+        path: 'salesDetail',
+        name: 'salesDetail',
+        component: SalesDetailView
+      } 
 
     ]
     // router.beforeEach((to, from, next) => {

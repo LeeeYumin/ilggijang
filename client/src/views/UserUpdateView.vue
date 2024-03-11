@@ -1,75 +1,72 @@
 
 <template>
   <div class="container">
-    <h3 class="text-center">회원 정보 수정</h3>
-    <div class="row">
-      <table class="table">
-        <div class="form-item col-lg-6 my-3">
-          <label class="bold">No.<sup></sup></label>
-          <input
-            type="text"
-            class="form-control"
-            
-            id="user_no"
-            v-model="userInfo2.user_no"
-            readonly
-          />
-        </div>
-
-        <div class="form-item col-lg-6">
-          <label class="bold">ID<sup></sup></label>
-          <input
-            type="text"
-            class="form-control"
-           
-            id="id"
-            v-model="userInfo2.id"
-            readonly
-          />
-        </div>
-        <div class="form-item col-lg-6">
-          <label class="bold">비밀번호<sup>*</sup></label>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="비밀번호 입력"
-            id="pw_no"
-            v-model="userInfo2.pw_no"
-          />
-        </div>
-        <div class="form-item col-lg-6 my-3">
-          <label class="bold">이름<sup>*</sup></label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="이름 입력"
-            id="name"
-            v-model="userInfo2.name"
-          />
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 col-lg-6 my-3">
-            <div class="form-item w-100">
-              <label class="bold">기본주소<sup>*</sup></label>
-              <!-- <input
-                type="text"
-                class="form-control"
-                placeholder="우편번호"
-                id="postcode"
-                v-model="userInfo.postcode"
-                readonly
-              /> -->
+    <h3>회원 정보 수정</h3>
+    <table class="table">
+      <colgroup>
+          <col span="1" width="15%;">
+          <col span="1" width="85%;">
+        </colgroup>
+      <tbody>
+        <tr>
+          <th>No</th>
+          <td><input
+          type="text"
+          class="form-control"
+          
+          id="user_no"
+          v-model="userInfo2.user_no"
+          readonly
+        /></td>
+        </tr>
+        <tr>
+          <th>ID</th>
+          <td><input
+          type="text"
+          class="form-control"
+          
+          id="id"
+          v-model="userInfo2.id"
+          readonly
+        /></td>
+        </tr>
+        <tr>
+          <th>비밀번호<sup>*</sup></th>
+          <td><input
+          type="password"
+          class="form-control"
+          placeholder="비밀번호 입력"
+          id="pw_no"
+          v-model="userInfo2.pw_no"
+        /></td>
+        </tr>
+        <tr>
+          <th>이름<sup>*</sup></th>
+          <td><input
+          type="text"
+          class="form-control"
+          placeholder="이름 입력"
+          id="name"
+          v-model="userInfo2.name"
+        /></td>
+        </tr>
+        <tr>
+          <th>기본주소<sup>*</sup></th>
+          <td>
+            <!-- <input
+              type="text"
+              class="form-control"
+              placeholder="우편번호"
+              id="postcode"
+              v-model="userInfo.postcode"
+              readonly
+            /> -->
+        <div class="col-md-12 col-lg-6">
+          <div class="form-item w-100">
+            <div>
+              <OpenPostcode @postcode="getCode" />
             </div>
-          </div>
-          <div class="col-md-12 col-lg-6">
-            <div class="form-item w-100">
-              <br /><br />
-              <div>
-                <OpenPostcode @postcode="getCode" />
-              </div>
-              <!-- <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button> -->
-            </div>
+            <!-- <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button> -->
           </div>
         </div>
         <div class="form-item">
@@ -90,24 +87,42 @@
             v-model="userInfo2.detail_addr"
           />
         </div>
-        <div class="form-item col-lg-6 my-3">
-          <label class="bold">휴대전화<sup>*</sup></label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="'-'없이 숫자만 입력"
-            id="phone"
-            v-model="userInfo2.phone"
-          />
-        </div>
-      </table>
-    </div>
-    <div class="row">
-      <button class="btn btn-info" @click="updateInfo()">저장</button>
+      </td>
+        </tr>
+        <tr>
+          <th>휴대전화<sup>*</sup></th>
+          <td><input
+          type="text"
+          class="form-control"
+          placeholder="'-'없이 숫자만 입력"
+          id="phone"
+          v-model="userInfo2.phone"
+        /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="btn_box">
+      <button class="btn btn-outline-primary" @click="updateInfo()">저장</button>
     </div>
   </div>
 </template>
  
+<style scoped>
+  .container{padding-top:50px; margin-bottom:50px;}
+  h3{font-weight:700;}
+  .table{margin-top:20px; border-top:1px solid #111; text-align:left;}
+  .table tr{border-bottom:1px solid #ddd;}
+  .table tr th{padding-left:20px; background:#fbfbfb; vertical-align:middle;}
+  .table tr td{padding:10px; padding-left:20px; vertical-align:middle;}
+  .table tr td input{margin-bottom:0;}
+  #addr{margin-top:5px !important;}
+  #detail_addr{margin-top:5px !important;}
+  .btn_box{margin-top:20px; text-align:center;}
+  .btn_box button{padding:10px 30px;}
+  sup{color:red;}
+</style>
+
  <script>
 import axios from "axios";
 import OpenPostcode from "../components/OpenPostcode.vue";

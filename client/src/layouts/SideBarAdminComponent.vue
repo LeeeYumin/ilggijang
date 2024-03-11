@@ -6,7 +6,9 @@
     <router-link to="productList">
       <b-list-group-item href="#">상품관리</b-list-group-item>
     </router-link>
-    <b-list-group-item href="#">판매관리</b-list-group-item>
+    <router-link to="salesList">
+      <b-list-group-item href="#">판매관리</b-list-group-item>
+    </router-link>
     <router-link to="notice">
     <b-list-group-item >공지사항</b-list-group-item>
   </router-link>
