@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top">
-      <p class="category">{{ bookInfo.category_code }}</p>
+      <p class="category">{{ category(bookInfo.category_code) }}</p>
       <h3>{{ bookInfo.book_name }}</h3>
     </div>
     <div class="book_info_box">
@@ -22,7 +22,7 @@
         </div>
         <div class="btn">
           <button type="button" @click="goCart(this.bno)"><span><font-awesome-icon icon="fa-solid fa-cart-shopping" size="sm" /> 장바구니</span></button>
-          <button type="button"><span><font-awesome-icon icon="fa-solid fa-heart" size="sm" /> 찜</span></button>
+          <button type="button" @click="goLike(this.bno)"><span><font-awesome-icon icon="fa-solid fa-heart" size="sm" /> 찜</span></button>
           <!--@click="methods이름(this.받는값)" 추가-->
         </div>
       </div>
@@ -140,7 +140,97 @@ export default {
         alert("장바구니에 추가되었습니다")
         this.$router.push({ path: '/cart' }); // 클릭이벤트 추가. query 지움
       }
-    }
+    },
+    category(category) {
+      let result = '';
+      switch(category) {
+        case 'c01': 
+          result = '소설';
+          break;
+        case 'c02':
+          result = '시/에세이';
+          break;
+        case 'c03':
+          result = '인문';
+          break;
+        case 'c04':
+          result = '가정/육아';
+          break;
+        case 'c05':
+          result = '경제/경영';
+          break;
+        case 'c06':
+          result = '자기계발';
+          break;
+        case 'c07':
+          result = '역사/문화';
+          break;
+        case 'c08':
+          result = '예술/대중문화';
+          break;
+        case 'c09':
+          result = '외국어';
+          break;
+        case 'c10':
+          result = '과학';
+          break;
+        case 'c11':
+          result = '취업/수험서';
+          break;
+        case 'c12':
+          result = '여행';
+          break;
+        case 'c13':
+          result = '컴퓨터/IT';
+          break;
+        case 'c14':
+          result = '청소년';
+          break;
+         case 'c15':
+          result = '어린이(초등)';
+          break;
+        }
+        return result;
+      },
+      goLike() { //(bno)
+        console.log('책정보', this.bookInfo);
+        if (this.$store.state.isLogin) {
+          this.addLike()
+        } else {
+          alert("로그인 후 이용해주세요")
+        }
+      },
+    async addLike() { // *중복체크 + 담기
+      let uno = this.$store.state.userNo;
+      let pno = this.bookInfo.prdt_no;
+      // 찜 중복체크
+      await axios.get("/api/save/like/check?uno=" + uno + "&pno=" + pno)
+        .then(result => {
+          console.log("=======", result.data);
+          if (result.data) {
+            this.saveInsert();// 찜에 추가
+            alert('찜에 추가되었습니다.')
+          } else {
+            alert("이미 담긴 도서입니다.")
+          }
+        })
+        .catch(err => console.log(err));
+    },
+    async saveInsert() {
+      let data = {
+        param: {
+          user_no: this.$store.state.userNo,
+          prdt_no: this.bookInfo.prdt_no
+        }
+      }
+      let result = await axios.post("/api/save", data)
+        .catch(err => console.log(err));
+      let info = result.data.insertId; // 찜에 insert
+      if (info > 0) {
+        alert("찜에 추가되었습니다")
+        this.$router.push({ path: '/save' }); // 클릭이벤트 추가
+      }
+    },
   }
 }
 
@@ -149,7 +239,7 @@ export default {
 <style scoped>
 .container{padding-top:50px;}
 .top{text-align:center;}
-h3{font-weight:700; letter-spacing:-1px;}
+h3{width:70%; margin:0 auto; text-align:center; font-weight:700; letter-spacing:-1px; word-break:keep-all;}
 p.category{display:inline-block; padding:2px 20px; border:1px solid #ccc; border-radius:50px; margin-bottom:10px; color:#555; font-size:15px; font-weight:500;}
 .book_info_box{display:flex; justify-content:center; padding:30px; box-sizing:border-box;}
 .left .img{display:block; width:200px; height:293px; background:#ccc; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}

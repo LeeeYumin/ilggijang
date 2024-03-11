@@ -25,7 +25,7 @@
                         </div>
                     </td>
                     <td class="tc"><i class="point">{{ formatPrice(list.unit_price) }}</i>원</td>
-                    <td class="tc"><i class="point color">{{ list.orders_state }}</i></td>
+                    <td class="tc"><i class="point color state">{{ orderState(list.orders_state) }}</i></td>
                     <td class="tc">
                         <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
                     </td>
@@ -155,6 +155,7 @@ h5 + table{margin-top:15px;}
 .addr_info{padding:15px 0; font-size:15px;}
 .addr_info p:first-child{margin-bottom:5px !important; font-weight:700;}
 .addr_info p{margin-bottom:10px;}
+i.state{font-size:15px;}
 </style>
 
 <script>
@@ -279,6 +280,30 @@ export default {
         },
         goDetailBook(bno) { // 이미지 클릭하면 상세화면으로.
             this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
+        },
+        orderState(state) {
+            let result = '';
+            switch(state) {
+                case 's1': 
+                result = '결제완료';
+                break;
+                case 's2':
+                result = '배송준비중';
+                break;
+                case 's3':
+                result = '배송중';
+                break;
+                case 's4':
+                result = '배송완료';
+                break;
+                case 's5':
+                result = '구매취소';
+                break;
+                case 's6':
+                result = '구매취소완료';
+                break;
+            }
+            return result;
         }
     }
 }
