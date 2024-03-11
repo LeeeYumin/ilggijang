@@ -1,3 +1,5 @@
+const { search } = require("../router/userRouter");
+
 //회원리스트
 const userList =
 `SELECT
@@ -66,10 +68,17 @@ const userUpdate =
 SET ?
 WHERE id = ?`;
 
+const searchLogin=
+`select id
+from user
+where phone = ?`;
+
+
 module.exports = {
     userList,
     userJoin,
     userInfo,
     userUpdate,
-    useradInfo
+    useradInfo,
+    searchLogin
   }

@@ -35,8 +35,6 @@
   </div>
 
   <div class="container">
-    <!-- <MyOrderListView /> -->
-
     <router-view />
   </div>
 
@@ -81,8 +79,9 @@
       }
     },
     created(){
-        let userId = this.$route.query.userId;
+        let userId = this.$route.query.id;
         this.getUserInfo(userId);
+        
     },
     methods : {
       async getUserInfo(){

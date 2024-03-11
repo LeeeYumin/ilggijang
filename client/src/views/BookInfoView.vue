@@ -6,7 +6,9 @@
     </div>
     <div class="book_info_box">
       <div class="left">
-        <span class="img"><img src="{{ bookInfo.book_img }}"></span>
+        <span class="img">
+            <img :src="require('@/assets/product/' + bookInfo.book_img)" alt="cover">
+        </span>
         
       </div>
       <div class="right">
@@ -29,7 +31,7 @@
 
     <div class="botton">
         <div class="detailDown">
-        <p>책 목차, 상세내용 영역 {{ bookInfo.detail_exp }}</p>
+        <p>{{ bookInfo.detail_exp }}</p>
       </div>
     </div>
     <BookReviewView />
@@ -148,11 +150,12 @@ export default {
 <style scoped>
 .container{padding-top:50px;}
 .top{text-align:center;}
-h3{font-weight:700;}
+h3{font-weight:700; letter-spacing:-1px;}
 p.category{display:inline-block; padding:2px 20px; border:1px solid #ccc; border-radius:50px; margin-bottom:10px; color:#555; font-size:15px; font-weight:500;}
 .book_info_box{display:flex; justify-content:center; padding:30px; box-sizing:border-box;}
-.left .img{display:block; width:300px; height:400px; background:#ccc;}
-.right{position:relative; width:500px; margin-left:40px; border-top:1px solid #ddd;}
+.left .img{display:block; width:200px; height:293px; background:#ccc; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}
+.left .img img{display:block; width:100%; height:100%;}
+.right{position:relative; width:500px; margin-left:40px; padding-bottom:80px; border-top:1px solid #ddd;}
 .right p{margin:0; padding:15px 20px; font-size:16px; letter-spacing:-0.5px; border-bottom:1px dashed #ddd;}
 .right p i{display:inline-block; width:70px; font-style:normal; color:#555; font-size:15px; font-weight:700;}
 .btn{position:absolute; right:0; bottom:0; padding:0; margin:0;}
