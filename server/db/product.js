@@ -10,7 +10,20 @@ const productList =
       , detail_exp
       , publ_date
       , category_code
-FROM  prdt`;
+FROM  prdt
+LIMIT 10`;
+
+// 상품 페이징
+const prdtPaging =
+`SELECT book_img
+        , book_name
+        , isbn
+        , title
+        , publ_co
+        , book_price      
+FROM prdt 
+ORDER BY prdt_no DESC 
+LIMIT ?, 10`;
 
 // 상품 상세보기 컴포넌트 (관리자)
 const productDetailInfo =
@@ -60,5 +73,6 @@ module.exports = {
       productDetailInfo,
       productUpdate,
       productDelete,
-      prdtInsert
+      prdtInsert,
+      prdtPaging
   }

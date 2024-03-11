@@ -1,5 +1,3 @@
-ProductInsertView 수정전
-
 <template>
   <div class="container">
     <form @submit.prevent >

@@ -36,6 +36,7 @@
     </div>
     <BookReviewView />
     <BookQnaView />
+    <!-- footer안들어옴 -->
   </div>
 </template>
 

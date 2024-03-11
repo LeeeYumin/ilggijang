@@ -4,19 +4,19 @@
       <table class="table">
         <tbody>
           <tr>
-            <th scope="col" class="text-center table-primary">도서명</th>
-            <td scope="col" class="text-center">{{ productDetailInfo.book_name }}</td>
-            <th scope="col" class="text-center table-primary">가격</th>
-            <td scope="col" class="text-center">{{ formatPrice(productDetailInfo.book_price) }}</td>
-            <th scope="col" class="text-center table-primary">저자</th>
-            <td scope="col" class="text-center">{{ productDetailInfo.title }}</td>
+            <th colspan="3" class="text-center table-primary">ISBN</th>
+            <td colspan="3">{{ productDetailInfo.isbn }}</td>
+            <th colspan="col" class="text-center table-primary">가격</th>
+            <td colspan="col" class="text-center">{{ formatPrice(productDetailInfo.book_price) }}</td>
+            <th colspan="col" class="text-center table-primary">저자</th>
+            <td colspan="col" class="text-center">{{ productDetailInfo.title }}</td>
           </tr>
-
+          
           <tr>
-            <th colspan="2" class="text-center table-primary">ISBN</th>
-            <td colspan="4">{{ productDetailInfo.isbn }}</td>
+            <th colspan="2" class="text-center table-primary">도서명</th>
+            <td colspan="3" class="text-center">{{ productDetailInfo.book_name }}</td>
             <th colspan="2" class="text-center table-primary">출판사</th>
-            <td colspan="4">{{ productDetailInfo.publ_co }}</td>
+            <td colspan="5">{{ productDetailInfo.publ_co }}</td>
           </tr>
           <tr>
             <th colspan="2" class="text-center table-primary">도서 이미지</th>
@@ -24,8 +24,8 @@
           </tr>
 
           <tr>
-            <th colspan="2" class="text-center table-primary">도서 상세 설명</th>
-            <td colspan="4">{{ productDetailInfo.detail_exp }}</td>
+            <th colspan="3" class="text-center table-primary">도서 상세 설명</th>
+            <td colspan="7">{{ productDetailInfo.detail_exp }}</td>
           </tr>
 
           <tr>

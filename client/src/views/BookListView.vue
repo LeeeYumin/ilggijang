@@ -37,7 +37,7 @@ export default {
       currentList: [],
       currentPage: 1,
       // listId: '/recdlist',
-      startCnt: 8,
+      startCnt: 10,
       pages: 0,
       currentCode: null
     }
