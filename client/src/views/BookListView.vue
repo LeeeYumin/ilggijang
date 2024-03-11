@@ -5,7 +5,7 @@
         <ul>
           <li :key="i" v-for="i in currentList">
             <span class="img" @click="goDetailBook(i.prdt_no)">
-              <img :src="require('@/assets/product/' + i.book_img)" alt="cover">
+              <img :src="getImgUrl(i.book_img)" alt="cover">
             </span>
             <div class="text">
               <p class="category">{{ category(i.category_code) }}</p>
@@ -110,6 +110,9 @@ export default {
           break;
         }
         return result;
+    },
+    getImgUrl(imgName) { // 이미지 동적으로 가져오기
+        return new URL(`/product/${imgName}`, 'http://localhost:8081');
       }
   }
 }
