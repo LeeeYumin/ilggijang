@@ -7,6 +7,19 @@
         </router-link>
       </div>
       <div id="loginForm">
+ //hyoeun_home_0310
+          <div class="mb-3">
+    <input class="w3-input" name="uid" placeholder="ID를 입력해주세요" v-model="id"><br>
+  </div>
+  <div class="mb-3">
+    <input name="pw" class="w3-input" placeholder="PW를 입력해주세요" v-model="pw_no" type="password">
+  </div>
+    <button v-on:click="Login" type="submit" class="w3-button w3-green w3-round">Login</button>
+    <button v-on:click="join"  class="w3-button w3-green w3-round" >회원가입</button>
+    <button v-on:click="findid"  class="w3-button w3-green w3-round" >아이디찾기</button>
+    <button v-on:click="findpw"  class="w3-button w3-green w3-round" >비밀번호찾기</button>
+    <NaverLogin />
+    //충돌확인
         <form @submit.prevent="Login">
           <ul>
             <li>
@@ -26,6 +39,7 @@
           </div>
           <NaverLogin />
         </form>
+//dev_daily
       </div>
     </div>
   </div>

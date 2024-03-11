@@ -3,23 +3,21 @@
     <h4><span>'{{ book_name }}'</span>에 대한 검색 결과</h4>
     <div class="list">
         <div class="selected" :key="i" v-for= "(book, i) in bookSearchList">
-          <div class="left" >
-            <span class="img" @click="goDetailBook(book.prdt_no)">
-              <img src="{{ book.book_img }}" alt="cover">
-            </span>
-            <ul class="prdt_list">
+          <div class="left" @click="goDetailBook(book.prdt_no)">
+            <span class="img">
+              <img :src="require('@/assets/product/' + book.book_img)" alt="cover">
+            </span>       
+          </div>
+           <ul class="prdt_list">
               <li class="tit">{{ book.book_name }}</li>
               <li>{{ book.title }}</li>
               <li>{{ publDate(book.publ_date) }}</li>
               <li><i class="point">{{ formatPrice(book.book_price) }}원</i></li>
             </ul>
-          </div>
           <div class="right">
             <button type="button" class="btn btn-primary" @click="goCart(book.prdt_no)">장바구니</button>
             <button type="button" class="btn btn-secondary">찜</button>
           </div>
-      </div>
-      <div>
       </div>
     </div>
   </div>

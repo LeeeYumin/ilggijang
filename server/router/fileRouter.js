@@ -7,7 +7,7 @@ var url = require('url');
 
 
 // 폴더경로 만들기
-let dir = 'C:/Users/admin/Pictures/ilggijang/images/';
+let dir = 'C:/Users/admin/ilggijang/images/';
 
 // 함수
 const storage = multer.diskStorage({ // 디스크 저장소 정의
