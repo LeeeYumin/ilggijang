@@ -8,7 +8,7 @@
         <span class="img" @click="goDetailBook(book.prdt_no)"><img src="../assets/img_book_sample.jpg"></span>
           <div class="text">
             <p class="tit">{{ book.book_name }}</p>
-            <p>{{ book.category_code }}</p>
+            <p>{{ Category }}</p>
             <p>{{ book.title }}</p>
           </div>
       </div>
@@ -32,7 +32,58 @@ export default {
     this.getBookList();
   },
   computed: {
-
+    Category() {
+      let category = this.bookList.category_code;
+      let result = '';
+      switch(category) {
+        case 'c01': 
+          result = '소설';
+          break;
+        case 'c02':
+          result = '시/에세이';
+          break;
+        case 'c03':
+          result = '인문';
+          break;
+        case 'c04':
+          result = '가정/육아';
+          break;
+        case 'c05':
+          result = '경제/경영';
+          break;
+        case 'c06':
+          result = '자기계발';
+          break;
+        case 'c07':
+          result = '역사/문화';
+          break;
+        case 'c08':
+          result = '예술/대중문화';
+          break;
+        case 'c09':
+          result = '외국어';
+          break;
+        case 'c10':
+          result = '과학';
+          break;
+        case 'c11':
+          result = '취업/수험서';
+          break;
+        case 'c12':
+          result = '여행';
+          break;
+        case 'c13':
+          result = '컴퓨터/IT';
+          break;
+        case 'c14':
+          result = '청소년';
+          break;
+         case 'c15':
+          result = '어린이(초등)';
+          break;
+        }
+        return result;
+      }
   },
   methods: {
     async getBookList() {
@@ -68,3 +119,4 @@ h3{text-align:left; color:#333; font-size:25px; font-weight:700; letter-spacing:
 .booklist .text > *{margin-bottom:3px; letter-spacing:-1px; color:#777; font-size:15px;}
 .booklist .text .tit{margin-bottom:3px; color:#333; font-size:16px; font-weight:700;}
 </style>
+
