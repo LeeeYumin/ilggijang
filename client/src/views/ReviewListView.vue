@@ -1,14 +1,16 @@
 <template>
   <div class="reviews">
-    <h3 v-if="listId == '/mrvlist' && userno != ''">내가 쓴 리뷰</h3>
-    <h4 v-if="currentList == '' && userno != ''">아직 리뷰가 없습니다.</h4>
+    <h5 v-if="listId == '/mrvlist' && userno != ''">내가 쓴 리뷰</h5>
+    <span v-if="currentList == '' && userno != ''">아직 리뷰가 없습니다.</span>
     <div class="reviewlist" :key="i" v-for="i in currentList">
       <div class="top">
         <div class="writerdate">
           <span v-if="listId == '/rvlist'">구매자명 : {{ i.writer }} / </span>
           <span>{{ i.write_date }}</span>
-          <button v-if="listId == '/mrvlist' && userno != ''" @click="$emit('update', i.review_no, i.grade, i.content, i.orders_detail_no)">수정</button>
-          <button v-if="listId == '/mrvlist' && userno != ''" @click="DeleteMyReview(i.review_no)">삭제</button>
+          <div v-if="listId == '/mrvlist' && userno != ''" class="btns">
+            <button @click="$emit('update', i.review_no, i.grade, i.content, i.orders_detail_no)">수정</button>
+            <button @click="DeleteMyReview(i.review_no)">삭제</button>
+          </div>
         </div>
         <div class="grade">
           <span :key="g" v-for="g in i.grade"><font-awesome-icon :icon="['fas', 'star']" style="color: #66dd70;" /></span>
@@ -52,7 +54,7 @@ export default {
     return {
       currentList: [],
       currentPage: 1,
-      startCnt: 10,
+      startCnt: 5,
       pagecnts: 0,
       currentCode: null,
       userno: this.$store.state.userNo

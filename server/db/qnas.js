@@ -2,27 +2,27 @@
 const detailQnaList =
 `SELECT q.reply_state
 		, RPAD(SUBSTR(q.qry_content, 1, 30), CHAR_LENGTH(SUBSTR(q.qry_content, 1, 32)), '.') AS litecont
-        , q.write_date
+        , DATE_FORMAT(q.write_date, '%Y-%m-%d') AS write_date
         , RPAD(SUBSTR(u.id, 1, 2), CHAR_LENGTH(u.id), '*') AS writer
 FROM qna q
 JOIN user u
 ON (u.user_no = q.user_no)
-JOIN prdt p
-ON (p.prdt_no = q.prdt_no)
-WHERE p.prdt_no = ?
-ORDER BY q.write_date DESC`; // 상품 번호 필요
+WHERE prdt_no = ?
+ORDER BY q.write_date DESC
+LIMIT ?, 5`; // 상품 번호, 페이지 값 필요
+const detailQnaCnt =
+`SELECT count(*) AS qacnt
+FROM qna
+WHERE prdt_no = ?`; // 상품 번호 필요
+
 
 // 도서 상세 내 QnA 목록
 const detailMyQnaList =
 `SELECT q.reply_state
 		, RPAD(SUBSTR(q.qry_content, 1, 30), CHAR_LENGTH(SUBSTR(q.qry_content, 1, 32)), '.') AS litecont
-        , q.write_date
+        , DATE_FORMAT(q.write_date, '%Y-%m-%d') AS write_date
 FROM qna q
-JOIN user u
-ON (u.user_no = q.user_no)
-JOIN prdt p
-ON (p.prdt_no = q.prdt_no)
-WHERE u.user_no = ? AND p.prdt_no = ?
+WHERE user_no = ? AND prdt_no = ?
 ORDER BY q.write_date DESC`; // 회원 번호, 상품 번호 필요
 
 // 관리자 QnA 목록
@@ -67,7 +67,7 @@ const qnaDelete =
 WHERE qna_no = ? `;
 
 module.exports = {
-    detailQnaList
+    detailQnaList, detailQnaCnt
     , detailMyQnaList
     , adminQnaList
     , qnaInfo

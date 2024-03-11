@@ -3,8 +3,8 @@ const reviewRouter = express.Router();
 const db = require("../db.js");
 
 // 도서 상세 리뷰 목록
-reviewRouter.get("/rvlist/:pno/:odno/:pgno", async (request, response) => {
-    let data = [request.params.pno, parseInt(request.params.odno), parseInt(request.params.pgno)];
+reviewRouter.get("/rvlist/:pno/:stno/:pgno", async (request, response) => {
+    let data = [request.params.pno, parseInt(request.params.stno), parseInt(request.params.pgno)];
     let list = await db.connection('reviews', 'detailReviewList', data);
     let pages = await db.connection('reviews', 'detailReviewCnt', data[0]);
     let res = {list, pages};
@@ -19,11 +19,11 @@ reviewRouter.get("/mrvlist/:uno/:pno", async (request, response) => {
 });
 
 
-// 관리자 리뷰 목록
-reviewRouter.get("/admin", async (request, response) => {
-    let result = await db.connection('reviews', 'adminReviewList');
-    response.send(result);
-});
+// // 관리자 리뷰 목록
+// reviewRouter.get("/admin", async (request, response) => {
+//     let result = await db.connection('reviews', 'adminReviewList');
+//     response.send(result);
+// });
 
 
 // 리뷰 등록

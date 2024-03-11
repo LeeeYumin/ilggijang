@@ -34,16 +34,19 @@
       </div>
     </div>
     <BookReviewView />
+    <BookQnaView />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import BookReviewView from '../views/BookReviewView.vue';
+import BookQnaView from '../views/BookQnaView.vue';
 
 export default {
   components: {
-    BookReviewView
+    BookReviewView,
+    BookQnaView
   },
   data() {
     return {
