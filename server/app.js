@@ -181,8 +181,7 @@ app.post("/afterpay", async (req, res) => {
     result = {
       orderResult,
       orderDetailResult,
-      cartInfoResult,
-      saveInfoResult
+      cartInfoResult
     }
     res.send(result); // 클라이언트에게 결과전송
   }catch(err) {
