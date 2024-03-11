@@ -52,7 +52,7 @@
 
     </div>
     <div class="row">
-      <button class="btn btn-info col-4" @click="goToUpdate(userInfo.id)">수정</button>
+      <!-- <button class="btn btn-info col-4" @click="goToUpdate(userInfo.id)">수정</button> -->
       <router-link to="/admin/userList" class="btn btn-success col-4">목록</router-link>
       
     </div>
@@ -96,6 +96,8 @@ export default {
       let info = result.data;
       this.userInfo = info;
     },
+   
+
     dataFormat(value) {
       let result = null;
       if (value != null) {

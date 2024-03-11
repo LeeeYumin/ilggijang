@@ -22,6 +22,7 @@ import UserNoticeView from '../views/UserNoticeView.vue';
 import UserNoticeInfoView from '../views/UserNoticeInfoView.vue';
 import MyOrderlistView from '../views/MyOrderListView.vue';
 import SaveView from '../views/SaveView.vue';
+import UserInfo2View from '../views/UserInfo2View.vue';
 
 
 
@@ -80,6 +81,7 @@ export default {
         path: 'mypage',
         name: 'mypage',
         component: MypageView,
+        redirect : 'mypage/userInfo2',
         children : [
             {
                 path: 'myOrderlist',
@@ -92,9 +94,9 @@ export default {
                 component: SaveView
             },
             {
-                path: 'userInfo',
-                name: 'userInfo',
-                component: UserInfoView
+                path: 'userInfo2',
+                name: 'userInfo2',
+                component: UserInfo2View
             }
         ]
     },

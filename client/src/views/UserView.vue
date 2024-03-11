@@ -19,7 +19,9 @@
         <div class="btn_box">
           <ul>
             <li><button v-on:click="join">회원가입</button></li>
-            <li><button v-on:click="findid">아이디찾기</button></li>
+
+            <li><router-link to="/searchId">아이디 찾기</router-link></li>
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
             <li><button v-on:click="findpw">비밀번호찾기</button></li>
           </ul>
         </div>
