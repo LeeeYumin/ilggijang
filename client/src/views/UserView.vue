@@ -94,7 +94,7 @@ export default {
         this.$store.commit('setUserNo', userNo);
         this.$store.commit('setLoginTypeCode', loginTypeCode);
 
-
+         alert('로그인 되었습니다.');
 
 
         console.log(this.$store.state.isLogin);
@@ -110,20 +110,22 @@ export default {
         }
 
       }else{
-        alert('아이디 또는 비밀번호를 다시 입력해주세요.');
+         alert('아이디 또는 비밀번호를 다시 입력해주세요.');
+       
       }
-       alert('로그인 되었습니다.');
+      
+       
 
     },
     validation() {
       if (this.id === '') {
-        alert('ID를 입력하세요.')
-        return
+        alert('ID를 입력하세요.') 
+        return false;
       }
 
       if (this.pw_no === '') {
         alert('비밀번호를 입력하세요.')
-        return
+        return false;
       }
 
 

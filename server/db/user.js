@@ -38,6 +38,7 @@ const userInfo =
     ,mail
     ,phone
     ,login_type_code
+    ,user_rank_no
     ,age_code 
 FROM user
 WHERE id = ? `;
