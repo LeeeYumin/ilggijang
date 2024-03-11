@@ -7,7 +7,7 @@
     <div class="book_info_box">
       <div class="left">
         <span class="img"><img src="{{ bookInfo.book_img }}"></span>
-        
+
       </div>
       <div class="right">
         <div class="book_info">
@@ -30,7 +30,7 @@
     <div class="botton">
         <div class="detailDown">
         <p>책 목차, 상세내용 영역 {{ bookInfo.detail_exp }}</p>
-        <p>저자/관리자작성 책 소개 영역 {{ bookInfo.book_intro }}</p>
+        <!--<p>저자/관리자작성 책 소개 영역 {{ bookInfo.book_intro }}</p>-->
       </div>
     </div>
     <BookReviewView />
@@ -57,7 +57,6 @@ export default {
         title: '',
         publ_co: '',
         book_price: '',
-        book_intro: '',
         detail_exp: '',
         publ_date: null,
         category_code: ''
@@ -145,7 +144,7 @@ export default {
   }
 }
 
-</script> 
+</script>
 
 <style scoped>
 .container{padding-top:50px;}

@@ -6,7 +6,7 @@
 
       <label for="book_name">도서명</label>
       <input type="text" id="book_name" v-model="productInsert.book_name">
-      
+
       <label for="book_price">가격</label>
       <input type="text" id="book_price"  v-model="productInsert.book_price">
 
@@ -19,8 +19,8 @@
       <label for="publ_co">출판사</label>
       <input type="text" id="publ_co" v-model="productInsert.publ_co" >
 
-      <label for="book_intro">책소개</label>
-      <textarea type="text" id="book_intro" style="height:200px" v-model="productInsert.book_intro"></textarea>
+      <!-- <label for="book_intro">책소개</label>
+      <textarea type="text" id="book_intro" style="height:200px" v-model="productInsert.book_intro"></textarea> -->
 
       <label for="book_img">이미지</label>
       <input type="text" id="book_img" v-model="productInsert.book_img" >
@@ -28,8 +28,14 @@
       <label for="detail_exp">도서상세설명</label>
       <textarea type="text" id="detail_exp" style="height:200px" v-model="productInsert.detail_exp" ></textarea>
 
+      <label for="publ_date">출간일</label>
+      <input type="date" id="publ_date" v-model="productInsert.publ_date" >
+
+      <label for="category_code">카테고리</label>
+      <input type="text" id="category_code" v-model="productInsert.category_code" >
+
       <button type="button" class="btn btn-xs btn-info"
-              @click="isUpdated ? productUpdate() : productsInsert()">저장</button>
+              @click="isUpdated ? productUpdate() : prdtInsert()">저장</button>
     </form>
 
   </div>
@@ -41,13 +47,12 @@ import axios from 'axios'
 export default {
   data(){
     return {
-      productInsert : {
+      productInsert : { // 타입만 지정. 비워놔도 됨.
         book_name : '',
         book_price : '',
         title : '',
         isbn : '',
         publ_co : '',
-        book_intro : '',
         book_img : '',
         detail_exp : ''
       },
@@ -65,37 +70,38 @@ export default {
             this.isUpdated = true;
         }else{
             //등록
-            this.productsInsert;
+            this.productInsert;
         }
     },
 
     methods : {
-      async productsInsert(){
+      async prdtInsert(){
         let data = {
-          param : {
-            book_name : '',
-            book_price : '',
-            title : '',
-            isbn : '',
-            publ_co : '',
-            book_intro : '',
-            book_img : '',
-            detail_exp : ''
-          }
+          param :[
+            this.productInsert.isbn, //바인딩 된 정보를 위에서 넣어줌.
+            this.productInsert.book_name,
+            this.productInsert.book_img,
+            this.productInsert.title,
+            this.productInsert.publ_co,
+            this.productInsert.book_price,
+            this.productInsert.detail_exp,
+            this.productInsert.publ_date,
+            this.productInsert.category_code,
+        ]
         };
-
-        let result = await axios.post("/api/product/", data)
+        console.log()
+        let result = await axios.post("/api/product", data)
                                 .catch(err => console.log(err));
 
         let info = result.data.insertId;
         if(info > 0) {
           alert('도서가 등록되었습니다');
-          this.productInsert.pno = info;
+          this.prdtInsert.pno = info;
             }
     },
 
       async getproductDetailInfo(pno) {
-        let result = await axios.get("/api/product/" + pno) //admin/product ?
+        let result = await axios.get("/api/product" + pno) //admin/product ?
                     .catch(err => console.log(err));
         this.getproductDetailInfo = result.data;
       },
@@ -108,12 +114,11 @@ export default {
             title : '',
             isbn : '',
             publ_co : '',
-            book_intro : '',
             book_img : '',
             detail_exp : ''
           }
         };
-            let result = await axios.put("/api/product/" + this.getproductDetailInfo.pno , data)
+            let result = await axios.put("/api/product" + this.getproductDetailInfo.pno , data)
                                 .catch(err => console.log(err));
 
             let info = result.data.changedRows;
@@ -128,12 +133,12 @@ export default {
 
 <style>
 input[type=text], select, textarea {
-  width: 100%; 
-  padding: 5px; 
-  border: 1px solid #ccc; 
-  border-radius: 4px; 
-  box-sizing: border-box; 
-  margin-bottom: 5px; 
-  resize: vertical 
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  resize: vertical
 }
 </style>
