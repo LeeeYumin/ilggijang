@@ -8,7 +8,7 @@
     <div class="book_info_box">
       <div class="left">
         <span class="img">
-            <img :src="require('@/assets/product/' + bookInfo.book_img)" alt="cover">
+            <img :src="getImgUrl(bookInfo.book_img)" alt="cover">
         </span>
       </div>
       <div class="right">
@@ -193,15 +193,15 @@ export default {
           break;
         }
         return result;
-      },
-      goLike() { //(bno)
-        console.log('책정보', this.bookInfo);
-        if (this.$store.state.isLogin) {
-          this.addLike()
-        } else {
-          alert("로그인 후 이용해주세요")
-        }
-      },
+    },
+    goLike() { //(bno)
+      console.log('책정보', this.bookInfo);
+      if (this.$store.state.isLogin) {
+        this.addLike()
+      } else {
+        alert("로그인 후 이용해주세요")
+      }
+    },
     async addLike() { // *중복체크 + 담기
       let uno = this.$store.state.userNo;
       let pno = this.bookInfo.prdt_no;
@@ -233,6 +233,11 @@ export default {
         this.$router.push({ path: '/save' }); // 클릭이벤트 추가
       }
     },
+    getImgUrl(imgName) { // 이미지 동적으로 가져오기
+      // let test = new URL(`/product/${imgName}`, import.meta.url).href;
+      // console.log(test)
+      return new URL(`/product/${imgName}`, 'http://localhost:8081');
+    }
   }
 }
 

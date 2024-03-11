@@ -6,7 +6,7 @@
       <li :key="i" v-for="(book, i) in bookList">
         <div>
           <span class="img" @click="goDetailBook(book.prdt_no)">
-              <img :src="require('@/assets/product/' + book.book_img)" alt="cover">
+              <img :src="getImgUrl(book.book_img)" alt="cover">
           </span>
           <div class="text">
             <p class="category">{{ category(book.category_code) }}</p>
@@ -27,7 +27,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      bookList: []
+      bookList: [],
+      publicPath: process.env.BASE_URL
     }
   },
   created() {
@@ -96,6 +97,11 @@ export default {
           break;
         }
         return result;
+      },
+      getImgUrl(imgName) { // 이미지 동적으로 가져오기
+        // let test = new URL(`/product/${imgName}`, import.meta.url).href;
+        // console.log(test)
+        return new URL(`/product/${imgName}`, 'http://localhost:8081');
       }
   }
 }

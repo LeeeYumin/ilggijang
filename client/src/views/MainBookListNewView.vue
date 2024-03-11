@@ -6,7 +6,7 @@
       <li :key="i" v-for="(book, i) in bookList">
         <div>
           <span class="img" @click="goDetailBook(book.prdt_no)">
-            <img :src="require('@/assets/product/' + book.book_img)" alt="cover">
+            <img :src="getImgUrl(book.book_img)" alt="cover">
           </span>
         <!-- prdt테이블 정리 후 '@/assets/product/' + book.book_img -->
           <div class="text">
@@ -97,7 +97,10 @@ export default {
           break;
         }
         return result;
-      }
+    },
+    getImgUrl(imgName) { // 이미지 동적으로 가져오기
+      return new URL(`/product/${imgName}`, 'http://localhost:8081');
+    }
   }
 }
 </script>
