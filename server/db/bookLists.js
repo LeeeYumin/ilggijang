@@ -21,7 +21,7 @@ JOIN user u
 ON (o.user_no = u.user_no)
 WHERE u.age_code = ?
 ORDER BY ordercnt DESC, p.book_name 
-LIMIT ?, 8`; // 연령대 코드 필요, 페이지 값 필요
+LIMIT ?, 10`; // 연령대 코드 필요, 페이지 값 필요
 const recdPageCnt =
 `SELECT COUNT(DISTINCT p.prdt_no) AS pcnt
 FROM prdt p
@@ -52,7 +52,7 @@ JOIN orders o
 ON (od.orders_no = o.orders_no)
 WHERE TIMESTAMPDIFF(MONTH, o.orders_date, CURDATE()) < 3
 ORDER BY ordercnt DESC, book_name 
-LIMIT ?, 8`; // 페이지 값 필요
+LIMIT ?, 10`; // 페이지 값 필요
 const bestSellerPageCnt =
 `SELECT COUNT(DISTINCT p.prdt_no) AS pcnt
 FROM prdt p
