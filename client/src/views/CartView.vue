@@ -130,7 +130,7 @@ table ul li button:hover{background:#eee;}
 .btn_num button:first-child span:before{content:''; display:block; position:absolute; left:50%; top:50%; width:10px; height:2px; background:#888; transform:translate(-50%, -50%);}
 .btn_num button:last-child span:before{content:''; display:block; position:absolute; left:50%; top:50%; width:10px; height:2px; background:#888; transform:translate(-50%, -50%);}
 .btn_num button:last-child span:after{content:''; display:block; position:absolute; left:50%; top:50%; width:2px; height:10px; background:#888; transform:translate(-50%, -50%);}
-.btn_num input{width:30px; text-align:center; border:0; font-size:14px;}
+.btn_num input{width:30px; text-align:center; border:0; font-size:14px; margin-bottom:0;}
 .tc{text-align:center;}
 .price{margin-bottom:5px;}
 .mr-0{margin-right:0;}
