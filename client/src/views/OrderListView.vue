@@ -16,7 +16,7 @@
                     <td>
                         <div class="book_info">
                             <span class="img" @click="goDetailBook(list.prdt_no)">
-                                <img :src="require('@/assets/product/' + list.book_img)" alt="cover">
+                                <img :src="getImgUrl(list.book_img)" alt="cover">
                             </span>
                             <div class="txt">
                                 <p>{{ list.book_name }}</p>
@@ -304,6 +304,9 @@ export default {
                 break;
             }
             return result;
+        },
+        getImgUrl(imgName) { // 이미지 동적으로 가져오기
+            return new URL(`/product/${imgName}`, 'http://localhost:8081');
         }
     }
 }

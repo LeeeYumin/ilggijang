@@ -87,7 +87,7 @@
               <tr v-bind:key="idx" v-for="(info, idx) in selectList">
                 <td>
                   <span class="img" @click="goDetailBook(list.prdt_no)">
-                      <img :src="require('@/assets/product/' + info.book_img)" alt="cover">
+                      <img :src="getImgUrl(info.book_img)" alt="cover">
                   </span>
                 </td>
                 <td>{{ info.book_name }}</td>
@@ -356,85 +356,6 @@ i.point{font-style:normal; font-size:16px;}
               return book_price
           }
       }, 
-      // getImPort() {
-      //   let IMP = window.IMP; // 생략가능
-
-      //   IMP.init('imp64012553'); // 본인 가맹점 식별코드 삽입
-      //   IMP.request_pay({
-      //     pg: "nice_v2.nictest00m", // 나이스 신버전.상점아이디
-      //     // pg: "kakaopay.TC0ONETIME", // 카카오페이.상점아이디
-      //     // pg: "html5_inicis.INIpayTest", // KG이니시스.상점아이디
-      //     pay_method: "card",
-      //     merchant_uid : 'merchant_'+new Date().getTime(), // 도서 id
-      //     name : '결제테스트',
-      //     amount : this.totalPrice,
-      //     buyer_email : this.userInfo.mail,
-      //     buyer_name : this.userInfo.name,
-      //     buyer_tel : this.userInfo.phone,
-      //     buyer_addr : this.userInfo.addr,
-      //     buyer_postcode : '123-456',
-      //     m_redirect_url : 'http://localhost:8081/complete',
-      //   },
-      //   function (rsp) { // callback 
-      //       console.log(rsp);
-      //       console.log(rsp.imp_uid); // 
-          
-      //     if (rsp.imp_uid != '') {
-      //       console.log('결제성공');
-      //       //DB로 저장될 정보 전송
-      //       // axios로 HTTP 요청
-
-      //       axios({
-      //         url: "api/complete",
-      //         method: "post",
-      //         headers: { "Content-Type": "application/json" },
-      //         data: {
-      //           imp_uid: rsp.imp_uid
-      //         }
-      //       }).then((data) => {
-      //         // 서버 결제 API 성공시 로직
-      //         console.log(data.data);
-      //         if(data.data != 'failed') {
-      //           let msg = '결제가 완료되었습니다.';
-      //           alert(msg);
-      //         }
-      //         else {
-      //           let msg = '결제가 취소되었습니다.';
-      //           alert(msg);
-      //         }
-      //       })
-      //       console.log(rsp);
-      //     } else {
-      //       console.log(rsp);
-      //       let msg = '결제에 실패하였습니다.';
-      //       alert(msg);
-      //     }
-      //   });
-      // },
-
-      // insertInfo() {
-      //   // 2) ajax
-      //   // 2-1) 실제 보낼 데이터 선별
-      //   let data = this.getSendData();
-
-      //   // 2-2) axios를 이용해서 ajax 실행 // 비동기로 진행
-      //   // /api/users
-      //   axios
-      //   .post('/api/orders', data) // data는 반드시 배열 아니면 객체여야 함 -> axios는 default가 JSON으로 되어있음
-      //   .then(rsp => {
-      //       // 3) 결과처리
-      //       console.log(rsp);
-      //       let orders_no = rsp.data.insertId; // insertId는 AUTO_INCREMENT가 사용됐다는 가정하에 쓰임
-      //       if(orders_no == 0) {
-      //           alert(`등록되지 않았습니다\n 메세지를 확인해주세요\n${rsp.data.message}`);
-      //       }else {
-      //           alert(`정상적으로 등록되었습니다.`);
-      //           this.orderInfo.orders_no = orders_no;
-      //           this.$router.push({ path : '/'});
-      //       }
-      //   })
-      //   .catch(err => console.log(err));
-      // },
       getSendData() {
         let obj = this.orderInfo;
         let delData = ["orders_no"];
@@ -575,24 +496,10 @@ i.point{font-style:normal; font-size:16px;}
       },
       closePop() {
         this.$emit('close');
+      },
+      getImgUrl(imgName) { // 이미지 동적으로 가져오기
+            return new URL(`/product/${imgName}`, 'http://localhost:8081');
       }
-      // changData() { // 객체 [{},{},{}] => [[수량, 상품번호, 단가],[수량, 상품번호, 단가],[수량, 상품번호, 단가]]
-      //   let ary = [];
-
-      //   let qua = 0;
-      //   let pno = '';
-      //   let perPrice = 0;
-
-      //   for(let i = 0; i < this.selectList.length; i++){
-      //     qua = this.selectList[i].quantity;
-      //     pno = this.selectList[i].book_no;
-      //     perPrice = this.selectList[i].book_price;
-      //     ary.push([qua, pno, perPrice]);
-      //     // 3개씩 될때 다시 배열에 담아줘야함
-      //   }
-      //   return ary;
-        
-      // }
     }
   }
 </script>

@@ -80,7 +80,7 @@ export default {
         path: 'mypage',
         name: 'mypage',
         component: MypageView,
-        redirect : 'mypage/userInfo2',
+        redirect : '/mypage/userInfo2',
         children : [
             {
                 path: 'myOrderlist',
