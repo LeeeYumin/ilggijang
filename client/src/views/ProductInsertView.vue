@@ -19,9 +19,6 @@
       <label for="publ_co">출판사</label>
       <input type="text" id="publ_co" v-model="productInsert.publ_co" >
 
-      <label for="book_intro">책소개</label>
-      <textarea type="text" id="book_intro" style="height:200px" v-model="productInsert.book_intro"></textarea>
-
       <label for="book_img">이미지</label>
       <input type="text" id="book_img" v-model="productInsert.book_img" >
 
@@ -47,7 +44,6 @@ export default {
         title : '',
         isbn : '',
         publ_co : '',
-        book_intro : '',
         book_img : '',
         detail_exp : ''
       },
@@ -78,7 +74,6 @@ export default {
             title : '',
             isbn : '',
             publ_co : '',
-            book_intro : '',
             book_img : '',
             detail_exp : ''
           }
@@ -108,7 +103,6 @@ export default {
             title : '',
             isbn : '',
             publ_co : '',
-            book_intro : '',
             book_img : '',
             detail_exp : ''
           }

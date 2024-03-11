@@ -58,7 +58,6 @@ export default {
         title: '',
         publ_co: '',
         book_price: '',
-        book_intro: '',
         detail_exp: '',
         publ_date: null,
         category_code: ''

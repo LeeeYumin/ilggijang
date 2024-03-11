@@ -7,7 +7,6 @@ const productList =
       , title
       , publ_co
       , book_price
-      , book_intro
       , detail_exp
       , publ_date
       , category_code
@@ -22,7 +21,6 @@ const productDetailInfo =
       , title
       , publ_co
       , book_price
-      , book_intro
       , detail_exp
       , publ_date
       , category_code
