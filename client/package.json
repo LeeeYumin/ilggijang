@@ -25,6 +25,7 @@
     "vue": "^3.4.21",
     "vue-owl-carousel": "^2.0.3",
     "vue-router": "^4.0.3",
+    "vue3-charts": "^1.1.33",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0",
     "yarn": "^1.22.22"
