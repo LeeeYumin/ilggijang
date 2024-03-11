@@ -38,7 +38,7 @@ import axios from 'axios'
 export default {
   data(){
     return {
-      product : [], // productList ?
+      product : [], // productList..?
       currentPage : 1,
       startCnt : 10,
       pages : 0,

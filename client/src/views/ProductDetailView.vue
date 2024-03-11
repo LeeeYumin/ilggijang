@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>상품상세관리</h1> <!--  하단에 수정,삭제 버튼 밑에 같이.-->
+    <h1>상품상세관리</h1> <!-- 하단에 수정,삭제 버튼 밑에 같이.-->
       <table class="table">
         <tbody>
           <tr>

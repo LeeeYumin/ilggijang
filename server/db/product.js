@@ -13,7 +13,7 @@ const productList =
 FROM  prdt
 LIMIT 10`;
 
-// 상품 페이징
+// 상품 페이징..
 const prdtPaging =
 `SELECT book_img
         , book_name
