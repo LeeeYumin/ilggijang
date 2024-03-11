@@ -1,10 +1,8 @@
-ProductInsertView 수정전
-
 <template>
   <div class="container">
     <form @submit.prevent >
 
-      <h3 class="text-center">{{ title }}</h3> <!--메모 API 토스트로 이미지.. 등..?-->
+      <h3 class="text-center">{{ title }}</h3> <!--메모 API 토스트로 이미지 등..?-->
 
       <label for="book_name">도서명</label>
       <input type="text" class="form-control" id="book_name" v-model="productInsert.book_name">
@@ -27,7 +25,7 @@ ProductInsertView 수정전
                   multiple
                   @change="showThumbnail()"
                   name="fileList">
-          <button class="btn btn-primary mt-3" @click="sendFiles()">멀티 파일 전송</button>
+          <button class="btn btn-primary mt-3" @click="sendFiles()">이미지 파일 업로드</button>
       </div>
       
       <div class="border col-4">
@@ -64,7 +62,8 @@ export default {
         isbn : '',
         publ_co : '',
         book_img : '',
-        detail_exp : ''
+        detail_exp : '',
+        uploadedImg : '' // 첨부된 파일명
       },
       isUpdated : false,
       files : [],
@@ -92,7 +91,7 @@ export default {
             this.isUpdated = true;
         }else{
             //등록
-            this.productInsert;
+            this.prdtInsert();
         }
     },
 
@@ -102,7 +101,7 @@ export default {
           param :[
             this.productInsert.isbn, //v-바인딩 된 정보를 위에서 넣어줌.
             this.productInsert.book_name,
-            this.productInsert.book_img,
+            this.productInsert.uploadedImg,
             this.productInsert.title,
             this.productInsert.publ_co,
             this.productInsert.book_price,
@@ -116,11 +115,11 @@ export default {
         let result = await axios.post("/api/product", data)
                                 .catch(err => console.log(err));
 
-        let info = result.data.insertId;
+        let info = result.data.insertId; //affectedRows?
         if(info > 0) {
           alert('도서가 등록되었습니다');
           this.prdtInsert.pno = info;
-            }
+        }
       },
       async getproductDetailInfo(pno) {
         let result = await axios.get("/api/product" + pno) //admin/product ?
@@ -175,6 +174,8 @@ export default {
         // URL.createObjectURL로 사용자가 올린 이미지를 URL로 만들어서 화면에 표시할 수 있게 한다. img 태그의 src값에 바인딩해준다
         this.imgUrl = URL.createObjectURL(this.input.image[0])
         console.log(this.imgUrl)
+        console.log(this.input.image[0].name);
+        this.productInsert.uploadedImg = this.input.image[0].name
       }
   }
 }

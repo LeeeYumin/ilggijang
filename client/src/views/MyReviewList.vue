@@ -1,13 +1,20 @@
 <template>
     <div class="container mt-5">
+        <RegisterModalView v-if="popupView == true" @save="popupView = false, refresh = true" @close="popupView = false"
+            :rno="`/` + uprno"
+            :rpno="uprpno"
+            :rgrade="upgrade"
+            :rcontent ="upcontent"
+            :rodtno ="upodtno"
+            :rbnm = "upbnm"/>
         <h3 class="mb-4 title">내리뷰</h3>
         <div class="content">
             <div class="order_list">
                 <ul>
-                    <li v-bind:key="idx" v-for="(list, idx) in myOrderList">
+                    <li :key="idx" v-for="(list, idx) in myList">
                         <div>
                             <!-- <p class="tit point p-2">{{ list.orders_date }}</p> -->
-                            <p class="tit point p-2">{{ orderDate(list.orders_date) }} <span class="detail_go" @click="goToDetail(list.orders_no)">상세보기 ></span></p>
+                            <p class="tit point p-2">{{ list.write_date }} </p>
                             <table class="table">
                                 <colgroup>
                                     <col span="1">
@@ -18,17 +25,24 @@
                                     <tr>
                                         <td>
                                             <div class="book_info">
-                                                <span class="img">{{ list.book_img }}</span>
+                                                <span :key="g" v-for="g in list.grade"><font-awesome-icon :icon="['fas', 'star']" style="color: #66dd70;" /></span>
+                                                <span :key="g" v-for="g in 5-list.grade"><font-awesome-icon :icon="['far', 'star']" style="color: #66dd70;" /></span>
                                                 <div class="txt">
-                                                    <p>{{ list.book_name }} {{ bookQuantity(list.count) }}</p>
-                                                    <span>수량 : {{ list.count }}</span>
+                                                    <p>{{ liteCont(list.content) }}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="tc"><i class="point">{{ formatPrice(list.order_price) }}</i>원</td>
-                                        <td class="tc"><i class="point color">{{ list.orders_state }}</i></td>
+                                        <td class="tc"><i class="point color">{{ liteCont(list.book_name) }}</i></td>
                                         <td class="tc">
-                                            <button class="btn btn-outline-primary mr-0" @click="cartDelete(myOrderList.cart_no)">취소신청</button>
+                                            <button class="btn btn-outline-primary mr-0" 
+                                            @click="popupView = true,
+                                            uprno= list.review_no,
+                                            upgrade= list.grade,
+                                            upcontent = list.content,
+                                            upodtno = list.orders_detail_no,
+                                            uprpno = list.prdt_no,
+                                            upbnm = list.book_name">수정</button>
+                                            <button class="btn btn-outline-primary mr-0" @click="DeleteMyReview(list.review_no)">삭제</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -39,7 +53,6 @@
             </div>
         </div>
     </div>
-    <h1>{{ bookQuantity() }}</h1>
     </template>
     
     <style scoped>
@@ -100,82 +113,58 @@
     
     <script>
     import axios from 'axios';
-    
+    import RegisterModalView from './RegisterModalView.vue';
+
     export default {
         data() {
             return {
-                myOrderList: []
+                myList: [],
+                uno: this.$store.state.userNo,
+                refresh: false,
+                popupView: false,
+
+                uprno: 0,
+                upgrade: 0,
+                upcontent: '',
+                upodtno: 0,
+                uprpno: ''
             }
         },
         created(){
-            let userNo = this.$route.query.userNo;
-            this.getOrderList(userNo);
+            this.getList();
         },
-        computed : {
-            
+        components:{
+            RegisterModalView
         },
-        methods : {
-            async getOrderList(){
-                let userNo = this.$store.state.userNo;  
-                console.log('회원번호', userNo);
-                // http://localhost:3000/orders/mypage/myorderlist/2
-                let result = await axios.get('/api/orders/mypage/myorderlist/' + userNo) 
-                                        .catch(err => console.log(err)); // catch -> 오류가 나지 않으면 실행이 안되고 
-                let list = result.data;
-                this.myOrderList = list;
-                console.log('데이터', this.myOrderList);
-            },
-            orderDate(orderDate) {
-                let result = null;
-                if(orderDate != null){
-                    let date = new Date(orderDate);
-                    let year = date.getFullYear();
-                    let month = ('0' + (date.getMonth() + 1)).slice(-2);
-                    let day = ('0' + date.getDate()).slice(-2);             
-                    
-                    result = `${year}-${month}-${day}`;
-                    return result;
+        watch:{
+            refresh(a){
+                if(a == true){
+                    this.getList();
+                    this.refresh = false;
                 }
-                return ''
-            },
-            formatPrice(book_price) {
-                if (book_price > 999) {
-                    let priceAry = String(book_price).split("").reverse(); //split 사용해서 앞에 String 으로 감싸주고 씀
-                    let idx = 0;
-                    while (priceAry.length > idx + 3) {
-                    priceAry.splice(idx + 3, 0, ',');
-                    idx += 4;
-                    }
-                    return priceAry.reverse().join('') //reverse 함수임
-                } else {
-                    return book_price
-                }
-            }, 
-            bookQuantity(cnt) {
-                let result = '';
-                if(cnt > 1) {
-                    result = ` 외 ${(cnt - 1)}권`;
-                }
-                return result;
-            },
-            goToDetail(orderNo){
-                // let orderItem = [];
-                // for(let i = 0; i < this.myOrderList.length; i++){
-                //     if(this.selected.includes(this.myOrderList[i].orders_no)){
-                //         orderItem.push({ 
-                //             book_no : this.myOrderList[i].prdt_no,
-                //             book_name : this.myOrderList[i].book_name,
-                //             quantity : this.myOrderList[i].quantity,
-                //             book_img : this.myOrderList[i].book_img,
-                //             book_price : this.myOrderList[i].book_price,
-                //             total_price : this.myOrderList[i].total_price,
-                //             orders_state : this.myOrderList[i].orders_state
-                //         });
-                //         sessionStorage.setItem("orderItem", JSON.stringify(orderItem));
-                //     }
-                // }
-                this.$router.push({ path : '/orderlist', query : { "orderNo" : orderNo } }); // query는 무조건 객체타입
             }
+        },
+        methods: {
+            async getList(){
+                console.log('회원번호', this.uno);
+                let result = await axios.get(`/api/reviews/mmrvlist/${this.uno}`) 
+                                        .catch(err => console.log(err)); // catch -> 오류가 나지 않으면 실행이 안되고 
+                this.myList = result.data;
+                console.log('데이터', this.myList);
+            },
+            liteCont(cont) {
+                let litecont = cont.substr(0, 30);
+                return litecont + `${cont.length > 30 ? ".." : ""}`;
+            },
+            async DeleteMyReview(rno) {
+                let delchk = confirm('정말로 삭제하시겠습니까?');
+                if (delchk) {
+                await axios.delete(`/api/reviews/${rno}`)
+                    .catch(err => console.log(err));
+                alert('삭제되었습니다.');
+                this.refresh = true;
+      }
+    }
         }
     }
     </script>

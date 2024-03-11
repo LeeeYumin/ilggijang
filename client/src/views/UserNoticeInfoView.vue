@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <h1>공지사항 조회</h1>
-    <div class="row">
+    <h3>공지사항 조회</h3>
       <table class="table">
+        <colgroup>
+          <col span="1" width="15%;">
+          <col span="1" width="85%;">
+        </colgroup>
         <tr>
           <th class="text-right table-primary">No.</th>
           <td>{{ noticeInfo.notice_no }}</td>
@@ -17,6 +20,7 @@
         </tr>
         <tr>
           <th class="text-right table-primary">등록날짜</th>
+
           <td>{{ notiDate(noticeInfo.reg_date)   }}</td>
         </tr>
         <tr>
@@ -26,14 +30,23 @@
 
       </table>
 
-    </div>
-    <div class="row">
-         
-      <router-link to="/userNotice" class="btn btn-success col-4">목록</router-link>     
-    </div>
+      <div class="btn_box">
+        <router-link to="/userNotice" class="btn btn-outline-primary">목록</router-link>     
+      </div>
   </div>
 
 </template>
+
+<style scoped>
+  .container{padding-top:50px; margin-bottom:50px;}
+  h3{font-weight:700;}
+  .table{margin-top:20px; border-top:1px solid #111; text-align:left;}
+  .table tr{border-bottom:1px solid #ddd;}
+  .table tr th{padding-left:20px; background:#fbfbfb;}
+  .table tr td{padding:10px; padding-left:20px;}
+  .btn_box{margin-top:20px; text-align:center;}
+  .btn_box a{padding:10px 30px;}
+</style>
 
 <script>
 import axios from 'axios'

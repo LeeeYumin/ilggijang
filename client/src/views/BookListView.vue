@@ -5,7 +5,7 @@
         <ul>
           <li :key="i" v-for="i in currentList">
             <span class="img" @click="goDetailBook(i.prdt_no)">
-              <img :src="require('@/assets/product/' + i.book_img)" alt="cover">
+              <img :src="getImgUrl(i.book_img)" alt="cover">
             </span>
             <div class="text">
               <p class="category">{{ category(i.category_code) }}</p>
@@ -39,17 +39,18 @@ export default {
       // listId: '/recdlist',
       startCnt: 10,
       pages: 0,
-      currentCode: null
+      // currentCode: null
     }
   },
   created() {
     // this.currentCode = this.code.slice(-1,-2);
-    console.log(this.listId, this.code, this.currentCode);
+    console.log(this.listId, this.code);
     this.getBookList(this.currentPage);
   },
   methods: {
     async getBookList(pgno) {
-      let result = await axios.get(`/api/bookLists${this.listId}${this.code}/${((pgno - 1) * this.startCnt)}`)
+      let makepno = this.listId == '/catlist' ? `` : `/`+((pgno - 1) * this.startCnt);
+      let result = await axios.get(`/api/bookLists${this.listId}${this.code}${makepno}`)
         .catch(err => console.log(err));
         console.log(result);
       this.currentList = result.data.list;
@@ -110,6 +111,9 @@ export default {
           break;
         }
         return result;
+    },
+    getImgUrl(imgName) { // 이미지 동적으로 가져오기
+        return new URL(`/product/${imgName}`, 'http://localhost:8081');
       }
   }
 }

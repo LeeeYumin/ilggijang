@@ -108,15 +108,19 @@ export default {
   padding: 20px;
 }
 
-.link:hover {
-  text-decoration: underline;
-  cursor: pointer;
+.link:hover td{
+  cursor:pointer;
+  background:#f3f5fd;
 }
 .qnas, .qnastitle{
-    border-bottom: 1px solid #888;
+    border-bottom: 1px solid #ddd;
     font-size: 15px;
 }
+th{background:#fbfbfb;}
 th, td{
+    padding:10px;
     text-align: center;
 }
+.pages{position:absolute; left:50%; bottom:0; width:100%; margin:20px auto 0; text-align:center; transform:translateX(-50%);} 
+.justify-content-start{justify-content:center !important;}
 </style>

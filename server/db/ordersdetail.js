@@ -7,15 +7,20 @@ const orderDetailList =
                , p.book_name           
                , d.quantity
                , d.orders_no
+               , o.orders_date
                , p.prdt_no
                , d.unit_price
+               , o.user_no
                , o.orders_state
                , o.recipient
                , o.dlv_addr
+               , o.total_pay_amount
                , o.phone
+               , r.orders_detail_no AS rodtno
 FROM ordersdetail d
                     JOIN orders o ON o.orders_no = d.orders_no
                     JOIN prdt p ON d.prdt_no = p.prdt_no
+                    LEFT OUTER JOIN review r ON d.orders_detail_no = r.orders_detail_no
 WHERE d.orders_no = ?`;
 
 // 주문상세등록
@@ -33,5 +38,5 @@ VALUES ?`; // [[''],[],[]]
 
 module.exports = {
     orderDetailList,    
-    orderDetailInsert
+    orderDetailInsert,
   }

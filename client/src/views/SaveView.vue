@@ -32,7 +32,7 @@
                                     </b-form-checkbox>
                                 </div>
                                 <span class="img" @click="goDetailBook(list.prdt_no)">
-                                    <img :src="require('@/assets/product/' + list.book_img)" alt="cover">
+                                    <img :src="getImgUrl(list.book_img)" alt="cover">
                                 </span>
                                 <div class="txt">
                                     <p>{{ list.book_name }}</p>
@@ -227,6 +227,9 @@ export default {
         },
         goDetailBook(bno) { // 이미지 클릭하면 상세화면으로.
             this.$router.push({ path : '/book', query : { 'bookNo' : bno }});
+        },
+        getImgUrl(imgName) { // 이미지 동적으로 가져오기
+            return new URL(`/product/${imgName}`, 'http://localhost:8081');
         }
     }
 }

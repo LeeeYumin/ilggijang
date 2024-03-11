@@ -6,7 +6,7 @@
         <div class="selected" :key="i" v-for= "(book, i) in bookSearchList">
           <div class="left" @click="goDetailBook(book.prdt_no)">
             <span class="img">
-              <img :src="require('@/assets/product/' + book.book_img)" alt="cover">
+              <img :src="getImgUrl(book.book_img)" alt="cover">
             </span>
           </div>
            <ul class="prdt_list">
@@ -139,7 +139,6 @@ export default {
         alert("로그인 후 이용해주세요")
       }
     },
-
     async addLike(prdt_no){ // *중복체크 + 담기
       let uno = this.$store.state.userNo;
       // let pno = this.book.prdt_no;
@@ -170,6 +169,9 @@ export default {
         alert("찜에 추가되었습니다")
         this.$router.push({path : '/save'}); // 클릭이벤트 추가
       }
+    },
+    getImgUrl(imgName) { // 이미지 동적으로 가져오기
+      return new URL(`/product/${imgName}`, 'http://localhost:8081');
     }
   }
       }

@@ -45,6 +45,7 @@ const bestSellerBookList =
             JOIN ordersdetail odc
             ON (oc.orders_no = odc.orders_no)
             WHERE odc.prdt_no = p.prdt_no AND TIMESTAMPDIFF(MONTH, oc.orders_date, CURDATE()) < 3) AS ordercnt
+        , p.prdt_no
 FROM prdt p
 JOIN ordersdetail od
 ON (p.prdt_no = od.prdt_no)
@@ -91,6 +92,7 @@ const categoryBookList =
             JOIN ordersdetail odc
             ON (oc.orders_no = odc.orders_no)
             WHERE odc.prdt_no = p.prdt_no) AS ordercnt
+        , p.prdt_no
 FROM prdt p
 WHERE category_code = ?
 ORDER BY ordercnt DESC, book_name `; // 카테고리 코드 필요
