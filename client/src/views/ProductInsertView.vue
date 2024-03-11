@@ -1,8 +1,10 @@
+ProductInsertView 수정전
+
 <template>
   <div class="container">
     <form @submit.prevent >
 
-    <h1>상품관리</h1> <!--메모 API 토스트로 이미지.. 등..?-->
+      <h3 class="text-center">{{ title }}</h3> <!--메모 API 토스트로 이미지.. 등..?-->
 
       <label for="book_name">도서명</label>
       <input type="text" id="book_name" v-model="productInsert.book_name">
@@ -56,6 +58,11 @@ export default {
       isUpdated : false
     };
   },
+  computed : {
+    title(){
+      return this.isUpdated ? '도서 정보 수정' : '도서 정보 등록';
+    }
+  },
 
   created() {
     let pno = this.$route.query.prdtNo;
@@ -75,7 +82,7 @@ export default {
       async prdtInsert(){
         let data = {
           param :[
-            this.productInsert.isbn, //바인딩 된 정보를 위에서 넣어줌.
+            this.productInsert.isbn, //v-바인딩 된 정보를 위에서 넣어줌.
             this.productInsert.book_name,
             this.productInsert.book_img,
             this.productInsert.title,
@@ -85,7 +92,7 @@ export default {
             this.productInsert.publ_date,
             this.productInsert.category_code,
           ]
-        
+
         };
         console.log()
         let result = await axios.post("/api/product", data)

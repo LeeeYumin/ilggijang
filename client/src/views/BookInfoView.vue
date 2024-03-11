@@ -1,4 +1,5 @@
 <template>
+  <!--도서상세화면-->
   <div class="container">
     <div class="top">
       <p class="category">{{ category(bookInfo.category_code) }}</p>

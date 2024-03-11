@@ -55,7 +55,6 @@ VALUES (
       )`;
 
 
-
 module.exports = {
       productList,
       productDetailInfo,
