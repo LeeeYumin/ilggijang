@@ -16,10 +16,10 @@
                         <p>평점 : </p>
                         <div class="grade">
                             <font-awesome-icon class="star" :key="g" v-for="g in jsons.grade" :value="g" type="button"
-                                :icon="['fas', 'star']" style="color: #66dd70;"
+                                :icon="['fas', 'star']" style="color: #3a4ca8;"
                                 @click.capture="jsons.grade = parseInt(g)" />
                             <font-awesome-icon class="star" :key="g" v-for="g in 5 - jsons.grade"
-                                :value="g + jsons.grade" type="button" :icon="['far', 'star']" style="color: #66dd70;"
+                                :value="g + jsons.grade" type="button" :icon="['far', 'star']" style="color: #3a4ca8;"
                                 @click.capture="jsons.grade = parseInt(g + jsons.grade)" />
                         </div>
                     </div>
