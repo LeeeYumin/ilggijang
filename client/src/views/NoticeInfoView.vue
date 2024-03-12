@@ -19,9 +19,7 @@
           <th class="text-right table-primary">등록날짜</th>
           <td>{{ notiDate(noticeInfo.reg_date) }}</td>
         </tr>
-        {{
-          noticeInfo.content
-        }}
+     
         <tr>
           <th class="text-right table-primary">조회수</th>
           <td>{{ noticeInfo.hit_cnt }}</td>

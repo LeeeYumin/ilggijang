@@ -58,6 +58,19 @@
           </td>
         </tr>
         <tr>
+                    <th class="text-right table-primary">공지유형</th>
+                    <td class="text-center">
+                       
+                <div class="selectmenu">
+                    <select name="type" id="select" v-model="noticeInfo.type">
+                        <option value="n1">이벤트</option>
+                        <option value="n2">정책변경</option>
+                        <option value="n3">공지</option>
+                    </select>
+                </div>
+                    </td>
+                </tr>
+        <tr>
           <th class="text-right table-primary">개시일</th>
           <td class="text-center">
             <input
@@ -97,15 +110,17 @@ export default {
         notice_no: "",
         title: "",
         content: "",
-        reg_date: null,
-        fix_start_date: null,
-        fix_end_date: null,
+        reg_date: '',
+        fix_start_date: '',
+        fix_end_date: '',
+        type: ''
       },
     };
   },
   created() {
     let notice_no = this.$route.query.notice_no;
     this.getNoticeInfo(notice_no);
+    
   },
 
   methods: {
@@ -116,7 +131,11 @@ export default {
       let info = result.data;
 
       this.noticeInfo = info;
+      this.noticeInfo.reg_date = this.getToday();
+    this.noticeInfo.fix_start_date = this.getToday();
+    this.noticeInfo.fix_end_date = this.getToday1();
     },
+   
     updateInfo() {
       // 1) 유효성 체크
       if (!this.validation()) return;
@@ -163,7 +182,15 @@ export default {
         return false;
       }
       return true;
-    },
+    },noticeType(noticeType){
+    let reault = null;
+    if(noticeType == '이벤트') reault = 'n1';
+    else if(noticeType == '정책변경') reault = 'n2';
+    else if(noticeType == '공지') reault = 'n3';
+    else reault = '';
+    return reault;
+  },
+    
     getSendData() {
       let obj = this.noticeInfo;
       let delData = ["notice_no"];
@@ -187,6 +214,20 @@ export default {
       };
       return newData;
     },
+    getToday() {
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+            let day = ('0' + date.getDate()).slice(-2);
+            return `${year}-${month}-${day}`;
+        },
+        getToday1() {
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+            let day = ('0' + date.getDate()+7).slice(-2);
+            return `${year}-${month}-${day}`;
+        },
     dataFormat(value) {
       let result = null;
       if (value != null) {
