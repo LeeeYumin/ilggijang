@@ -80,16 +80,16 @@
 
 
 ##### Ect.
-<img src="https://img.shields.io/badge/figma-F24E1E?style=flat&logo=figma&logoColor=white" />)
+<img src="https://img.shields.io/badge/figma-F24E1E?style=flat&logo=figma&logoColor=white" />
 : 화면설계
 <br>
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white" />)
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white" />
 : Database
 <br>
 [erwin](https://www.erwin.com/products/erwin-data-modeler/)
 : DB설계
 <br>
-<img src="https://img.shields.io/badge/github-181717?style=flat&logo=github&logoColor=white" />) & [jandi](https://www.jandi.com/landing/kr)
+<img src="https://img.shields.io/badge/github-181717?style=flat&logo=github&logoColor=white" /> & [jandi](https://www.jandi.com/landing/kr)
 : 협업 및 소통 커뮤니티
 
 
