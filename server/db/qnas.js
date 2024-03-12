@@ -11,7 +11,7 @@ FROM qna q
 JOIN user u
 ON (u.user_no = q.user_no)
 WHERE prdt_no = ?
-ORDER BY u.user_no = ? DESC, q.write_date DESC
+ORDER BY u.user_no = '?' DESC, q.write_date DESC
 LIMIT ?, 5`; // 상품 번호, 회원번호, 페이지 값 필요
 const detailQnaCnt =
 `SELECT count(*) AS qacnt

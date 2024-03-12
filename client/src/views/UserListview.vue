@@ -91,7 +91,7 @@ export default {
       //        여기서 정한 key를 받는 쪽에서도 알아야 함(받는 쪽: 새롭게 불려지는 컴포넌트)
       // $router.push: 통신을 요청 / $route : 통신을 받음
 
-      this.$router.push({ path: '/userInfo', query: { 'id': id } });
+      this.$router.push({ path: '/admin/userInfo', query: { 'id': id } });
       //this.$router.push({ path: '/admin/userInfo', query: { 'id': id } });
       
       // this.$router.push({ name: 'userInfo', query: {'userId' : userId}});  // name으로도 가능

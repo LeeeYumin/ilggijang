@@ -27,9 +27,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="tc"><i class="point">{{ formatPrice(list.order_price) }}</i>원</td>
-                                        <td class="tc"><i class="point color state">{{ orderState(list.orders_state) }}</i></td>
-                                        <td class="tc">
+                                        <td><i class="point">{{ formatPrice(list.order_price) }}</i>원</td>
+                                        <td><i class="point color state">{{ orderState(list.orders_state) }}</i></td>
+                                        <td>
                                             <button class="btn btn-outline-primary mr-0" @click="cartDelete(myOrderList.cart_no)">취소신청</button>
                                         </td>
                                     </tr>
@@ -60,7 +60,7 @@
     table td{border-top:1px solid #ddd;}
     ul{list-style:none; padding-left:0;}
     ul li{border-top:1px solid #111;}
-    .book_info{padding:20px 0;}
+    .book_info{padding:20px 0; text-align:left;}
     .book_info > *{display:inline-block; vertical-align:top;}
     .book_info .img{width:100px; background:#ddd; cursor:pointer; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}
     .book_info .img img{display:block; width:100%; height:100%;}

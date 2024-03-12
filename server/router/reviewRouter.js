@@ -51,7 +51,8 @@ reviewRouter.put("/:rno", async (request, response) => {
 
 // 리뷰 삭제
 reviewRouter.delete("/:rno", async (request, response) => {
-    let data = request.params.rno;
+    let data = parseInt(request.params.rno);
+    await db.connection('reviews', 'ldataDelete', data); // 삭제
     let result = await db.connection('reviews', 'reviewDelete', data);
     response.send(result);
 });

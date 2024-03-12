@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <h1>공지사항</h1>
-    <div style="float: right">
-      <router-link to="/admin/noticeInsert" class="btn btn-info"
+    <div style="float: right; margin-bottom:20px;">
+      <router-link to="/admin/noticeInsert" class="btn btn-outline-primary"
         >등록</router-link
       >
     </div>

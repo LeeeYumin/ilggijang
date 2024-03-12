@@ -131,7 +131,7 @@
                       <span v-bind:class="{'active' : isActive}">토스페이</span>
                     </label>
                   </div>
-                  <!-- <span>선택한 결제수단 : {{ selectedPay }}</span> -->
+                  <span class="pick"><i>선택한 결제수단</i> {{ selectedPay }}</span>
                   <div v-if="show" class="option_box">
                     <b-form-select v-model="selected" :options="options"></b-form-select>
                   </div>
@@ -184,7 +184,7 @@
 .right span{float:right;}
 .right span i{font-style:normal;}
 .right .btn_order{margin-top:20px; width:100%; padding:10px 0;}
-.table{margin-bottom:0;}
+.table{margin-bottom:0; text-align:left;}
 .table tr:last-child th,
 .table tr:last-child td{border-bottom:0;}
 .container{padding:0;}
@@ -217,6 +217,8 @@ i.point{font-style:normal; font-size:16px;}
 .hidden{display:none; font-size:0;}
 .img{display:block; width:80px; text-align:center; margin:0 auto; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}
 .img img{display:block; width:100%; height:100%;}
+.pick{display:block; margin-top:10px; letter-spacing:-1px;}
+.pick i{display:inline-block; margin-right:10px; background:#ddd; padding:5px 10px; border-radius:50px; font-size:13px; font-style:normal; font-weight:700;}
 </style>
 
 <script>

@@ -76,6 +76,9 @@ WHERE review_no = ? `;
 const reviewDelete = 
 `DELETE FROM review
 WHERE review_no = ? `;
+const ldataDelete =
+`DELETE FROM likes
+WHERE review_no = ? `;
 
 // 좋아요 추가 삭제
 const likeInsert = 
@@ -102,6 +105,6 @@ module.exports = {
 //     , adminReviewList
     , reviewInsert
     , reviewUpdate
-    , reviewDelete
+    , reviewDelete, ldataDelete
     , likeCheck, likeInsert, likeDelete, likeCnt
 }

@@ -4,13 +4,13 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>주문날짜</th>
-          <th>주문번호</th>
-          <th>회원번호</th>
-          <th>도서명</th>
-          <th>수량</th>
-          <th>금액</th>
-          <th>주문상태</th>
+          <th class="text-center table-primary">주문날짜</th>
+          <th class="text-center table-primary">주문번호</th>
+          <th class="text-center table-primary">회원번호</th>
+          <th class="text-center table-primary">도서명</th>
+          <th class="text-center table-primary">수량</th>
+          <th class="text-center table-primary">금액</th>
+          <th class="text-center table-primary">주문상태</th>
         </tr>
       </thead>
       <tbody>
@@ -100,12 +100,12 @@ export default {
               break;
           }
           return result;
-        }
+      }
     }
 }
 
 </script>
 
 <style scope>
-  table{text-align:center;}
+  table{margin-top:20px; text-align:center;}
 </style>

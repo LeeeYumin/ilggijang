@@ -4,8 +4,8 @@
             <p class="q">Q</p>
             <p v-if="upform == false">{{ qcont }}</p>
             <div v-if="usno == userno && upform == false && repstate == 'a1'" class="btns">
-                <button @click="upform = true">수정</button>
-                <button @click="DeleteMyQ(qano)">삭제</button>
+                <button class="btn primary" @click="upform = true">수정</button>
+                <button class="btn primary" @click="DeleteMyQ(qano)">삭제</button>
                 <p>* 수정 및 삭제는 '답변대기' 상태일때만 가능합니다</p>
             </div>
             <textarea v-if="upform == true" v-model="jsons.qry_content" placeholder="내용을 입력하세요" cols="30"
