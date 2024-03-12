@@ -1,43 +1,43 @@
 <template>
   <div class="container">
     <h1>공지사항 조회</h1>
-    <div class="row">
       <table class="table">
-        <tr>
-          <th class="text-right table-primary">No.</th>
-          <td>{{ noticeInfo.notice_no }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">제목</th>
-          <td>{{ noticeInfo.title }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary" type="text">내용</th>
-          <td>{{ noticeInfo.content }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">등록날짜</th>
-          <td>{{ notiDate(noticeInfo.reg_date) }}</td>
-        </tr>
-     
-        <tr>
-          <th class="text-right table-primary">조회수</th>
-          <td>{{ noticeInfo.hit_cnt }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">유형</th>
-          <td>{{ noticeType(noticeInfo.type) }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">고정시작일</th>
-          <td>{{ notiDate(noticeInfo.fix_start_date) }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">고정마감일</th>
-          <td>{{ notiDate(noticeInfo.fix_end_date) }}</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th class="text-right table-primary">No.</th>
+            <td>{{ noticeInfo.notice_no }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">제목</th>
+            <td>{{ noticeInfo.title }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary" type="text">내용</th>
+            <td>{{ noticeInfo.content }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">등록날짜</th>
+            <td>{{ notiDate(noticeInfo.reg_date) }}</td>
+          </tr>
+      
+          <tr>
+            <th class="text-right table-primary">조회수</th>
+            <td>{{ noticeInfo.hit_cnt }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">유형</th>
+            <td>{{ noticeType(noticeInfo.type) }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">고정시작일</th>
+            <td>{{ notiDate(noticeInfo.fix_start_date) }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">고정마감일</th>
+            <td>{{ notiDate(noticeInfo.fix_end_date) }}</td>
+          </tr>
+        </tbody>
       </table>
-    </div>
     <div class="btn_box">
       <button class="btn btn-outline-primary" @click="goToUpdate(noticeInfo.notice_no)">
         수정

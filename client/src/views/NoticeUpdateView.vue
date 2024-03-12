@@ -5,91 +5,93 @@
     <h3 class="text-center">공지사항 수정</h3>
     <div class="row">
       <table class="table">
-        <tr>
-          <th class="text-right table-primary">No.</th>
-          <td class="text-center">
-            <input
-              class="form-control"
-              type="number"
-              v-model="noticeInfo.notice_no"
-              readonly
-            />
-          </td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">제목</th>
-          <td class="text-center">
-            <input
-              class="form-control"
-              type="text"
-              v-model="noticeInfo.title"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">내용</th>
-          <td class="text-center">
-            <input
-              class="form-control"
-              type="text"
-              v-model="noticeInfo.content"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">작성일</th>
-          <td class="text-center">
-            <input
-              class="form-control"
-              type="date"
-              v-model="noticeInfo.reg_date"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">조회수</th>
-          <td class="text-center">
-            <input
-              class="form-control"
-              type="number"
-              v-model="noticeInfo.hit_cnt"
-              readonly
-            />
-          </td>
-        </tr>
-        <tr>
-                    <th class="text-right table-primary">공지유형</th>
-                    <td class="text-center">
-                       
-                <div class="selectmenu">
-                    <select name="type" id="select" v-model="noticeInfo.type">
-                        <option value="n1">이벤트</option>
-                        <option value="n2">정책변경</option>
-                        <option value="n3">공지</option>
-                    </select>
-                </div>
-                    </td>
-                </tr>
-        <tr>
-          <th class="text-right table-primary">개시일</th>
-          <td class="text-center">
-            <input
-              class="form-control"
-              type="date"
-              v-model="noticeInfo.fix_start_date"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">개시종료일</th>
-          <td class="text-center">
-            <input
-              class="form-control"
-              type="date"
-              v-model="noticeInfo.fix_end_date"
-            />
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th class="text-right table-primary">No.</th>
+            <td class="text-center">
+              <input
+                class="form-control"
+                type="number"
+                v-model="noticeInfo.notice_no"
+                readonly
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">제목</th>
+            <td class="text-center">
+              <input
+                class="form-control"
+                type="text"
+                v-model="noticeInfo.title"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">내용</th>
+            <td class="text-center">
+              <input
+                class="form-control"
+                type="text"
+                v-model="noticeInfo.content"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">작성일</th>
+            <td class="text-center">
+              <input
+                class="form-control"
+                type="date"
+                v-model="noticeInfo.reg_date"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">조회수</th>
+            <td class="text-center">
+              <input
+                class="form-control"
+                type="number"
+                v-model="noticeInfo.hit_cnt"
+                readonly
+              />
+            </td>
+          </tr>
+          <tr>
+                      <th class="text-right table-primary">공지유형</th>
+                      <td class="text-center">
+                        
+                  <div class="selectmenu">
+                      <select name="type" id="select" v-model="noticeInfo.type">
+                          <option value="n1">이벤트</option>
+                          <option value="n2">정책변경</option>
+                          <option value="n3">공지</option>
+                      </select>
+                  </div>
+                      </td>
+                  </tr>
+          <tr>
+            <th class="text-right table-primary">개시일</th>
+            <td class="text-center">
+              <input
+                class="form-control"
+                type="date"
+                v-model="noticeInfo.fix_start_date"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">개시종료일</th>
+            <td class="text-center">
+              <input
+                class="form-control"
+                type="date"
+                v-model="noticeInfo.fix_end_date"
+              />
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <div class="row">
