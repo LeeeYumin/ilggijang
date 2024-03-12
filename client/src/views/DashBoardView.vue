@@ -182,7 +182,6 @@ export default {
                               .catch(err => console.log(err));
       console.log(result);
       this.salesList = result.data;
-      console.log('데이터 받아오세요', this.salesList);
     },
     goToDetail(ono){
       this.$router.push({ path : '/admin/salesDetail', query : {'orderNo' : ono}});

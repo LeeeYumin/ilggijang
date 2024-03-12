@@ -3,55 +3,56 @@
     <h1>회원 정보 조회</h1>
     <div class="row">
       <table class="table">
-        <tr>
-          <th class="text-right table-primary">No.</th>
-          <td>{{ userInfo.user_no }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">아이디</th>
-          <td >{{ userInfo.id }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">이름</th>
-          <td>{{ userInfo.name }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">생년월일</th>
-          <td>{{ dataFormat(userInfo.birth_date) }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">성별</th>
-          <td >{{ Gender }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">주소</th>
-          <td>{{ userInfo.addr }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">상세주소</th>
-          <td >{{ userInfo.detail_addr }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">메일</th>
-          <td >{{ userInfo.mail }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">연락처</th>
-          <td>{{ userInfo.phone }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">로그인타입</th>
-          <td>{{ loginType(userInfo.login_type_code) }}</td>
-        </tr>
-        <tr>
-          <th class="text-right table-primary">나이</th>
-          <td>{{ ageType(userInfo.age_code) }}</td>
-        </tr>
-         <tr>
-        <th class="text-right table-primary">회원등급</th>
-        <td>{{ rank(userInfo.user_rank_no) }}</td>
-      </tr>
-
+        <tbody>
+          <tr>
+            <th class="text-right table-primary">No.</th>
+            <td>{{ userInfo.user_no }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">아이디</th>
+            <td >{{ userInfo.id }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">이름</th>
+            <td>{{ userInfo.name }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">생년월일</th>
+            <td>{{ dataFormat(userInfo.birth_date) }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">성별</th>
+            <td >{{ Gender }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">주소</th>
+            <td>{{ userInfo.addr }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">상세주소</th>
+            <td >{{ userInfo.detail_addr }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">메일</th>
+            <td >{{ userInfo.mail }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">연락처</th>
+            <td>{{ userInfo.phone }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">로그인타입</th>
+            <td>{{ loginType(userInfo.login_type_code) }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">나이</th>
+            <td>{{ ageType(userInfo.age_code) }}</td>
+          </tr>
+          <tr>
+            <th class="text-right table-primary">회원등급</th>
+            <td>{{ rank(userInfo.user_rank_no) }}</td>
+          </tr>
+        </tbody>
       </table>
 
     </div>
