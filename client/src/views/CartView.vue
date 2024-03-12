@@ -118,7 +118,7 @@ table ul li{display:inline-block; margin-left:10px;}
 table ul li:first-child{margin-left:0;}
 table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #ddd; background:#fff; border-radius:5px;}
 table ul li button:hover{background:#eee;}
-.book_info{padding:20px 0;}
+.book_info{padding:20px 0; text-align:left;}
 .book_info > *{display:inline-block; vertical-align:top;}
 .book_info .img{width:100px; margin-left:10px; background:#ddd; cursor:pointer; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}
 .book_info .img img{display:block; width:100%; height:100%;}

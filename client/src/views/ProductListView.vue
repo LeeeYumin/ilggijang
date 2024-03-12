@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <h1>상품관리</h1>
-     <router-link to="/admin/productInsert" class="btn btn-info">도서 추가</router-link>
+     <router-link to="/admin/productInsert" class="btn btn-outline-primary">도서 추가</router-link>
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>도서이미지</th>
-            <th>도서명</th>
-            <th>도서번호</th>
-            <th>저자</th>
-            <th>출판사</th>
-            <th>가격</th>
+            <th class="text-center table-primary">도서이미지</th>
+            <th class="text-center table-primary">도서명</th>
+            <th class="text-center table-primary">도서번호</th>
+            <th class="text-center table-primary">저자</th>
+            <th class="text-center table-primary">출판사</th>
+            <th class="text-center table-primary">가격</th>
           </tr>
         </thead>
 
@@ -79,8 +79,9 @@ export default {
 
 </script>
 
-<style>
-.btn-info {
+<style scoped>
+.btn-outline-primary {
   float : right;
+  margin-bottom:20px;
 }
 </style>

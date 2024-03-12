@@ -40,17 +40,23 @@
         </tr>
       </table>
     </div>
-    <div class="row">
-      <button class="btn btn-info" @click="goToUpdate(noticeInfo.notice_no)">
+    <div class="btn_box">
+      <button class="btn btn-outline-primary" @click="goToUpdate(noticeInfo.notice_no)">
         수정
       </button>
-      <router-link to="/admin/notice" class="btn btn-info">목록</router-link>
-      <button class="btn btn-info" @click="deleteInfo(noticeInfo.notice_no)">
+      <router-link to="/admin/notice" class="btn btn-outline-secondary">목록</router-link>
+      <button class="btn btn-outline-success" @click="deleteInfo(noticeInfo.notice_no)">
         삭제
       </button>
     </div>
   </div>
 </template>
+
+<style scoped>
+  .btn_box{margin:20px auto 0; text-align:center;}
+  .btn_box > *{display:inline-block; margin:0 5px;}
+
+</style>
 
 <script>
 import axios from "axios";

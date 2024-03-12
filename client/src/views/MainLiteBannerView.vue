@@ -5,7 +5,7 @@
             <div class="single-banner">
                 <img src="../assets/thisyearbest.jpg" alt="#">
                 <div class="content">
-                    <button type="button" class="btn link">보러가기</button>
+                    <router-link to="/book?bookNo=BK240311004" class="btn link">보러가기 +</router-link>
                 </div>
             </div>
         </div>
@@ -13,7 +13,7 @@
             <div class="single-banner">
                 <img src="../assets/recommand.jpg" alt="#">
                 <div class="content">
-                    <button type="button" class="btn link">보러가기</button>
+                    <router-link to="/book?bookNo=BK240311005" class="btn link">보러가기 +</router-link>
                 </div>
             </div>
         </div>
@@ -21,11 +21,7 @@
 </template>
 
 <style scoped>
-.link:hover {
-    text-decoration: underline;
-    cursor: pointer;
-    color:#7ee1ff
-}
+
 .banners {
     display: inline-block;
     margin-bottom: 100px;
@@ -38,6 +34,22 @@
     position: absolute;
     top:85%;
     right: 10%;
-    color: #00c3ff;
+    cursor: pointer;
+    background:rgba(0, 0, 0, 0.4);
+    border-radius:50px;
+    padding:5px 20px;
+    color: #fff;
+    letter-spacing:-1px;
+}
+.link:hover{
+    position: absolute;
+    top:85%;
+    right: 10%;
+    cursor: pointer;
+    background:rgba(0, 0, 0, 0.8);
+    border-radius:50px;
+    padding:5px 20px;
+    color: #fff;
+    letter-spacing:-1px;
 }
 </style>
