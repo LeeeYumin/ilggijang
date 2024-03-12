@@ -500,7 +500,8 @@ i.point{font-style:normal; font-size:16px;}
         this.$emit('close');
       },
       getImgUrl(imgName) { // 이미지 동적으로 가져오기
-            return new URL(`/product/${imgName}`, 'http://localhost:8081');
+        // return new URL(`/product/${imgName}`, 'http://localhost:8081');
+        return new URL(`${this.url}/product/${imgName}`);
       }
     }
   }
