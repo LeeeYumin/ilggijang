@@ -13,11 +13,11 @@
             <colgroup>
                 <col span="1">
                 <col span="2" style="width:10%;">
-                <col span="1" style="width:15%;">
+                <col span="1" style="width:20%;">
             </colgroup>
             <tbody>
                 <tr>
-                    <td colspan="3"><i class="point p-2">배송</i></td>
+                    <td colspan="3"><i class="point p-2">주문</i></td>
                 </tr>
                 <!--  -->
                 <tr v-bind:key="idx" v-for="(list, idx) in orderDetailList">
@@ -32,11 +32,11 @@
                             </div>
                         </div>
                     </td>
-                    <td class="tc"><i class="point">{{ formatPrice(list.unit_price) }}</i>원</td>
-                    <td class="tc"><i class="point color state">{{ orderState(list.orders_state) }}</i></td>
-                    <td class="tc">
-                        <button class="btn btn-outline-primary mr-0" @click="popupView = true, rodtno = list.orders_detail_no, rpno = list.prdt_no, rbnm = list.book_name" :disabled="list.rodtno != null">리뷰작성</button>
-                        <button class="btn btn-outline-primary mr-0" @click="cartDelete(list.cart_no)">취소신청</button>
+                    <td><i class="point">{{ formatPrice(list.unit_price) }}</i>원</td>
+                    <td><i class="point color state">{{ orderState(list.orders_state) }}</i></td>
+                    <td>
+                        <button class="btn btn-outline-secondary btn_review" @click="popupView = true, rodtno = list.orders_detail_no, rpno = list.prdt_no, rbnm = list.book_name" :disabled="list.rodtno != null">리뷰작성</button>
+                        <button class="btn btn-outline-primary" @click="cartDelete(list.cart_no)">취소신청</button>
                     </td>
                 </tr>
                 <!--  -->
@@ -44,7 +44,7 @@
         </table>
 
         <h5>배송정보</h5>
-        <table class="table dlv_tbl">
+        <table class="table dlv_tbl" style="text-align:left;">
             <colgroup>
                 <col span="1" style="width:20%;">
                 <col span="1" style="width:80%;">
@@ -105,6 +105,7 @@
 </template>
 
 <style scoped>
+.btn_review{margin-right:5px !important; cursor:pointer;}
 .title{font-weight:700;}
 .content{position:relative; min-height:480px; margin-bottom:50px;}
 .all{padding:15px; background:#f7f7f7; border-radius:10px; box-sizing:border-box;}
@@ -122,7 +123,7 @@ table ul li{display:inline-block; margin-left:10px;}
 table ul li:first-child{margin-left:0;}
 table ul li button{width:120px; height:50px; font-weight:700; border:1px solid #ddd; background:#fff; border-radius:5px;}
 table ul li button:hover{background:#eee;}
-.book_info{padding:20px 0;}
+.book_info{padding:20px 0; text-align:left;}
 .book_info > *{display:inline-block; vertical-align:top;}
 .book_info .img{width:100px; background:#ddd; cursor:pointer; box-shadow:0 0 5px 2px rgba(0, 0, 0, 0.1);}
 .book_info .img img{display:block; width:100%; height:100%;}

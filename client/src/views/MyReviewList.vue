@@ -16,11 +16,6 @@
                             <!-- <p class="tit point p-2">{{ list.orders_date }}</p> -->
                             <p class="tit point p-2">{{ list.write_date }} </p>
                             <table class="table">
-                                <colgroup>
-                                    <col span="1">
-                                    <col span="2" style="width:10%;">
-                                    <col span="1" style="width:15%;">
-                                </colgroup>
                                 <tbody>
                                     <tr>
                                         <td>
@@ -32,9 +27,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="tc"><i class="point color">{{ liteCont(list.book_name) }}</i></td>
-                                        <td class="tc">
-                                            <button class="btn btn-outline-primary mr-0" 
+                                        <td ><i class="point color">{{ liteCont(list.book_name) }}</i></td>
+                                        <td>
+                                            <button class="btn btn-outline-secondary" style="margin-right:5px;" 
                                             @click="popupView = true,
                                             uprno= list.review_no,
                                             upgrade= list.grade,
@@ -42,7 +37,7 @@
                                             upodtno = list.orders_detail_no,
                                             uprpno = list.prdt_no,
                                             upbnm = list.book_name">수정</button>
-                                            <button class="btn btn-outline-primary mr-0" @click="DeleteMyReview(list.review_no)">삭제</button>
+                                            <button class="btn btn-outline-primary" @click="DeleteMyReview(list.review_no)">삭제</button>
                                         </td>
                                     </tr>
                                 </tbody>

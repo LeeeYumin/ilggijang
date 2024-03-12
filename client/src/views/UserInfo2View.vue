@@ -48,7 +48,7 @@
       </tr>
     </table>
     <div class="btn_box">
-      <button class="btn btn-info" @click="goToUpdate(userInfo2.id)">수정</button>
+      <button class="btn btn-outline-primary" @click="goToUpdate(userInfo2.id)">수정</button>
     </div>
   </div>
 
