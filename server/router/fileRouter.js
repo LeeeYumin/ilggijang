@@ -7,7 +7,7 @@ var url = require('url');
 
 
 // 폴더경로 만들기
-let dir = 'C:/ilggijang-project/images/'; // ★ 경로확실히 -> 화면쪽 메소드에 new URL()
+let dir = 'C:/ilggijang-project/images/'; // ★ 경로확실히 -> 서버가 있는 pc local경로로 이미지 저장 -> 화면에서 불러올 때 file://~로 시작
 // let dir = 'C:/ilggijang-project/images/'; // public/product에 저장
 
 // 함수
