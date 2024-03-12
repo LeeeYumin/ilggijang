@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="search_input">
-          <input class="search" placeholder="도서명을 입력해주세요" v-model="text"> <!--@keyup.enter="searchWord(this.text)"-->
+          <input class="search" placeholder="도서명을 입력해주세요" v-model="text" @keyup.enter="searchWord(this.text)">
           <button variant="outline-success" class="btn_search" type="submit" @click="searchWord()"><font-awesome-icon icon="fa-solid fa-magnifying-glass" size="lg" style="color:#3a4ca8;" /><span>검색</span></button>
       </div>
     </div>

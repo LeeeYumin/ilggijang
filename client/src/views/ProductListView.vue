@@ -36,13 +36,17 @@
 import axios from 'axios'
 
 export default {
+  props: {
+    code: { type: String, default: '' },
+    listId: { type: String, default: '' }
+  },
   data(){
     return {
       product : [], // productList..?
       currentPage : 1,
       startCnt : 10,
       pages : 0,
-      currentCode: null
+      // currentCode: null
     };
   },
 
@@ -58,6 +62,7 @@ export default {
         console.log(result);
         this.product = result.data;
       },
+
       goToDetail(pno){
         this.$router.push({ path : '/admin/productDetail', query : {'prdtNo' : pno}});
       },

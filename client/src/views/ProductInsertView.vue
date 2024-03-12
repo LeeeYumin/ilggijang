@@ -27,7 +27,7 @@
                   name="fileList">
           <button class="btn btn-primary mt-3" @click="sendFiles()">이미지 파일 업로드</button>
       </div>
-      
+
       <div class="border col-4">
         <h6>업로드 할 파일 미리보기</h6>
         <img :src="this.imgUrl" style="width: 200px;">
@@ -115,7 +115,7 @@ export default {
         let result = await axios.post("/api/product", data)
                                 .catch(err => console.log(err));
 
-        let info = result.data.insertId; //affectedRows?
+        let info = result.data.affectedRows; //insertId 에서 변경하면 alert 뜸
         if(info > 0) {
           alert('도서가 등록되었습니다');
           this.prdtInsert.pno = info;
