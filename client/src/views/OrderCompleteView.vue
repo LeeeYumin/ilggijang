@@ -28,4 +28,5 @@
   .container{display:flex; justify-content:center; align-items:center; position:relative; min-height:480px; margin-bottom:50px;}
   .complete_box{width:60%; padding:50px 20px; text-align:center; border:1px solid #ddd; border-radius:15px; box-sizing:border-box;}
   .complete_box h3{margin-bottom:30px; font-size:25px; font-weight:700; letter-spacing:-1px;}
+  button:first-child{margin-right:5px;}
 </style>

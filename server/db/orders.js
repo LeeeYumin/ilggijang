@@ -44,6 +44,7 @@ const myOrderList =
         o.orders_date,
         d.quantity,
         o.orders_state,
+        o.total_orders_amount,
         p.book_price,
         (p.book_price * d.quantity) as 'order_price',
         count(*) as 'count'
