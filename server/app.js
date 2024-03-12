@@ -3,7 +3,9 @@ const express = require("express");
 const app = express();
 // const session = require('express-session');
 const axios = require('axios');
+var path = require('path');
 
+app.use(express.static("public"));
 
 
 
@@ -32,9 +34,9 @@ const productRouter = require('./router/productRouter.js'); // 관리자페이�
 
 
 app.use( // json-parser
-  express.json({
-    limit: "50mb",
-  })
+express.json({
+  limit: "50mb",
+})
 );
 
 app.use(express.urlencoded({extended : false})); // query
@@ -71,21 +73,20 @@ app.listen(3000, () => {
 
 const db = require("./db.js");
 
+app.get('/', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '/public', 'index.html'));
+})
+
+
 // REST API 기준
-
-//전체조회
-app.get("/", async (request, response) => {
-  response.send('get방식 전송');
-});
-
 // 서버측 아임포트-토큰발급 + 결제단건 메소드
 app.post("/complete", async (req, res) => {
   try {
     const { imp_uid } = req.body; // req의 body에서 imp_uid추출
     /** 클라이언트 쪽에서 들어와야 할 body
-    {
-      "imp_uid" : "imp_427462517173",
-      "merchant_uid" : "merchant_1709556462172"
+     {
+       "imp_uid" : "imp_427462517173",
+       "merchant_uid" : "merchant_1709556462172"
     }
     */
 

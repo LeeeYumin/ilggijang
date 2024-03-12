@@ -1,12 +1,13 @@
 const { defineConfig } = require('@vue/cli-service')
 const target = "http://localhost:3000"; // Origin : http + IP + port
+var path = require('path');
 
 module.exports = defineConfig({
   chainWebpack: config => {
     config.plugins.delete('prefetch');//perfetch삭제
 
   },
-
+  outputDir : path.resolve("../myserver/public"),
 
   transpileDependencies: true,
   devServer: {
