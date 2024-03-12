@@ -25,10 +25,6 @@
     <UpdateQnaView v-if="qno == i.qna_no" :repstate="state" :qano="`/` + qno" :usno="uno" :qcont="cont" :acont="rcont"
       @refreon="(e) => {this.refreon = e, qno = ''}" />
   </tbody>
-
-  <template>
-  </template>
-
   <div class="pages">
     <b-pagination v-model="currentPage" :total-rows="pagecnts" :per-Page="startCnt"
       @click="getQnaList(currentPage)"></b-pagination>
@@ -79,6 +75,9 @@ export default {
   },
   methods: {
     async getQnaList(pgno) {
+      if(this.userno == ''){
+        this.userno = 0;
+      }
       let result = await axios.get(`/api/qnas${this.listId}${this.pcode}/${this.userno}/${((pgno - 1) * this.startCnt)}`)
         .catch(err => console.log(err));
       this.currentList = result.data.list;

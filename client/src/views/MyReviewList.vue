@@ -25,8 +25,8 @@
                                     <tr>
                                         <td>
                                             <div class="book_info">
-                                                <span :key="g" v-for="g in list.grade"><font-awesome-icon :icon="['fas', 'star']" style="color: #66dd70;" /></span>
-                                                <span :key="g" v-for="g in 5-list.grade"><font-awesome-icon :icon="['far', 'star']" style="color: #66dd70;" /></span>
+                                                <span :key="g" v-for="g in list.grade"><font-awesome-icon :icon="['fas', 'star']" style="color: #3a4ca8;" /></span>
+                                                <span :key="g" v-for="g in 5-list.grade"><font-awesome-icon :icon="['far', 'star']" style="color: #3a4ca8;" /></span>
                                                 <div class="txt">
                                                     <p>{{ liteCont(list.content) }}</p>
                                                 </div>
@@ -163,8 +163,8 @@
                     .catch(err => console.log(err));
                 alert('삭제되었습니다.');
                 this.refresh = true;
-      }
-    }
+                }
+            }
         }
     }
     </script>
