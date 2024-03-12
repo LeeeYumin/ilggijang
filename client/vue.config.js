@@ -1,5 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
-const target = "http://localhost:3000"; // Origin : http + IP + port
+// const target = "http://localhost:3000"; // Origin : http + IP + port
+const target = "http://192.168.0.18:3000"; // Origin : http + IP + port
 
 module.exports = defineConfig({
   chainWebpack: config => {

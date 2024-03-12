@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "./db/db.env" });
+require("dotenv").config({ path: "./db/db.env" }); // 전역변수로 등록하기
 const express = require("express");
 const app = express();
 // const session = require('express-session');

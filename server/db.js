@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const sql = require('./db/sql.js');
 
 const dbInfo = {
-    connetionLimit : process.env.MYSQL_LIMIT,
+    connectionLimit : process.env.MYSQL_LIMIT,
     host : process.env.MYSQL_HOST,
     port: process.env.MYSQL_PORT,
     database : process.env.MYSQL_DATABASE,    

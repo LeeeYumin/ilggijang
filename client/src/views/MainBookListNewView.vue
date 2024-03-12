@@ -23,7 +23,8 @@
 
 <script>
 import axios from 'axios';
-
+// require("dotenv").config({ path: "./db/db.env" });
+// const { SERVER_URL } = process.env;
 
 export default {
   data() {
@@ -99,7 +100,11 @@ export default {
         return result;
     },
     getImgUrl(imgName) { // 이미지 동적으로 가져오기
-      return new URL(`/product/${imgName}`, 'http://localhost:8081');
+      // console.log(process.env.SERVER_URL)
+      // return new URL(`/product/${imgName}`, SERVER_URL);
+      // return SERVER_URL + `/product/${imgName}`
+      // return new URL(`/product/${imgName}`, import.meta.url).href;
+      return new URL(`${this.url}/product/${imgName}`);
     }
   }
 }

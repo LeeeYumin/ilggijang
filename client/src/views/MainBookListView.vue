@@ -27,8 +27,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      bookList: [],
-      publicPath: process.env.BASE_URL
+      bookList: []
     }
   },
   created() {
@@ -101,7 +100,8 @@ export default {
       getImgUrl(imgName) { // 이미지 동적으로 가져오기
         // let test = new URL(`/product/${imgName}`, import.meta.url).href;
         // console.log(test)
-        return new URL(`/product/${imgName}`, 'http://localhost:8081');
+        // return new URL(`/product/${imgName}`, 'http://localhost:8081');
+        return new URL(`${this.url}/product/${imgName}`);
       }
   }
 }
