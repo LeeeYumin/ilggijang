@@ -100,7 +100,7 @@ export default {
               break;
           }
           return result;
-        }
+      }
     }
 }
 

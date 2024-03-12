@@ -8,7 +8,7 @@
       <input type="text" class="form-control" id="book_name" v-model="productInsert.book_name">
 
       <label for="book_price">가격</label>
-      <input type="text" class="form-control" id="book_price"  v-model="productInsert.book_price">
+      <input type="number" class="form-control" id="book_price"  v-model="productInsert.book_price">
 
       <label for="title">저자</label>
       <input type="text" class="form-control" id="title" v-model="productInsert.title">
