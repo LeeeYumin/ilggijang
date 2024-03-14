@@ -13,6 +13,17 @@ const bookList =
 FROM  prdt
 LIMIT 0, 5`;
 
+const bookNewList =
+`SELECT book_name
+, book_img
+, title
+, category_code
+, publ_date
+FROM prdt
+WHERE TIMESTAMPDIFF(MONTH, publ_date, CURDATE()) < 12
+ORDER BY publ_date DESC, book_name 
+LIMIT 0, 5`;
+
 // 상품 상세보기 컴포넌트 (관리자)
 const bookDetailInfo =
 `SELECT prdt_no
@@ -73,6 +84,7 @@ FROM  prdt`;
 
 module.exports = {
     bookList,
+    bookNewList,
     bookInsert,
     bookUpdate,
     bookDelete,

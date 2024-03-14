@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     async getBookList() {
-      let result = await axios.get('/api/books')
+      let result = await axios.get('/api/books/newbooks')
         .catch(err => console.log(err));
 
       this.bookList = result.data;

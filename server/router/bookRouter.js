@@ -8,6 +8,12 @@ bookRouter.get("/", async (request, response) => {
   response.send(result);
 });
 
+// 전체 조회 (관리자)
+bookRouter.get("/newbooks", async (request, response) => {
+  let result = await db.connection('books', 'bookNewList');
+  response.send(result);
+});
+
 // 도서 검색결과 http://localhost:8081/bookSearch
 bookRouter.get("/search/:pname", async (request, response) => {
   let data = request.params.pname;

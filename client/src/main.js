@@ -19,7 +19,8 @@ app.use(store)
 app.mount('#app')
 
 // client 전역변수 선언
-app.config.globalProperties.url = "http://192.168.0.18:8081";
+// app.config.globalProperties.url = "http://192.168.0.18:8081";
+app.config.globalProperties.url = "http://localhost:8081";
 
 // Font Awesome
 library.add(fas, far);
